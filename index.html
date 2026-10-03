@@ -43,7 +43,7 @@ body.loading{visibility:hidden}
     <a href="#" aria-label="Holden Heating and Cooling home"><img src="images/logo.jpg" alt="Holden Heating and Cooling" class="h-14 sm:h-20 w-auto"></a>
     <div class="hidden md:flex gap-3 text-sm">
       <a href="#book" class="btn ar">Book Online</a>
-      <a href="tel:6146655384" class="btn g">Call Now 614-665-5384</a>
+      <a href="tel:6146655384" class="btn g">Call Now <span data-k="contact.phone">614-665-5384</span></a>
     </div>
     <div class="flex items-center gap-2 md:hidden">
       <a href="tel:6146655384" aria-label="Call now" class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background:linear-gradient(135deg,#8dc63f,#3f7f1e)"><i class="fa-solid fa-phone"></i></a>
@@ -59,7 +59,7 @@ body.loading{visibility:hidden}
   </nav>
 </header>
 
-<section id="hero" class="relative bg-cover bg-center min-h-[420px] flex items-center" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920&auto=format&fit=crop')">
+<section id="hero" class="relative bg-cover bg-center min-h-[420px] flex items-center" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920&auto=format&fit=crop')" data-bg="hero.image">
   <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent"></div>
   <div class="relative max-w-5xl mx-auto px-4 py-14 w-full">
     <h1 class="text-4xl sm:text-6xl font-black italic leading-[1.02] max-w-md">
@@ -73,10 +73,10 @@ body.loading{visibility:hidden}
 </section>
 <div class="max-w-3xl mx-auto -mt-1">
   <div class="text-white text-center py-4 px-4" style="background:#4f9a2a">
-    <div class="text-2xl sm:text-4xl font-black">Get up to <span class="text-[#0b2545] bg-white/20 px-2 rounded">$500</span> in Plumbing Repairs</div>
-    <div class="font-bold text-sm sm:text-lg">with the installation of a Water Heater</div>
+    <div class="text-2xl sm:text-4xl font-black" data-k="hero.promoTitle">Get up to $500 in Plumbing Repairs</div>
+    <div class="font-bold text-sm sm:text-lg" data-k="hero.promoSubtitle">with the installation of a Water Heater</div>
   </div>
-  <div class="bg-white text-right text-[#0b2545] font-extrabold px-6 py-2 border-b-8 border-[#0b2545]">...because, we're already there!</div>
+  <div class="bg-white text-right text-[#0b2545] font-extrabold px-6 py-2 border-b-8 border-[#0b2545]" data-k="hero.promoTagline">...because, we're already there!</div>
 </div>
 
 <section id="services" class="py-16 px-4 center text-center">
@@ -86,13 +86,7 @@ body.loading{visibility:hidden}
 
 <section id="deals" class="px-4 pb-14 text-center center">
   <h2 class="orb text-2xl font-bold">Our Deals</h2>
-  <div class="max-w-5xl mx-auto mt-6 flex items-center gap-3"><button class="sbtn shrink-0" data-s="dealS" data-d="-1" aria-label="Previous deal"><i class="fa-solid fa-chevron-left"></i></button><div id="dealS" class="slider flex-1 text-white font-extrabold">
-    <span class="bg-[#0b2545] rounded-2xl px-6 py-6 w-56 flex flex-col items-center justify-center gap-2 text-center text-xs"><b class="text-[#8dc63f] text-lg">$90</b>&nbsp;OR IT'S FREE · Drain Clearing</span>
-    <span class="bg-[#0b2545] rounded-2xl px-6 py-6 w-56 flex flex-col items-center justify-center gap-2 text-center text-xs"><b class="text-[#8dc63f] text-lg">$89</b> A/C or Furnace Clean &amp; Check</span>
-    <span class="bg-[#0b2545] rounded-2xl px-6 py-6 w-56 flex flex-col items-center justify-center gap-2 text-center text-xs ring-2 ring-[#8dc63f]">Get <b class="text-[#8dc63f] text-lg">$1500</b> Repair Buyback</span>
-    <span class="bg-[#0b2545] rounded-2xl px-6 py-6 w-56 flex flex-col items-center justify-center gap-2 text-center text-xs"><b class="text-[#8dc63f] text-lg">$89</b> Sump Pump Inspection</span>
-    <span class="bg-[#0b2545] rounded-2xl px-6 py-6 w-56 flex flex-col items-center justify-center gap-2 text-center text-xs"><b class="text-[#8dc63f] text-lg">$49</b> Water Heater Clean &amp; Check</span>
-  </div><button class="sbtn shrink-0" data-s="dealS" data-d="1" aria-label="Next deal"><i class="fa-solid fa-chevron-right"></i></button></div>
+  <div class="max-w-5xl mx-auto mt-6 flex items-center gap-3"><button class="sbtn shrink-0" data-s="dealS" data-d="-1" aria-label="Previous deal"><i class="fa-solid fa-chevron-left"></i></button><div id="dealS" class="slider flex-1 text-white font-extrabold"></div><button class="sbtn shrink-0" data-s="dealS" data-d="1" aria-label="Next deal"><i class="fa-solid fa-chevron-right"></i></button></div>
   <h3 class="orb text-xl font-bold mt-12">Financing Available</h3>
   <a href="#book" class="btn ar mt-5">Apply Now</a>
 </section>
@@ -140,7 +134,7 @@ body.loading{visibility:hidden}
     <div class="text-center shrink-0"><div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-600 border-2 border-cyan-300 flex items-center justify-center text-3xl"><i class="fa-solid fa-user-tie"></i></div><div class="text-[10px] font-bold">Aaron Gaynor</div><div class="text-[9px]">-Founder/CEO</div></div>
   </div>
   <div class="max-w-5xl mx-auto grid lg:grid-cols-2 gap-8">
-    <div><h2 class="orb !text-white text-2xl sm:text-3xl font-bold mb-6 after:!hidden">Serving Columbus And Central Ohio</h2>
+    <div><h2 class="orb !text-white text-2xl sm:text-3xl font-bold mb-6 after:!hidden" data-k="areas.heading">Serving Columbus And Central Ohio</h2>
       <div id="aMain" class="grid grid-cols-3 gap-x-3 gap-y-1.5"></div>
       <a href="#" class="inline-block mt-3 text-sm underline view">View More Areas</a></div>
     <div class="h-80 rounded-md overflow-hidden border border-white/40"><iframe title="Map" class="w-full h-full border-0" loading="lazy" src="https://www.google.com/maps?q=Columbus,+OH&z=8&output=embed"></iframe></div>
@@ -155,24 +149,24 @@ body.loading{visibility:hidden}
   <div class="absolute inset-0 bg-gradient-to-b from-[#0b2545]/60 to-[#02111d]"></div>
   <div class="relative w-full max-w-xl"><h2 class="text-3xl sm:text-5xl font-black text-white mb-3" style="font-family:Orbitron">Schedule an Appointment Today!</h2>
   <p class="text-white/85 text-sm mb-6">Tell us what you need and we'll call you back to confirm your same-day visit.</p>
-  <form id="bookF" class="bg-white rounded-3xl p-6 grid sm:grid-cols-2 gap-3 text-left shadow-2xl">
-   <input class="fld" name="name" placeholder="Full name" required aria-label="Full name"><input class="fld" name="phone" type="tel" placeholder="Phone" required aria-label="Phone">
+  <form id="bookF" novalidate class="bg-white rounded-3xl p-6 grid sm:grid-cols-2 gap-3 text-left shadow-2xl">
+   <input class="fld" name="name" placeholder="Full name" required aria-label="Full name"><input class="fld" name="phone" type="tel" placeholder="Phone" required aria-label="Phone"><input class="fld sm:col-span-2" name="email" type="email" placeholder="Email (optional)" aria-label="Email">
    <select class="fld" name="svc" aria-label="Service"><option>Heating &amp; Cooling</option><option>Plumbing</option><option>Drain &amp; Sewer</option><option>Electrical</option></select><input class="fld" name="date" type="date" aria-label="Preferred date">
-   <textarea class="fld sm:col-span-2" name="msg" rows="3" placeholder="Describe the issue (optional)" aria-label="Details"></textarea>
+   <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px"><textarea class="fld sm:col-span-2" name="msg" rows="3" placeholder="Describe the issue (optional)" aria-label="Details"></textarea>
    <button class="btn g justify-center sm:col-span-2" type="submit">Request Appointment</button>
    <p id="bookMsg" class="sm:col-span-2 text-sm font-bold text-[#3f7f1e] hidden" role="status"></p>
   </form>
-  <div class="flex items-center justify-center gap-3 mt-5 text-white/85 text-sm">Prefer to talk? <a href="tel:6146655384" class="btn ar !py-2">Call 614-665-5384</a></div></div>
+  <div class="flex items-center justify-center gap-3 mt-5 text-white/85 text-sm">Prefer to talk? <a href="tel:6146655384" class="btn ar !py-2">Call <span data-k="contact.phone">614-665-5384</span></a></div></div>
 </section>
 
 <footer class="bg-[#0b2545] text-white px-4 pt-10 pb-6 dark">
   <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-xs">
     <div><img src="images/logo.jpg" alt="Holden Heating and Cooling" class="h-24 w-auto mb-4 bg-white rounded-xl p-2"><h3 class="orb !text-white font-bold mb-4 after:!hidden">Connect With Us</h3>
-      <p class="mb-2 font-bold text-[#8dc63f]">1455 RYAN DR SILVERTON OR 97381</p>
-      <p class="mb-3"><i class="fa-solid fa-envelope text-[#8dc63f] mr-2"></i><a href="mailto:service@geteco.com">service@geteco.com</a></p>
-      <iframe title="Location" class="w-full h-32 border-0 rounded" loading="lazy" src="https://www.google.com/maps?q=1455+Ryan+Dr,+Silverton,+OR+97381&z=12&output=embed"></iframe></div>
+      <p class="mb-2 font-bold text-[#8dc63f] uppercase" data-k="contact.address">1455 Ryan Dr, Silverton, OR 97381</p>
+      <p class="mb-3"><i class="fa-solid fa-envelope text-[#8dc63f] mr-2"></i><a href="mailto:service@geteco.com" data-k="contact.email" data-mail>service@geteco.com</a></p>
+      <iframe title="Location" class="w-full h-32 border-0 rounded" loading="lazy" src="https://www.google.com/maps?q=1455+Ryan+Dr,+Silverton,+OR+97381&z=12&output=embed" data-map></iframe></div>
     <div class="text-center">
-      <a href="tel:6146655384" class="flex items-center gap-3 bg-gradient-to-r from-[#1580c8] to-[#0b2545] rounded-full p-2 pr-6"><span class="w-12 h-12 rounded-full bg-white text-[#1580c8] flex items-center justify-center text-xl"><i class="fa-solid fa-phone"></i></span><span class="text-left"><span class="block text-[9px] font-bold">CALL US FOR SAME-DAY SERVICE</span><span class="block text-2xl font-black">614-665-5384</span></span></a>
+      <a href="tel:6146655384" class="flex items-center gap-3 bg-gradient-to-r from-[#1580c8] to-[#0b2545] rounded-full p-2 pr-6"><span class="w-12 h-12 rounded-full bg-white text-[#1580c8] flex items-center justify-center text-xl"><i class="fa-solid fa-phone"></i></span><span class="text-left"><span class="block text-[9px] font-bold">CALL US FOR SAME-DAY SERVICE</span><span class="block text-2xl font-black" data-k="contact.phone">614-665-5384</span></span></a>
       <div class="flex justify-center gap-2 my-4" id="soc"></div>
       <p class="mt-4 text-slate-400">OH LIC #23868 | #46198<br>KY LIC #ME638484 | M7662 | HM638346</p></div>
     <div><h3 class="orb !text-white font-bold mb-4 after:!hidden">Service Areas</h3><div id="aFoot" class="grid grid-cols-3 gap-x-2 gap-y-1 text-[11px]"></div></div>
@@ -187,51 +181,71 @@ body.loading{visibility:hidden}
 
 <script>
 const $=id=>document.getElementById(id),arr='<i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>';
-const base="Amlin,Ashley,Bexley,Blacklick,Brice,Canal Winchester,Cardington,Centerburg,Circleville,Columbus,Croton,Delaware,Dublin,Galena,Galloway,Grove City,Groveport,Harrisburg,Hilliard,Johnstown,Kilbourne,Lancaster,Lewis Center,Lithopolis,Lockbourne,Logan,London,Marengo,Marion,Marysville,New Albany,Ostrander,Pataskala,Pickerington,Plain City,Powell,Prospect,Radnor,Raymond,Reynoldsburg,Richwood,Sunbury,Waldo,West Jefferson,Westerville,Worthington".split(",");
-const more="Gahanna,Mechanicsburg,Mount Gilead,Newark,Obetz,Upper Arlington,Urbana,Whitehall".split(",");
-const col=l=>l.map(a=>`<div class="area">${a}</div>`).join("");
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const get=(o,p)=>p.split(".").reduce((a,k)=>a?.[k],o);
+const col=l=>l.map(a=>`<div class="area">${esc(a)}</div>`).join("");
+let SITE={};
 
-// Builds any section that is still empty (first run). Saved edits already contain them.
-function build(){
- if(!$("svcCards").children.length){
-  const svc=[["Plumbing","fa-faucet-drip","Expertly sealing leaks, fixing broken pipes, or installing new plumbing systems are what our experienced plumbers do best."],["Drain and Sewer","fa-water","Flow effortlessly with our eco-plumbing prowess, clearing obstacles for pristine pipelines."],["Electrical","fa-bolt","Brighten your space responsibly with our certified electricians, delivering eco-powered solutions for a safer tomorrow."],["Heating and Cooling","fa-fan","Enjoy eco-optimized comfort year-round with our HVAC wizards, balancing your indoor climate sustainably."]];
-  $("svcCards").innerHTML=svc.map(s=>`<div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col"><div class="h-28 bg-gradient-to-br from-[#0b2545] to-[#1580c8] text-white text-4xl flex items-center justify-center"><i class="fa-solid ${s[1]}"></i></div><div class="p-4 flex flex-col flex-1 items-center"><h3 class="font-extrabold text-[#0b2545] text-sm mb-2">${s[0]}</h3><p class="text-[11px] leading-relaxed mb-4 flex-1">${s[2]}</p><a href="#book" class="border border-[#1580c8] text-[#0b2545] rounded-full px-6 py-1.5 text-[11px] font-bold">Read More ${arr}</a></div></div>`).join("");
- }
+// Draws every content-managed part of the page from SITE (edited in /admin).
+function render(d){
+ document.querySelectorAll("[data-k]").forEach(el=>{const v=get(d,el.dataset.k);if(v)el.textContent=v});
+ const bg=get(d,"hero.image");if(bg)document.querySelector("[data-bg]").style.backgroundImage=`url("${encodeURI(bg)}")`;
+ const tel="tel:"+String(d.contact?.phone||"").replace(/[^\d+]/g,"");
+ if(d.contact?.phone)document.querySelectorAll('a[href^="tel:"]').forEach(a=>a.href=tel);
+ if(d.contact?.email)document.querySelectorAll("[data-mail]").forEach(a=>a.href="mailto:"+d.contact.email);
+ if(d.contact?.address)document.querySelectorAll("[data-map]").forEach(f=>{const u="https://www.google.com/maps?q="+encodeURIComponent(d.contact.address)+"&z=12&output=embed";if(f.src!==u)f.src=u});
+ $("svcCards").innerHTML=(d.services||[]).map(s=>`<div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col"><div class="h-28 bg-gradient-to-br from-[#0b2545] to-[#1580c8] text-white text-4xl flex items-center justify-center"><i class="fa-solid ${esc(s.icon||"fa-wrench")}"></i></div><div class="p-4 flex flex-col flex-1 items-center"><h3 class="font-extrabold text-[#0b2545] text-sm mb-2">${esc(s.name)}</h3><p class="text-[11px] leading-relaxed mb-4 flex-1">${esc(s.description)}</p><a href="#book" class="border border-[#1580c8] text-[#0b2545] rounded-full px-6 py-1.5 text-[11px] font-bold">Read More ${arr}</a></div></div>`).join("");
+ $("dealS").innerHTML=(d.deals||[]).map(x=>`<span class="bg-[#0b2545] rounded-2xl px-6 py-6 w-56 flex flex-col items-center justify-center gap-2 text-center text-xs ${x.featured?"ring-2 ring-[#8dc63f]":""}"><b class="text-[#8dc63f] text-2xl">${esc(x.price)}</b>${esc(x.label)}</span>`).join("");
+ $("reviews").innerHTML=(d.reviews||[]).map(r=>`<div class="bg-white rounded-3xl p-6 text-xs leading-relaxed w-[85%] sm:w-[calc(50%-8px)]"><i class="fa-solid fa-quote-left text-4xl text-[#4f9a2a] mb-2"></i><p>${esc(r.text)}</p><div class="flex items-center gap-3 mt-3"><span class="w-9 h-9 rounded-full bg-[#1580c8] text-white flex items-center justify-center font-bold">${esc((r.name||"?")[0])}</span><div><div class="text-amber-400">★★★★★</div><b class="uppercase text-[#0b2545] text-sm">${esc(r.name)}</b></div></div></div>`).join("");
+ const main=d.areas?.main||[];
+ $("aMain").innerHTML=col(main);$("aFoot").innerHTML=col(main.slice(0,40));
+}
+
+function legacy(){
  if(!$("details").children.length){
   const det=[["Professional Plumbing and Water Heater Services","Eco Plumbers, Electricians, and HVAC Technicians stand out as the epitome of plumbing excellence in Columbus, OH, delivering unmatched service right to your doorstep. Whether you're grappling with a rebellious water heater or dreaming of a sleek tankless upgrade, your quest for excellence ends here. Our mastery in water heater repair is not just a promise—it's a guarantee of warmth and efficiency, wrapping your home in comfort. But why stop at repairs? With our cutting-edge tankless water heater installation & maintenance services, you can forget your woes and enjoy endless hot showers with the touch of a button.","More About Plumbing","fa-faucet-drip","#b9d9f0"],["Drain and Sewer Services—Now","When it comes to your home's plumbing, even the smallest issues can quickly escalate into major problems. That's where our expertise in drain and sewer services comes into play. Our team utilizes state-of-the-art equipment to identify and resolve any issues, from a clogged drain to a damaged sewer line. With our efficient drain clearing and cleaning services, you can be sure that your home's plumbing system is in safe hands. Utilizing the latest in eco-friendly technology, we diligently remove blockages and build-up, preventing potential problems before they arise.","More About Drain & Sewer","fa-water","#cfe6b4"],["Expert Electrical Services","When the lights flicker, and the outlets grow silent, choose the skilled hands of the finest electricians in Columbus, OH, at Eco Plumbers, Electricians, and HVAC Technicians. Grounded in years of experience and powered by a drive for eco-friendly innovation, we illuminate the path to electrical solutions that echo the pulse of modernity. Each flick of the switch, each glow of light, resonates with the assurance of safety, efficiency, and innovation. It's not just about fixing problems—it's about forging unwavering trust with each job completed.","More About Electric","fa-bolt","#b9d9f0"],["Heating and Cooling Comfort For Your Home","As the season changes, the comfort of your home hinges on the reliability and efficiency of your HVAC system. We offer a vigilant approach to heat pumps, AC maintenance, or furnace repair, ensuring your home remains an oasis of perfect temperature. When it's time for a seamless AC installation or a meticulous AC repair in Columbus, OH, our highly skilled technicians tailor solutions to fit not just any home—but your home—leveraging the latest advancements for peak performance. We're not just experts; we're your neighbors committed to delivering an unwavering sense of comfort with every service call.","More About HVAC","fa-fan","#cfe6b4"]];
   $("details").innerHTML=det.map((d,i)=>`<div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 items-center"><div class="${i%2?'md:order-1':'md:order-2'} text-center md:text-left"><h2 class="orb text-xl sm:text-2xl font-bold mb-5 text-left">${d[0]}</h2><p class="text-xs leading-relaxed mb-5 text-left">${d[1]}</p><a href="#book" class="btn">${d[2]} ${arr}</a></div><div class="${i%2?'md:order-2':'md:order-1'}"><div class="photo" style="--bk:${d[4]};--r:${i%2?6:-6}deg"><div><i class="fa-solid ${d[3]}"></i></div></div></div></div>`).join("");
- }
- if(!$("reviews").children.length){
-  const rv=[["Keith did an absolutely wonderful job! He arrived sooner than expected and immediately diagnosed the problem with my HVAC system. Once we went to the outside unit, he knew exactly what was wrong. He gave me a little tutorial on it...","Delondo Miles","D"],["I had a problem with water pipes banging violently and randomly. I called ECO and DeLonn was dispatched to my home. DeLonn quickly found my problem - a bad PRV valve. He gave me several...","Kevin Nicol","K"],["Very professional! Dylan arrived on time. He was willing to make adjustments to accommodate my request. He provided options to fix the issues and tested until he found the problem.","Ben Nnyanzi","B"],["Amazing service all the way around! They helped us with price options, were very flexible and the workers have lots of character. We will be calling again if we have any other issues.","Huskio","H"]];
-  $("reviews").innerHTML=rv.map(r=>`<div class="bg-white rounded-3xl p-6 text-xs leading-relaxed w-[85%] sm:w-[calc(50%-8px)]"><i class="fa-solid fa-quote-left text-4xl text-[#4f9a2a] mb-2"></i><p>${r[0]}</p><div class="flex items-center gap-3 mt-3"><span class="w-9 h-9 rounded-full bg-[#1580c8] text-white flex items-center justify-center font-bold">${r[2]}</span><div><div class="text-amber-400">★★★★★</div><b class="uppercase text-[#0b2545] text-sm">${r[1]}</b></div></div></div>`).join("");
  }
  if(!$("guar").children.length){
   const g=[["Trusted Up-Front Pricing","fa-hand-holding-dollar"],["Trusted Employee","fa-people-group"],["Professional Team","fa-award"],["Property Protection","fa-shield-halved"],["Cleaner Than We Found It","fa-broom"],["No Lemons","fa-certificate"],["One-Year Make It Happen","fa-heart"]];
   $("guar").innerHTML=g.map((x,i)=>`<div class="w-36 text-center"><div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center text-white text-xl mb-2 ${i%2?'bg-[#1580c8]':'bg-[#8dc63f]'}"><i class="fa-solid ${x[1]}"></i></div><b class="text-[11px] text-[#0b2545]">${x[0]} Guarantee${i==5?'s':''}</b></div>`).join("");
  }
- if(!$("aMain").children.length){$("aMain").innerHTML=col(base);$("aFoot").innerHTML=col(base.filter(a=>!["Bexley","Circleville","Lancaster","Logan","London","Marion"].includes(a)))}
  if(!$("soc").children.length)$("soc").innerHTML=[["linkedin-in","https://www.linkedin.com/company/eco-plumbers-electricians-hvac-technicians/"],["instagram","https://www.instagram.com/ecoplumbers/"],["facebook-f","https://www.facebook.com/EcoPlumbers"],["x-twitter","https://x.com/theecoplumbers"],["tiktok","#"],["youtube","#"]].map(s=>`<a href="${s[1]}" target="_blank" rel="noopener" class="w-8 h-8 rounded-full bg-[#8dc63f] text-[#0b2545] flex items-center justify-center"><i class="fa-brands fa-${s[0]}"></i></a>`).join("");
 }
 
 function wire(){
  let all=false;
- document.querySelectorAll(".view").forEach(b=>b.onclick=e=>{e.preventDefault();all=!all;$("aMain").innerHTML=col(all?[...base,...more].sort():base)});
+ document.querySelectorAll(".view").forEach(b=>b.onclick=e=>{e.preventDefault();all=!all;const m=SITE.areas?.main||[];$("aMain").innerHTML=col(all?[...m,...(SITE.areas?.more||[])].sort():m)});
  const bg=$("burger"),nav=$("mnav");
  const setMenu=o=>{bg.setAttribute("aria-expanded",o);bg.setAttribute("aria-label",o?"Close menu":"Open menu");nav.style.maxHeight=o?nav.scrollHeight+"px":"0"};
  bg.onclick=()=>setMenu(bg.getAttribute("aria-expanded")!=="true");
  nav.querySelectorAll("a").forEach(a=>a.onclick=()=>setMenu(false));
  document.querySelectorAll(".sbtn").forEach(b=>b.onclick=()=>{const el=$(b.dataset.s);el.scrollBy({left:b.dataset.d*el.clientWidth*.6})});
- const f=$("bookF");if(f)f.onsubmit=e=>{e.preventDefault();const m=$("bookMsg");m.textContent="Thanks, "+(f.name.value.split(" ")[0]||"there")+"! We'll call you shortly to confirm.";m.classList.remove("hidden");f.reset()};
+ const f=$("bookF"),m=$("bookMsg");
+ f.onsubmit=async e=>{
+  const v=n=>f.elements[n].value;
+  e.preventDefault();
+  const show=(t,ok)=>{m.textContent=t;m.style.color=ok?"#3f7f1e":"#b91c1c";m.classList.remove("hidden")};
+  if(!v("name").trim()||v("phone").replace(/\D/g,"").length<7)return show("Please enter your name and a valid phone number.");
+  const btn=f.querySelector("button[type=submit]");btn.disabled=true;btn.style.opacity=.6;
+  try{
+   const r=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:v("name"),phone:v("phone"),email:v("email"),service:v("svc"),date:v("date"),message:v("msg"),website:v("website")})});
+   const j=await r.json().catch(()=>({}));
+   if(!r.ok)throw new Error(j.error||"Something went wrong.");
+   show("Thanks, "+(v("name").trim().split(" ")[0])+"! We received your request and will call you shortly to confirm.",true);f.reset();
+  }catch(err){show((err.message||"Couldn't send your request.")+" Please call us instead.")}
+  btn.disabled=false;btn.style.opacity=1;
+ };
  document.onkeydown=e=>{if(e.key==="Escape")setMenu(false)};
 }
 
-// Load the version saved from /admin (stored on Netlify), then show the page.
+// Load defaults, overlay what was saved in the admin panel, then show the page.
 (async()=>{
- try{
-  const r=await fetch("/api/content",{cache:"no-store"});
-  if(r.ok){const d=await r.json();if(d&&d.html)$("site").innerHTML=d.html}
- }catch(e){}
- build();wire();
+ let def={},saved={};
+ try{def=await (await fetch("/content-defaults.json",{cache:"no-store"})).json()}catch(e){}
+ try{const r=await fetch("/api/site",{cache:"no-store"});if(r.ok)saved=await r.json()}catch(e){}
+ SITE={...def,...saved,contact:{...def.contact,...saved.contact},hero:{...def.hero,...saved.hero},areas:{...def.areas,...saved.areas}};
+ render(SITE);legacy();wire();
  document.body.classList.remove("loading");
  window.siteReady=true;
 })();

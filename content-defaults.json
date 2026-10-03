@@ -1,0 +1,141 @@
+{
+  "contact": {
+    "phone": "614-665-5384",
+    "email": "service@geteco.com",
+    "address": "1455 Ryan Dr, Silverton, OR 97381"
+  },
+  "hero": {
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920&auto=format&fit=crop",
+    "promoTitle": "Get up to $500 in Plumbing Repairs",
+    "promoSubtitle": "with the installation of a Water Heater",
+    "promoTagline": "...because, we're already there!"
+  },
+  "services": [
+    {
+      "name": "Plumbing",
+      "icon": "fa-faucet-drip",
+      "description": "Expertly sealing leaks, fixing broken pipes, or installing new plumbing systems are what our experienced plumbers do best."
+    },
+    {
+      "name": "Drain and Sewer",
+      "icon": "fa-water",
+      "description": "Flow effortlessly with our eco-plumbing prowess, clearing obstacles for pristine pipelines."
+    },
+    {
+      "name": "Electrical",
+      "icon": "fa-bolt",
+      "description": "Brighten your space responsibly with our certified electricians, delivering eco-powered solutions for a safer tomorrow."
+    },
+    {
+      "name": "Heating and Cooling",
+      "icon": "fa-fan",
+      "description": "Enjoy eco-optimized comfort year-round with our HVAC wizards, balancing your indoor climate sustainably."
+    }
+  ],
+  "deals": [
+    {
+      "price": "$90",
+      "label": "OR IT'S FREE · Drain Clearing",
+      "featured": false
+    },
+    {
+      "price": "$89",
+      "label": "A/C or Furnace Clean & Check",
+      "featured": false
+    },
+    {
+      "price": "$1500",
+      "label": "Repair Buyback",
+      "featured": true
+    },
+    {
+      "price": "$89",
+      "label": "Sump Pump Inspection",
+      "featured": false
+    },
+    {
+      "price": "$49",
+      "label": "Water Heater Clean & Check",
+      "featured": false
+    }
+  ],
+  "reviews": [
+    {
+      "text": "Keith did an absolutely wonderful job! He arrived sooner than expected and immediately diagnosed the problem with my HVAC system. Once we went to the outside unit, he knew exactly what was wrong. He gave me a little tutorial on it...",
+      "name": "Delondo Miles"
+    },
+    {
+      "text": "I had a problem with water pipes banging violently and randomly. I called ECO and DeLonn was dispatched to my home. DeLonn quickly found my problem - a bad PRV valve. He gave me several...",
+      "name": "Kevin Nicol"
+    },
+    {
+      "text": "Very professional! Dylan arrived on time. He was willing to make adjustments to accommodate my request. He provided options to fix the issues and tested until he found the problem.",
+      "name": "Ben Nnyanzi"
+    },
+    {
+      "text": "Amazing service all the way around! They helped us with price options, were very flexible and the workers have lots of character. We will be calling again if we have any other issues.",
+      "name": "Huskio"
+    }
+  ],
+  "areas": {
+    "heading": "Serving Columbus And Central Ohio",
+    "main": [
+      "Amlin",
+      "Ashley",
+      "Bexley",
+      "Blacklick",
+      "Brice",
+      "Canal Winchester",
+      "Cardington",
+      "Centerburg",
+      "Circleville",
+      "Columbus",
+      "Croton",
+      "Delaware",
+      "Dublin",
+      "Galena",
+      "Galloway",
+      "Grove City",
+      "Groveport",
+      "Harrisburg",
+      "Hilliard",
+      "Johnstown",
+      "Kilbourne",
+      "Lancaster",
+      "Lewis Center",
+      "Lithopolis",
+      "Lockbourne",
+      "Logan",
+      "London",
+      "Marengo",
+      "Marion",
+      "Marysville",
+      "New Albany",
+      "Ostrander",
+      "Pataskala",
+      "Pickerington",
+      "Plain City",
+      "Powell",
+      "Prospect",
+      "Radnor",
+      "Raymond",
+      "Reynoldsburg",
+      "Richwood",
+      "Sunbury",
+      "Waldo",
+      "West Jefferson",
+      "Westerville",
+      "Worthington"
+    ],
+    "more": [
+      "Gahanna",
+      "Mechanicsburg",
+      "Mount Gilead",
+      "Newark",
+      "Obetz",
+      "Upper Arlington",
+      "Urbana",
+      "Whitehall"
+    ]
+  }
+}
