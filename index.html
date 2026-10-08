@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Holden Home Services — Plumbing, Electric, HVAC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       COLOR SYSTEM — BRIGHT VERSION
+       Primary   : Copper            #D9772F (brighter)
+       Secondary : Navy (text/accent) #1B365D
+       Base      : White / soft sky  #FFFFFF / #F4F8FD
+       ============================================================ */
+    :root{
+      --copper:#E07B2E;
+      --copper-dark:#C4651D;
+      --copper-light:#F5A25D;
+      --copper-soft:#FFF1E5;
+      --navy:#1B365D;
+      --navy-dark:#12294A;
+      --navy-light:#2F5A94;
+      --sky:#EAF3FC;
+      --sky-2:#F4F8FD;
+      --bg-light:#F7FAFD;
+      --white:#FFFFFF;
+      --charcoal:#212529;
+      --muted:#55606D;
+      --line:#E6EBF1;
+      --shadow-sm:0 2px 8px rgba(27,54,93,.06);
+      --shadow-md:0 8px 24px rgba(27,54,93,.09);
+      --shadow-lg:0 16px 40px rgba(27,54,93,.12);
+      --radius-sm:8px;
+      --radius:14px;
+      --radius-lg:24px;
+      --radius-pill:999px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Montserrat,Segoe UI,Arial,sans-serif;background:var(--white);color:var(--charcoal);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img,svg{display:block;max-width:100%}
+    ul{list-style:none}
+    button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:var(--radius-pill);font-weight:700;font-size:15px;letter-spacing:.2px;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;white-space:nowrap;text-decoration:none}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.copper{background:linear-gradient(135deg,var(--copper-light),var(--copper));color:#fff;box-shadow:0 6px 16px rgba(224,123,46,.35)}
+    .btn.copper:hover{box-shadow:0 10px 22px rgba(224,123,46,.45)}
+    .btn.navy{background:linear-gradient(135deg,var(--navy-light),var(--navy));color:#fff;box-shadow:0 6px 16px rgba(27,54,93,.25)}
+    .btn.navy:hover{box-shadow:0 10px 22px rgba(27,54,93,.35)}
+    .btn.outline{background:#fff;border:2px solid var(--copper);color:var(--copper-dark)}
+    .btn.outline:hover{background:var(--copper);color:#fff}
+    .btn.sm{padding:10px 18px;font-size:13.5px}
+    .btn svg{flex:none}
+
+    /* HEADER */
+    .site-header{position:sticky;top:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm)}
+    .topbar{height:4px;background:linear-gradient(90deg,var(--copper-light),var(--copper),var(--navy-light))}
+    .header-inner{max-width:1280px;margin:0 auto;padding:14px 24px 0}
+    .row1{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-bottom:6px}
+    .brand{display:flex;align-items:center;gap:14px}
+
+    /* LOGO GROUP — new logo displayed as-is on white */
+    .logo-group{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .logo-mark{height:64px;width:auto;max-width:240px;display:flex;align-items:center;justify-content:center;background:transparent;overflow:visible;flex-shrink:0;padding:0;box-shadow:none;border-radius:0}
+    .logo-mark img{height:100%;width:auto;max-width:100%;object-fit:contain}
+    .logo-text{font-weight:900;font-style:italic;font-size:30px;color:var(--navy);letter-spacing:-1px}
+
+    .tagline{font-size:11px;font-weight:800;font-style:italic;letter-spacing:.5px;line-height:1.35;color:var(--navy);text-transform:uppercase}
+    .ctas{display:flex;gap:12px;flex-wrap:wrap}
+
+    /* NAV */
+    nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 20px;padding:12px 0 12px;border-top:1px solid var(--line);margin-top:8px}
+    .item{position:relative}
+    .link{background:none;border:0;font:inherit;font-weight:700;font-size:14px;letter-spacing:.4px;text-transform:uppercase;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 0;transition:color .15s ease}
+    .link:hover{color:var(--copper)}
+    .link.offers{color:var(--copper)}
+    .chev{width:10px;height:10px;transition:transform .2s ease}
+    .open .chev{transform:rotate(180deg)}
+    .menu{position:absolute;top:100%;left:0;min-width:210px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-lg);border:1px solid var(--line);padding:8px 0;z-index:20}
+    .menu a{display:block;padding:10px 18px;color:var(--charcoal);font-size:14px;font-weight:600;transition:background .15s,color .15s}
+    .menu a:hover{background:var(--copper-soft);color:var(--copper-dark)}
+    .burger{display:none;background:var(--navy);color:#fff;border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;font-weight:700}
+
+    /* HERO — bright */
+    .hero{background:linear-gradient(115deg,#FFFFFF 0%,#FFF4EA 45%,#E6F1FC 100%);color:var(--navy);position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 85% 20%,rgba(245,162,93,.28),transparent 45%),radial-gradient(circle at 10% 90%,rgba(47,90,148,.14),transparent 45%);pointer-events:none}
+    .hero-inner{max-width:1280px;margin:0 auto;position:relative;padding:56px 24px 88px;display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap}
+    .hero-inner > div:first-child{flex:1;min-width:0}
+    .headline{display:flex;flex-direction:column;align-items:flex-start;line-height:.92;font-weight:900;font-style:italic;letter-spacing:-.02em}
+    .headline span{display:block;white-space:nowrap}
+    .s-xl{font-size:clamp(56px,10vw,130px)}
+    .s-lg{font-size:clamp(48px,9vw,116px)}
+    .s-md{font-size:clamp(30px,5vw,60px)}
+    .s-sm{font-size:clamp(26px,4.5vw,54px)}
+    .copper-text{color:var(--copper)}
+    .white-text{color:var(--navy);font-style:normal}
+    .hero-ctas{display:flex;align-items:center;gap:18px;margin-top:32px;flex-wrap:wrap}
+    .hero-ctas .or{color:var(--muted);font-size:15px;font-weight:600}
+    .badge{width:112px;height:112px;border-radius:50%;background:linear-gradient(135deg,var(--copper-light),var(--copper));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px dashed rgba(255,255,255,.8);flex-shrink:0;box-shadow:0 10px 30px rgba(224,123,46,.35)}
+    .badge b{font-size:24px;font-weight:900;line-height:1}
+    .badge span{font-size:11px;margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+
+    /* PROMO */
+    .promo-wrap{max-width:1200px;margin:-44px auto 0;position:relative;padding:0 24px;z-index:5}
+    .promo{display:flex;align-items:center;gap:20px;padding:22px 28px;color:#fff;background:linear-gradient(135deg,var(--copper),var(--copper-light));border-radius:var(--radius) var(--radius) 0 0;border-left:6px solid var(--navy);box-shadow:var(--shadow-lg);flex-wrap:wrap}
+    .promo-get{display:flex;flex-direction:column;line-height:1;font-size:28px;font-weight:900;font-style:italic}
+    .promo-get b{color:#fff}
+    .promo-get i{font-size:15px;font-style:italic;opacity:.95;letter-spacing:.5px}
+    .promo-amt{font-size:64px;font-weight:900;line-height:1;color:var(--navy)}
+    .promo-text{flex:1;min-width:180px}
+    .promo-text .t1{font-size:30px;font-weight:900;color:#fff;line-height:1.15}
+    .promo-text .t2{font-size:18px;font-weight:700;color:rgba(255,255,255,.95);margin-top:2px}
+    .promo-van{font-size:48px;color:#fff}
+    .promo-foot{text-align:right;font-weight:800;font-size:17px;color:var(--navy);padding:10px 28px;background:var(--white);border:1px solid var(--line);border-top:0;box-shadow:var(--shadow-md);border-radius:0 0 var(--radius) var(--radius);font-style:italic}
+
+    /* SECTIONS */
+    section{padding:72px 24px}
+    .section-title{margin:0;font-size:clamp(26px,3.5vw,38px);font-weight:800;letter-spacing:-.5px;color:var(--navy);text-align:center}
+    .section-rule{width:70px;height:4px;background:var(--copper);border-radius:2px;margin:14px auto 48px}
+
+    /* SERVICES */
+    .services{background:var(--sky-2);max-width:none}
+    .services .section-title,.services .cards{max-width:1280px;margin-left:auto;margin-right:auto}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease;border-top:4px solid var(--copper)}
+    .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+    .card-img{height:150px;display:grid;place-items:center;background:linear-gradient(135deg,var(--copper-soft),#DCEBFA);color:var(--copper)}
+    .card-img svg{width:56px;height:56px}
+    .card-body{padding:22px 20px 24px;display:flex;flex-direction:column;flex:1;align-items:center;text-align:center}
+    .card-body h3{margin:0 0 10px;font-size:19px;font-weight:800;color:var(--navy)}
+    .card-body p{margin:0 0 18px;color:var(--muted);line-height:1.6;font-size:14.5px;flex:1}
+    .more{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px 0;border:2px solid var(--copper);border-radius:var(--radius-pill);color:var(--copper-dark);font-weight:700;font-size:13.5px;transition:all .15s ease}
+    .more:hover{background:var(--copper);color:#fff}
+
+    /* DEALS */
+    .deals{background:var(--white);max-width:1300px;margin:0 auto}
+    .deal-row{display:flex;justify-content:center;align-items:center;gap:22px;flex-wrap:wrap}
+    .deal{display:inline-flex;align-items:center;transition:transform .15s ease}
+    .deal:hover{transform:translateY(-3px)}
+    .deal-price{z-index:1;margin-right:-18px;min-width:58px;height:56px;padding:0 12px;border-radius:28px 28px 28px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;color:#fff;font-style:italic;box-shadow:0 4px 12px rgba(27,54,93,.18)}
+    .deal-price small{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+    .deal-price b{font-size:20px;font-weight:900}
+    .deal-price.copper{background:linear-gradient(135deg,var(--copper-light),var(--copper))}
+    .deal-price.navy{background:linear-gradient(135deg,var(--navy-light),var(--navy))}
+    .deal-price.deep{background:var(--navy)}
+    .deal-label{background:var(--sky);border:1px solid #D3E4F6;padding:10px 16px 10px 30px;display:flex;flex-direction:column;text-align:left;line-height:1.15;min-width:150px;border-radius:0 var(--radius) var(--radius) 0;box-shadow:var(--shadow-sm)}
+    .deal-label strong{font-size:14px;font-weight:900;text-transform:uppercase;color:var(--navy);letter-spacing:.3px}
+    .deal-label em{font-size:11px;font-style:normal;text-transform:uppercase;color:var(--copper-dark);letter-spacing:.4px;margin-top:2px;font-weight:700}
+
+    /* FINANCING */
+    .financing{background:linear-gradient(135deg,var(--copper),var(--copper-light));color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;padding:64px 24px}
+    .fin-title{margin:0;font-size:clamp(26px,3.5vw,36px);font-weight:800;letter-spacing:-.5px}
+    .financing .btn.navy{background:#fff;color:var(--copper-dark);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+    .financing .btn.navy:hover{background:var(--copper-soft)}
+
+    /* ABOUT */
+    .about{background:var(--white)}
+    .about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .about-title{margin:0;font-size:clamp(24px,3vw,34px);line-height:1.3;font-weight:800;color:var(--navy);letter-spacing:-.5px}
+    .about-rule{width:60px;height:4px;background:var(--copper);margin:16px 0 24px;border-radius:2px}
+    .about-copy p{color:var(--muted);line-height:1.75;font-size:15px;margin:0 0 16px}
+    .about-copy a:not(.btn){color:var(--copper-dark);font-weight:600;border-bottom:1px solid transparent;transition:border-color .15s}
+    .about-copy a:not(.btn):hover{border-color:var(--copper-dark)}
+    .about-photo{border-radius:var(--radius-lg);min-height:440px;display:grid;place-items:end center;padding-bottom:24px;background:linear-gradient(160deg,rgba(255,255,255,0),rgba(27,54,93,.35)),linear-gradient(135deg,var(--copper-light),var(--navy-light));color:rgba(255,255,255,.95);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:13px;box-shadow:var(--shadow-lg)}
+
+    /* MEMBERSHIP — bright */
+    .member{background:linear-gradient(180deg,var(--sky),var(--sky-2));position:relative;padding:72px 24px 0;overflow:hidden}
+    .member::before{content:"";position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(245,162,93,.30),transparent 70%);border-radius:50%;pointer-events:none}
+    .member-card{position:relative;z-index:2;max-width:1200px;margin:0 auto;background:var(--white);border-radius:var(--radius-lg);padding:44px;display:grid;grid-template-columns:1.3fr 1fr;gap:36px;align-items:center;box-shadow:var(--shadow-lg);border-top:6px solid var(--copper)}
+    .member-logo{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+    .m-name{font-size:44px;font-weight:900;font-style:italic;letter-spacing:-1.5px;color:var(--copper)}
+    .m-plan{font-size:22px;font-weight:900;font-style:italic;color:var(--navy);text-transform:uppercase;border-top:3px solid var(--copper);padding-top:4px}
+    .m-kind{font-size:13px;letter-spacing:5px;color:var(--muted);text-transform:uppercase;font-weight:700}
+    .member-title{margin:0 0 14px;font-size:22px;line-height:1.45;font-weight:800;color:var(--navy)}
+    .member-copy p{margin:0;color:var(--muted);line-height:1.75;font-size:15px}
+    .member-booklet{height:300px;max-width:240px;margin:0 auto;border-radius:10px;transform:rotate(14deg);background:linear-gradient(160deg,var(--copper-light),var(--navy-light));box-shadow:8px 14px 26px rgba(27,54,93,.25);display:grid;place-items:center;color:#fff;font-weight:800;text-transform:uppercase;padding:20px;font-size:14px;letter-spacing:1px;text-align:center}
+    .member-wave{display:block;width:100%;height:140px;margin-top:-24px}
+
+    /* FEATURE */
+    .feature{background:var(--white);padding:72px 24px}
+    .feature-plain{background:var(--sky-2);padding-top:56px}
+    .feature-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+    .feature-inner.reverse{grid-template-columns:1.1fr 1fr}
+    .feature-photo-wrap{position:relative;max-width:420px;margin:0 auto;width:100%}
+    .feature-backdrop{position:absolute;inset:-24px 32px 32px -56px;background:var(--copper-soft);border-radius:32px;transform:rotate(-7deg)}
+    .navy-back .feature-backdrop{background:#DCEBFA;inset:-32px -56px 32px 40px;transform:rotate(8deg)}
+    .feature-photo{position:relative;height:460px;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);background:linear-gradient(160deg,var(--navy-light),#6FA0D8);color:rgba(255,255,255,.95);display:grid;place-items:end center;padding-bottom:24px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:13px}
+    .feature-photo.drain-photo{background:linear-gradient(160deg,var(--copper-light),var(--navy-light))}
+    .feature-photo.electric-photo{background:linear-gradient(160deg,#FFC78F,var(--copper))}
+    .feature-photo.hvac-photo{background:linear-gradient(160deg,#6FA0D8,var(--copper-light))}
+    .feature-copy p{color:var(--muted);line-height:1.75;font-size:15px;margin:0}
+    .feature-copy a:not(.btn){color:var(--copper-dark);font-weight:600}
+    .feature-cta{margin-top:28px}
+
+    /* REVIEWS — bright */
+    .reviews{background:linear-gradient(180deg,var(--sky),#F9FCFF);padding:72px 24px 56px;text-align:center}
+    .rev-title{margin:0;color:var(--navy);font-size:clamp(26px,3.5vw,36px);font-weight:800;letter-spacing:-.5px}
+    .rev-rule{width:70px;height:4px;background:var(--copper);margin:14px auto 48px;border-radius:2px}
+    .rev-cards{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .rev-card{background:var(--white);border-radius:var(--radius-lg);padding:32px;text-align:left;min-height:280px;box-shadow:var(--shadow-md);border-left:5px solid var(--copper)}
+    .rev-card p{color:var(--charcoal);line-height:1.75;font-size:15px;margin:8px 0 20px;font-style:italic}
+    .rev-who{display:flex;align-items:center;gap:14px}
+    .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--copper-light),var(--navy-light));color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;box-shadow:0 4px 10px rgba(27,54,93,.20)}
+    .stars{color:var(--copper);font-size:17px;letter-spacing:3px}
+    .rev-name{font-weight:800;font-size:15px;text-transform:uppercase;color:var(--navy);letter-spacing:.5px}
+    .dots{margin-top:28px;display:flex;gap:10px;justify-content:center}
+    .dots button{width:11px;height:11px;border-radius:50%;background:rgba(27,54,93,.20);transition:background .2s,transform .2s}
+    .dots button.on{background:var(--copper);transform:scale(1.25)}
+
+    /* GUARANTEES */
+    .guarantees{padding:72px 24px 64px;text-align:center;background:var(--white)}
+    .g-van{height:100px;display:grid;place-items:center;margin-bottom:24px;color:var(--copper)}
+    .g-van svg{width:80px;height:80px}
+    .g-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px 28px}
+    .g-circle{width:80px;height:80px;border-radius:50%;display:grid;place-items:center;margin:0 auto 14px;background:var(--copper-soft);border:3px solid var(--copper);box-shadow:0 4px 14px rgba(224,123,46,.18);color:var(--copper)}
+    .g-circle svg{width:34px;height:34px}
+    .g-circle.navy{background:var(--sky);border-color:var(--navy-light);box-shadow:0 4px 14px rgba(27,54,93,.15);color:var(--navy)}
+    .g-label{font-weight:800;font-size:14px;color:var(--navy);line-height:1.4}
+
+    /* AREAS — bright */
+    .areas{background:linear-gradient(180deg,var(--white) 0,var(--white) 140px,var(--sky) 140px,var(--sky-2) 100%);padding:72px 24px}
+    .same-day{max-width:620px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 32px 28px 56px;border-radius:var(--radius-pill);color:#fff;background:linear-gradient(90deg,var(--copper),var(--copper-light));box-shadow:var(--shadow-lg)}
+    .same-day h2{margin:0 0 16px;font-size:19px;line-height:1.4;font-weight:800}
+    .sd-photo{width:160px;height:170px;margin-top:-52px;border-radius:20px;background:linear-gradient(160deg,var(--navy-light),var(--navy));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:12px;font-weight:700;font-size:12px;text-align:center;flex-shrink:0;box-shadow:0 10px 24px rgba(27,54,93,.30)}
+    .sd-photo small{font-size:10px;font-weight:600;opacity:.9;margin-top:6px}
+    .areas-inner{max-width:1000px;margin:52px auto 0;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;color:var(--navy)}
+    .areas-list h2{margin:0 0 18px;font-size:24px;font-weight:800;letter-spacing:-.3px;color:var(--navy)}
+    .areas-list ul{list-style:none;margin:0 0 22px;padding:0;columns:3;column-gap:18px;font-size:13px;line-height:2;color:var(--charcoal)}
+    .areas-list li::before{content:"▸ ";color:var(--copper);font-weight:800}
+    .areas-list .btn{background:linear-gradient(135deg,var(--copper-light),var(--copper));color:#fff;box-shadow:0 6px 16px rgba(224,123,46,.35)}
+    .areas-list .btn:hover{background:var(--copper-dark)}
+    .areas-map{min-height:320px;background:#fff;border:2px dashed rgba(224,123,46,.55);border-radius:var(--radius);display:grid;place-items:center;color:var(--muted);font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:13px}
+
+    /* SCHEDULE — bright */
+    .schedule{background:linear-gradient(135deg,#FFF4EA,var(--sky));padding:80px 24px;text-align:center;color:var(--navy);border-top:6px solid var(--copper)}
+    .schedule h2{margin:0 0 32px;font-size:clamp(26px,4vw,42px);line-height:1.15;font-weight:900;letter-spacing:-.5px}
+    .hero-ctas.center{justify-content:center;margin-top:0}
+
+    /* FOOTER — bright */
+    .footer{background:var(--sky-2);color:var(--navy);padding:32px 24px 24px;border-top:1px solid var(--line)}
+    .f-van{text-align:center;margin-bottom:16px;color:var(--copper)}
+    .f-van svg{width:70px;height:70px;margin:0 auto}
+    .f-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px}
+    .f-col h3{margin:0 0 16px;font-size:16px;font-weight:800;color:var(--copper-dark);letter-spacing:.5px;text-transform:uppercase}
+    .f-line{margin:0 0 10px;font-size:13px;display:flex;gap:8px;align-items:flex-start;color:var(--charcoal)}
+    .f-line svg{width:16px;height:16px;flex:none;color:var(--copper);margin-top:2px}
+    .f-map{width:100%;max-width:200px;height:100px;background:#fff;border:1px dashed rgba(224,123,46,.55);border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--muted);font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-top:16px}
+    .f-center{text-align:center;display:flex;flex-direction:column;align-items:center;padding-top:32px}
+    .f-call{display:inline-flex;align-items:center;gap:14px;padding:12px 24px 12px 14px;border-radius:var(--radius-pill);color:#fff;background:linear-gradient(90deg,var(--copper),var(--copper-light));text-align:left;box-shadow:0 6px 18px rgba(224,123,46,.30);transition:transform .15s,box-shadow .15s}
+    .f-call:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(224,123,46,.40)}
+    .f-call small{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.8px;opacity:.95}
+    .f-call b{font-size:21px;font-weight:800}
+    .f-ico{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center}
+    .f-ico svg{width:18px;height:18px}
+    .f-social{display:flex;gap:10px;margin:20px 0 16px}
+    .f-social a{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;transition:background .15s,color .15s}
+    .f-social a:hover{background:var(--copper);color:#fff}
+    .f-lic{font-size:11px;margin:0;color:var(--muted);letter-spacing:.5px}
+    .f-areas{list-style:none;margin:0;padding:0;columns:3;column-gap:14px;font-size:11.5px;line-height:1.9;color:var(--charcoal)}
+    .f-areas li::before{content:"▸ ";color:var(--copper)}
+    .f-copy{text-align:center;font-size:12px;margin:48px 0 0;padding-top:24px;border-top:1px solid var(--line);color:var(--muted)}
+
+    /* RESPONSIVE */
+    @media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:900px){
+      .burger{display:inline-block}
+      nav{display:none;flex-direction:column;align-items:flex-start;width:100%;padding:16px 0}
+      nav.show{display:flex}
+      .menu{position:static;box-shadow:none;padding-left:12px;border:0;background:transparent}
+      .menu a{padding:8px 12px}
+    }
+    @media(max-width:860px){
+      .hero-inner{flex-direction:column;padding:40px 24px 72px}
+      .badge{display:none}
+      .promo-amt{font-size:44px}.promo-text .t1{font-size:22px}.promo-text .t2{font-size:15px}
+      .section-title{font-size:26px}
+      .about-inner,.feature-inner,.feature-inner.reverse,.areas-inner,.rev-cards{grid-template-columns:1fr}
+      .member-card{grid-template-columns:1fr;padding:28px}
+      .feature-photo{height:320px}
+      .same-day{flex-direction:column;border-radius:32px;padding:28px 24px;text-align:center}
+      .sd-photo{margin-top:0;width:100%;max-width:200px}
+      .areas{background:linear-gradient(180deg,var(--white) 0,var(--white) 48px,var(--sky) 48px,var(--sky-2) 100%)}
+      .areas-list ul{columns:2}
+      .schedule h2{font-size:26px}
+      .f-inner{grid-template-columns:1fr;gap:32px}
+      .f-center{padding-top:0}
+      .f-areas{columns:2}
+      .logo-group{flex-wrap:wrap}
+    }
+    @media(max-width:560px){
+      .cards{grid-template-columns:1fr}
+      .ctas{width:100%}
+      .ctas .btn{flex:1;justify-content:center}
+      .areas-list ul,.f-areas{columns:1}
+      .deal{width:100%;max-width:320px}
+      section{padding:56px 18px}
+      .logo-mark{height:48px}
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    // ============================================================
+    // SVG ICON LIBRARY
+    // ============================================================
+    const ICONS = {
+      arrow: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>',
+      chevron: '<svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l4 4 4-4"/></svg>',
+
+      plumbing: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 14h20v10H22z"/><path d="M32 24v10"/><path d="M32 34c-6 0-10 4-10 10v8"/><path d="M22 42h8"/><path d="M44 20v6"/><path d="M48 23h6"/></svg>',
+      drain: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 20h36v10H14z"/><path d="M20 30v14c0 4 3 7 7 7h10c4 0 7-3 7-7V30"/><path d="M26 44c0 2 1 4 3 4h6c2 0 3-2 3-4"/><path d="M22 14v6M32 14v6M42 14v6"/></svg>',
+      electric: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="20"/><path d="M34 18l-8 16h8l-2 14 10-18h-8l2-12z"/></svg>',
+      hvac: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M32 12v40"/><path d="M14.6 22l34.8 20"/><path d="M49.4 22L14.6 42"/><path d="M32 22l-5 5M32 22l5 5M32 42l-5-5M32 42l5-5"/><path d="M20 32l-3 6M44 32l3 6"/></svg>',
+
+      handshake: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24l8-8 6 6 4-4 6 6 8-8"/><path d="M6 24l6 6 8-4 8 4 6-6"/></svg>',
+      star: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 8l4.6 10.2 11.2 1.1-8.4 7.5 2.4 11-9.8-5.6-9.8 5.6 2.4-11-8.4-7.5 11.2-1.1z"/></svg>',
+      medal: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="30" r="10"/><path d="M17 22l-4-14h22l-4 14"/><path d="M24 26l1.8 3.6 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6z"/></svg>',
+      shield: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l14 6v12c0 8-6 15-14 18-8-3-14-10-14-18V12z"/><path d="M18 24l4 4 8-8"/></svg>',
+      broom: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M30 8l10 10"/><path d="M28 10l-14 20"/><path d="M14 30l-4 4 4 4 14-6z"/><path d="M14 30l6 10"/></svg>',
+      check: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="16"/><path d="M16 24l6 6 12-12"/></svg>',
+      heart: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40S8 30 8 20a8 8 0 0114-6 8 8 0 0114 6c0 10-16 20-16 20z"/></svg>',
+
+      van: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h34v22H4z"/><path d="M38 30h12l8 8v6H38z"/><circle cx="16" cy="48" r="4"/><circle cx="46" cy="48" r="4"/><path d="M20 48h22"/></svg>',
+      phone: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8h8l4 10-5 3a24 24 0 0010 10l3-5 10 4v8a4 4 0 01-4 4A34 34 0 0110 12a4 4 0 014-4z"/></svg>',
+      pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.6"/></svg>',
+      mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>'
+    };
+
+    const arrowSVG = ICONS.arrow;
+    const chevSVG = ICONS.chevron;
+
+    // ============================================================
+    // STATIC CONTENT
+    // ============================================================
+    const content = {
+      config: {
+        brand: 'holden',
+        phone: '503-351-0404',
+        // ✅ NEW LOGO
+        logoUrl: 'https://i.postimg.cc/hjKgbsxn/Screenshot-2026-10-04-at-12-47-25-PM.png',
+        tagline: ['', 'HOLDEN', 'HEATING COOLING'],
+        nav: [
+          { label: 'Our Services', children: ['Plumbing', 'Drain & Sewer', 'Electrical', 'HVAC'] },
+          { label: 'Offers', href: '#offers', highlight: true },
+          { label: 'Pricing', children: ['Plumbing', 'Electrical', 'HVAC'] },
+          { label: 'Learning Center', href: '#about' },
+          { label: 'Locations', children: ['Downtown', 'Westside', 'Eastside'] },
+          { label: 'Order Filters', href: '#' },
+          { label: 'About Us', children: ['Our Story', 'Team', 'Careers'] }
+        ],
+        bookUrl: '#book',
+        address: '123 Main Street, Your City, ST 00000',
+        email: 'hello@holden.com',
+        license: 'LIC #XXXXX'
+      },
+      hero: {
+        lines: [
+          { text: 'We', cls: 's-lg copper-text' },
+          { text: 'Show Up', cls: 's-sm copper-text' },
+          { text: 'For', cls: 's-sm copper-text' },
+          { text: 'You', cls: 's-xl white-text' },
+          { text: 'When You', cls: 's-sm copper-text' },
+          { text: 'Need', cls: 's-xl white-text' },
+          { text: 'Us', cls: 's-xl white-text' },
+          { text: 'Most', cls: 's-md copper-text' }
+        ],
+        reviewCount: 'XXK',
+        promoAmount: '$XXX',
+        promoTitle: 'in Plumbing Repairs',
+        promoSub: 'with the installation of a Water Heater',
+        promoFoot: "...because we're already there!"
+      },
+      services: [
+        { icon: ICONS.plumbing, title: 'Plumbing', text: 'Leaky faucets, burst pipes or a full fixture install. Our plumbers get it fixed right the first time.' },
+        { icon: ICONS.drain, title: 'Drain and Sewer', text: 'Clear clogs and keep water moving with fast, careful drain and sewer service.' },
+        { icon: ICONS.electric, title: 'Electrical', text: 'Safe, code-compliant wiring, panels and lighting from licensed electricians.' },
+        { icon: ICONS.hvac, title: 'Heating and Cooling', text: 'Stay comfortable all year with dependable HVAC repair, tune-ups and installs.' }
+      ],
+      deals: [
+        { lead: 'Only', price: '$XX', title: 'Drain Special', sub: 'Drain clearing offer', tone: 'copper' },
+        { lead: 'Only', price: '$XX', title: 'A/C or Furnace', sub: 'Clean & check', tone: 'navy' },
+        { lead: 'Up to', price: '$XXXX', title: 'Repair Buyback', sub: 'on your new HVAC system', tone: 'deep', wide: true },
+        { lead: 'Only', price: '$XX', title: 'Sump Pump', sub: 'Inspection', tone: 'copper' },
+        { lead: 'Only', price: '$XX', title: 'Water Heater', sub: 'Clean & check', tone: 'navy' }
+      ],
+      about: {
+        heading: 'Serving Customers and Helping Others Build a Life in the Trades',
+        paragraphs: [
+          "Our founder, [Founder Name], started out in the trades right after school. The road wasn't smooth, and there were plenty of people who doubted the path, but a few years later a contractor's license and a first small business were in hand.",
+          "When tough times hit, the business had to start over. With a small trusted team and a lot of determination, [Founder Name] rebuilt it from the ground up into the home service company it is today."
+        ],
+        linkText: 'plumbing company',
+        cta: 'Know More About',
+        photoCaption: 'Founder photo',
+        founderName: '[Founder Name], Founder/CEO'
+      },
+      membership: {
+        name: 'holden',
+        plan: 'Advantage',
+        kind: 'Membership',
+        heading: 'Unmatched Service & Exclusive Savings for Your Home',
+        text: 'With our membership, enjoy priority scheduling, discounts on services, and annual system checks. Plus, get exclusive offers, a workmanship guarantee, and more, all designed to keep your home efficient and worry-free.',
+        cta: 'Get Membership Now',
+        booklet: 'Membership Guide'
+      },
+      features: {
+        plumbing: {
+          heading: 'Professional Plumbing and Water Heater Services',
+          before: "Our team of plumbers, electricians and HVAC technicians delivers dependable service right to your doorstep. Whether you're dealing with a stubborn water heater or thinking about a tankless upgrade, we have you covered. Our experience with ",
+          linkText: 'water heater repair',
+          linkHref: '#water-heater',
+          after: ' means reliable hot water and a more efficient home. And we don\'t stop at repairs: our tankless water heater installation and maintenance services help you enjoy endless hot showers with the touch of a button.',
+          cta: 'More About Plumbing',
+          ctaHref: '#plumbing'
+        },
+        drain: {
+          heading: 'Drain and Sewer Services, Now',
+          before: "Even the smallest plumbing issues can quickly turn into major problems. That's where our drain and sewer expertise comes in. Our team uses modern equipment to find and resolve issues, from a clogged drain to a damaged sewer line. With our efficient ",
+          linkText: 'drain clearing and cleaning services',
+          linkHref: '#drain',
+          after: ", you can be sure your home's plumbing system is in safe hands. We carefully remove blockages and build-up, preventing bigger problems before they start.",
+          cta: 'More About Drain & Sewer',
+          ctaHref: '#drain-and-sewer'
+        },
+        electric: {
+          heading: 'Expert Electrical Services',
+          before: 'When the lights flicker or the outlets go quiet, count on skilled, licensed electricians. Backed by years of experience, we deliver safe, modern electrical solutions for your home. From a simple switch to a full panel upgrade, every job is about safety, efficiency and earning your trust. Learn more about our ',
+          linkText: 'electrical repair services',
+          linkHref: '#electrical',
+          after: '.',
+          cta: 'More About Electric',
+          ctaHref: '#electrical'
+        },
+        hvac: {
+          heading: 'Heating and Cooling Comfort for Your Home',
+          before: "As the seasons change, your comfort depends on a reliable, efficient HVAC system. We take a careful approach to heat pumps, AC maintenance and furnace repair so your home stays at the right temperature. When it's time for a new install or an ",
+          linkText: 'AC repair',
+          linkHref: '#hvac',
+          after: ", our skilled technicians tailor solutions to your home. We're your neighbors, committed to a comfortable home with every service call.",
+          cta: 'More About HVAC',
+          ctaHref: '#heating-and-cooling'
+        }
+      },
+      reviews: [
+        { text: 'Sample review text. Replace this with a real review from one of your customers, with their permission.', name: 'Customer Name' },
+        { text: 'Sample review text. Add a short, honest quote about the service, the technician and the result.', name: 'Customer Name' },
+        { text: 'Great service, fast and professional. Would definitely recommend to friends and family.', name: 'Jane D.' },
+        { text: 'The technician was on time, explained everything clearly, and fixed the issue quickly.', name: 'Mark R.' },
+        { text: 'Honest pricing and quality work. They cleaned up after themselves too.', name: 'Sarah L.' }
+      ],
+      guarantees: [
+        { icon: ICONS.handshake, label: 'Up-Front Pricing Guarantee' },
+        { icon: ICONS.star,      label: 'Trusted Employee Guarantee' },
+        { icon: ICONS.medal,     label: 'Professional Team Guarantee' },
+        { icon: ICONS.shield,    label: 'Property Protection Guarantee' },
+        { icon: ICONS.broom,     label: 'Cleaner Than We Found It Guarantee' },
+        { icon: ICONS.check,     label: 'No Lemons Guarantee' },
+        { icon: ICONS.heart,     label: 'One-Year Make It Happen Guarantee' }
+      ],
+      areas: [
+        'Service Area 1', 'Service Area 2', 'Service Area 3', 'Service Area 4', 'Service Area 5',
+        'Service Area 6', 'Service Area 7', 'Service Area 8', 'Service Area 9', 'Service Area 10',
+        'Service Area 11', 'Service Area 12', 'Service Area 13', 'Service Area 14', 'Service Area 15',
+        'Service Area 16', 'Service Area 17', 'Service Area 18', 'Service Area 19', 'Service Area 20',
+        'Service Area 21', 'Service Area 22', 'Service Area 23', 'Service Area 24'
+      ]
+    };
+
+    // ============================================================
+    // Logo helper
+    // ============================================================
+    function logoGroupHTML(C) {
+      const slots = [];
+      if (C.logoUrl && C.logoUrl.trim()) {
+        slots.push(`<div class="logo-mark"><img src="${C.logoUrl}" alt="${C.brand} logo"></div>`);
+      }
+      if (C.logoUrl2 && C.logoUrl2.trim()) {
+        slots.push(`<div class="logo-mark alt"><img src="${C.logoUrl2}" alt="${C.brand} logo 2"></div>`);
+      }
+      if (slots.length === 0) {
+        slots.push(`<div class="logo-mark"><span class="logo-text">${C.brand}</span></div>`);
+      }
+      return `<div class="logo-group">${slots.join('')}</div>`;
+    }
+
+    // ============================================================
+    // Render functions
+    // ============================================================
+    function renderNavItems(items) {
+      return items.map(item => {
+        if (!item.children) {
+          const cls = 'link' + (item.highlight ? ' offers' : '');
+          return `<div class="item"><a class="${cls}" href="${item.href || '#'}">${item.label}</a></div>`;
+        }
+        const childLinks = item.children.map(c => {
+          const href = '#' + c.toLowerCase().replace(/\W+/g, '-');
+          return `<a href="${href}">${c}</a>`;
+        }).join('');
+        return `
+          <div class="item" data-nav-dropdown>
+            <button class="link" type="button" data-nav-toggle>${item.label} ${chevSVG}</button>
+            <div class="menu" hidden>${childLinks}</div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderServices(list) {
+      return list.map(s => `
+        <article class="card">
+          <div class="card-img">${s.icon}</div>
+          <div class="card-body">
+            <h3>${s.title}</h3>
+            <p>${s.text}</p>
+            <a class="more" href="#">Read More ${arrowSVG}</a>
+          </div>
+        </article>`).join('');
+    }
+
+    function renderDeals(list) {
+      return list.map(d => `
+        <a href="#offers" class="deal">
+          <span class="deal-price ${d.tone || 'copper'}">
+            <small>${d.lead}</small>
+            <b>${d.price}</b>
+          </span>
+          <span class="deal-label">
+            <strong>${d.title}</strong>
+            <em>${d.sub}</em>
+          </span>
+        </a>`).join('');
+    }
+
+    function renderGuarantees(list) {
+      return list.map((g, i) => `
+        <div class="g-item">
+          <div class="g-circle${i % 2 ? ' navy' : ''}">${g.icon}</div>
+          <div class="g-label">${g.label}</div>
+        </div>`).join('');
+    }
+
+    function renderAreasList(areas, showAll) {
+      const shown = showAll ? areas : areas.slice(0, 15);
+      const lis = shown.map(a => `<li>${a}</li>`).join('');
+      const btn = areas.length > 15
+        ? `<button class="btn copper sm" type="button" id="toggleAreasBtn">${showAll ? 'Show Fewer Areas' : 'Load More Areas'} ${arrowSVG}</button>`
+        : '';
+      return `<ul>${lis}</ul>${btn}`;
+    }
+
+    function featureSection(key, fi, features) {
+      const f = features[key];
+      const reverse = key === 'drain' || key === 'hvac';
+      const photoClass = { plumbing: '', drain: 'drain-photo', electric: 'electric-photo', hvac: 'hvac-photo' }[key];
+      const backClass = (key === 'drain' || key === 'hvac') ? 'navy-back' : '';
+      const ids = { plumbing: 'plumbing', drain: 'drain-and-sewer', electric: 'electrical', hvac: 'heating-and-cooling' };
+      const sectionClass = 'feature' + (fi > 0 ? ' feature-plain' : '');
+      const innerClass = 'feature-inner' + (reverse ? ' reverse' : '');
+
+      const copy = `
+        <div class="feature-copy">
+          <h2 class="about-title">${f.heading}</h2>
+          <div class="about-rule"></div>
+          <p>${f.before}<a href="${f.linkHref || '#'}">${f.linkText}</a>${f.after}</p>
+          <div class="feature-cta">
+            <a class="btn navy" href="${f.ctaHref || '#'}">${f.cta} ${arrowSVG}</a>
+          </div>
+        </div>`;
+      const photo = `
+        <div class="feature-photo-wrap ${backClass}">
+          <div class="feature-backdrop"></div>
+          <div class="feature-photo ${photoClass}"><span>Service photo</span></div>
+        </div>`;
+
+      const inner = reverse ? copy + photo : photo + copy;
+      return `<section class="${sectionClass}" id="${ids[key]}"><div class="${innerClass}">${inner}</div></section>`;
+    }
+
+    function renderFeatures(features) {
+      return ['plumbing', 'drain', 'electric', 'hvac']
+        .map((key, i) => featureSection(key, i, features))
+        .join('');
+    }
+
+    // ============================================================
+    // Build page
+    // ============================================================
+    function buildPage(data) {
+      const C = data.config;
+      const H = data.hero;
+      const a = data.areas;
+      const rev = data.reviews;
+
+      const navHTML = renderNavItems(C.nav);
+      const headlineHTML = H.lines.map(l => `<span class="${l.cls}">${l.text}</span>`).join('');
+      const servicesHTML = renderServices(data.services);
+      const dealsHTML = renderDeals(data.deals);
+      const guaranteesHTML = renderGuarantees(data.guarantees);
+      const featuresHTML = renderFeatures(data.features);
+      const areasListHTML = renderAreasList(a, false);
+      const footerAreas = a.slice(0, 24).map(x => `<li>${x}</li>`).join('');
+
+      const about = data.about;
+      const membership = data.membership;
+
+      const reviewCards = [
+        { text: rev[0].text, name: rev[0].name },
+        { text: rev[1].text, name: rev[1].name }
+      ].map((r) => {
+        const initials = (r.name || 'CN').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        return `
+          <article class="rev-card">
+            <div class="stars">★★★★★</div>
+            <p>${r.text}</p>
+            <div class="rev-who">
+              <div class="avatar">${initials}</div>
+              <div class="rev-name">${r.name}</div>
+            </div>
+          </article>`;
+      }).join('');
+
+      const tel = String(C.phone || '').replace(/\D/g, '');
+
+      return `
+        <!-- ========== HEADER ========== -->
+        <div class="site-header">
+          <div class="topbar"></div>
+          <div class="header-inner">
+            <div class="row1">
+              <div class="brand">
+                ${logoGroupHTML(C)}
+                <div class="tagline">
+                  ${(C.tagline || []).map(t => `<div>${t}</div>`).join('')}
+                </div>
+              </div>
+              <div class="ctas">
+                <a class="btn copper" href="${C.bookUrl || '#'}">Book Online ${arrowSVG}</a>
+                <a class="btn navy" href="tel:${tel}">Call ${C.phone} ${arrowSVG}</a>
+              </div>
+              <button class="burger" id="burgerBtn" type="button">☰ Menu</button>
+            </div>
+            <nav id="mainNav">${navHTML}</nav>
+          </div>
+        </div>
+
+        <!-- ========== HERO ========== -->
+        <section class="hero">
+          <div class="hero-inner">
+            <div>
+              <h1 class="headline">${headlineHTML}</h1>
+              <div class="hero-ctas">
+                <a class="btn copper" href="${C.bookUrl || '#'}">Book Online ${arrowSVG}</a>
+                <span class="or">Or</span>
+                <a class="btn outline" href="tel:${tel}">Call Now ${arrowSVG}</a>
+              </div>
+            </div>
+            <div class="badge">
+              <b>${H.reviewCount}</b>
+              <span>Reviews</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PROMO ========== -->
+        <div class="promo-wrap">
+          <div class="promo">
+            <div class="promo-get"><b>Get</b><i>up to</i></div>
+            <div class="promo-amt">${H.promoAmount}</div>
+            <div class="promo-text">
+              <div class="t1">${H.promoTitle}</div>
+              <div class="t2">${H.promoSub}</div>
+            </div>
+            <div class="promo-van">${ICONS.van}</div>
+          </div>
+          <div class="promo-foot">${H.promoFoot}</div>
+        </div>
+
+        <!-- ========== SERVICES ========== -->
+        <section class="services" id="services">
+          <h2 class="section-title">Our Services</h2>
+          <div class="section-rule"></div>
+          <div class="cards">${servicesHTML}</div>
+        </section>
+
+        <!-- ========== DEALS ========== -->
+        <section class="deals" id="offers">
+          <h2 class="section-title">Our Deals</h2>
+          <div class="section-rule"></div>
+          <div class="deal-row">${dealsHTML}</div>
+        </section>
+
+        <!-- ========== FINANCING ========== -->
+        <section class="financing">
+          <h2 class="fin-title">Financing Available</h2>
+          <a class="btn navy" href="#financing">Apply Now ${arrowSVG}</a>
+        </section>
+
+        <!-- ========== ABOUT ========== -->
+        <section class="about" id="about">
+          <div class="about-inner">
+            <div class="about-copy">
+              <h2 class="about-title">${about.heading}</h2>
+              <div class="about-rule"></div>
+              <p>${about.paragraphs[0]}</p>
+              <p>${about.paragraphs[1]} Today, the team is proud to be a trusted local <a href="#plumbing">${about.linkText}</a>.</p>
+              <div style="margin-top:28px">
+                <a class="btn copper" href="#about">${about.cta} ${arrowSVG}</a>
+              </div>
+            </div>
+            <div class="about-photo"><span>${about.photoCaption}</span></div>
+          </div>
+        </section>
+
+        <!-- ========== MEMBERSHIP ========== -->
+        <section class="member" id="membership">
+          <div class="member-card">
+            <div class="member-copy">
+              <div class="member-logo">
+                <span class="m-name">${membership.name}</span>
+                <span class="m-plan">${membership.plan}</span>
+                <span class="m-kind">${membership.kind}</span>
+              </div>
+              <h2 class="member-title">${membership.heading}</h2>
+              <p>${membership.text}</p>
+              <div style="margin-top:20px">
+                <a class="btn copper" href="#membership">${membership.cta} ${arrowSVG}</a>
+              </div>
+            </div>
+            <div class="member-booklet"><span>${membership.booklet}</span></div>
+          </div>
+          <svg class="member-wave" viewBox="0 0 1440 200" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="wg" x1="0" x2="1">
+                <stop offset="0" stop-color="#F5A25D"/>
+                <stop offset="0.55" stop-color="#6FA0D8"/>
+                <stop offset="1" stop-color="#2F5A94"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 200 Q720 -60 1440 160 L1440 200 Z" fill="url(#wg)"/>
+            <path d="M0 200 Q720 20 1440 200 Z" fill="#FFFFFF"/>
+          </svg>
+        </section>
+
+        <!-- ========== FEATURES ========== -->
+        ${featuresHTML}
+
+        <!-- ========== REVIEWS ========== -->
+        <section class="reviews" id="reviews">
+          <h2 class="rev-title">Customer Reviews</h2>
+          <div class="rev-rule"></div>
+          <div class="rev-cards">${reviewCards}</div>
+          <div class="dots">
+            ${rev.map((_, d) => `<button type="button" class="${d === 0 ? 'on' : ''}" data-dot="${d}" aria-label="Review ${d+1}"></button>`).join('')}
+          </div>
+        </section>
+
+        <!-- ========== GUARANTEES ========== -->
+        <section class="guarantees">
+          <div class="g-van">${ICONS.van}</div>
+          <div class="g-grid">${guaranteesHTML}</div>
+        </section>
+
+        <!-- ========== AREAS ========== -->
+        <section class="areas">
+          <div class="same-day">
+            <div>
+              <h2>Experience Same-Day Service. Get In Touch Now!</h2>
+              <a class="btn navy sm" href="${C.bookUrl || '#'}">Schedule A Service ${arrowSVG}</a>
+            </div>
+            <div class="sd-photo">
+              <span>Founder photo</span>
+              <small>${about.founderName}</small>
+            </div>
+          </div>
+          <div class="areas-inner">
+            <div class="areas-list">
+              <h2>Serving Your Local Area</h2>
+              <div id="areasListWrap">${areasListHTML}</div>
+            </div>
+            <div class="areas-map"><span>Map</span></div>
+          </div>
+        </section>
+
+        <!-- ========== SCHEDULE ========== -->
+        <section class="schedule">
+          <h2>Schedule an Appointment Today!</h2>
+          <div class="hero-ctas center">
+            <a class="btn copper" href="${C.bookUrl || '#'}">Book Online ${arrowSVG}</a>
+            <span class="or">Or</span>
+            <a class="btn outline" href="tel:${tel}">Call Now ${arrowSVG}</a>
+          </div>
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="footer">
+          <div class="f-van">${ICONS.van}</div>
+          <div class="f-inner">
+            <div class="f-col">
+              <h3>Connect With Us</h3>
+              <p class="f-line">${ICONS.pin} ${C.address}</p>
+              <p class="f-line">${ICONS.mail} ${C.email}</p>
+              <div class="f-map"><span>Map</span></div>
+            </div>
+            <div class="f-col f-center">
+              <a class="f-call" href="tel:${tel}">
+                <span class="f-ico">${ICONS.phone}</span>
+                <span>
+                  <small>Call us for same-day service</small>
+                  <b>${C.phone}</b>
+                </span>
+              </a>
+              <div class="f-social">
+                <a href="#" aria-label="LinkedIn">in</a>
+                <a href="#" aria-label="Instagram">ig</a>
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="X">X</a>
+              </div>
+              <p class="f-lic">${C.license}</p>
+            </div>
+            <div class="f-col">
+              <h3>Service Areas</h3>
+              <ul class="f-areas">${footerAreas}</ul>
+            </div>
+          </div>
+          <p class="f-copy">Copyright © ${new Date().getFullYear()} ${C.brand}. All Rights Reserved</p>
+        </footer>`;
+    }
+
+    // ============================================================
+    // Mount
+    // ============================================================
+    document.getElementById('root').innerHTML = buildPage(content);
+
+    // ============================================================
+    // Interactions
+    // ============================================================
+    (function() {
+      const burger = document.getElementById('burgerBtn');
+      const nav = document.getElementById('mainNav');
+      if (burger && nav) burger.addEventListener('click', () => nav.classList.toggle('show'));
+
+      document.querySelectorAll('[data-nav-toggle]').forEach(btn => {
+        const parent = btn.closest('[data-nav-dropdown]');
+        const menu = parent.querySelector('.menu');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = parent.classList.contains('open');
+          document.querySelectorAll('[data-nav-dropdown]').forEach(p => {
+            p.classList.remove('open');
+            const m = p.querySelector('.menu');
+            if (m) m.hidden = true;
+          });
+          if (!isOpen) { parent.classList.add('open'); menu.hidden = false; }
+        });
+      });
+      document.addEventListener('click', () => {
+        document.querySelectorAll('[data-nav-dropdown]').forEach(p => {
+          p.classList.remove('open');
+          const m = p.querySelector('.menu');
+          if (m) m.hidden = true;
+        });
+      });
+      document.querySelectorAll('[data-nav-dropdown]').forEach(parent => {
+        const menu = parent.querySelector('.menu');
+        parent.addEventListener('mouseenter', () => {
+          if (window.innerWidth > 900) { parent.classList.add('open'); menu.hidden = false; }
+        });
+        parent.addEventListener('mouseleave', () => {
+          if (window.innerWidth > 900) { parent.classList.remove('open'); menu.hidden = true; }
+        });
+      });
+
+      // Reviews rotation
+      const revCards = document.querySelectorAll('.rev-card');
+      const revData = content.reviews;
+      const dots = document.querySelectorAll('.dots button');
+      let revIdx = 0;
+      function renderReviews(idx) {
+        const visible = [revData[idx % revData.length], revData[(idx + 1) % revData.length]];
+        revCards.forEach((card, k) => {
+          const r = visible[k];
+          if (!r) return;
+          const initials = (r.name || 'CN').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+          card.querySelector('p').textContent = r.text;
+          card.querySelector('.avatar').textContent = initials;
+          card.querySelector('.rev-name').textContent = r.name;
+        });
+        dots.forEach((d, i) => d.classList.toggle('on', i === idx % revData.length));
+      }
+      if (revData.length > 1) {
+        setInterval(() => { revIdx = (revIdx + 1) % revData.length; renderReviews(revIdx); }, 7000);
+        dots.forEach((dot, i) => dot.addEventListener('click', () => { revIdx = i; renderReviews(revIdx); }));
+      }
+
+      // Areas toggle
+      const areasWrap = document.getElementById('areasListWrap');
+      let allAreas = false;
+      function renderAreas() {
+        areasWrap.innerHTML = renderAreasList(content.areas, allAreas);
+        const btn = document.getElementById('toggleAreasBtn');
+        if (btn) btn.addEventListener('click', () => { allAreas = !allAreas; renderAreas(); });
+      }
+      if (areasWrap) renderAreas();
+    })();
+  </script>
+</body>
+</html>
