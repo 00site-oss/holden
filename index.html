@@ -11,6 +11,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Unbounded:wght@700;900&family=Lexend:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
+    /* ==== Nordth font (CDN fallback) ==== */
+    @font-face {
+      font-family: 'Nordth';
+      src: url('https://fonts.cdnfonts.com/s/93467/Nordth.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Nordth';
+      src: url('https://fonts.cdnfonts.com/s/93467/Nordth-Bold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     *{box-sizing:border-box;border-color:var(--border)}
     :root {
       --background: oklch(1 0 0);
@@ -41,6 +57,9 @@
       --font-body: "Montserrat", sans-serif;
       --font-heading: "Unbounded", "Montserrat", sans-serif;
       --font-control: "Lexend", "Montserrat", sans-serif;
+      --font-nav: "Nordth", "Montserrat", sans-serif;
+      /* ==== FINANCING HEADING FONT ==== */
+      --financing-navy: #0F2A47;
     }
     html{scroll-behavior:smooth;scroll-padding-top:24px}
     body{margin:0;font-family:var(--font-body);background:var(--background);color:var(--foreground);letter-spacing:0}
@@ -53,7 +72,6 @@
     .site-header{position:relative;z-index:20;background:var(--background)}
     .header-main{width:min(1120px,calc(100% - 64px));margin:auto;min-height:160px;display:flex;justify-content:space-between;align-items:center;gap:36px}
     .header-main>a{flex:0 1 480px;min-width:0}
-    /* ==== NEW LOGO ==== */
     .site-logo{display:block;width:auto;max-width:100%;height:130px;object-fit:contain}
     .header-actions{display:flex;gap:20px;align-items:center;flex-shrink:0}
     .eco-button{min-height:48px;height:auto;padding:13px 27px;border-radius:999px;gap:9px;font-family:var(--font-control);font-size:15px;line-height:1.4;font-weight:600;transition:transform 180ms ease,filter 180ms ease;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-align:center}
@@ -63,7 +81,21 @@
     .eco-button-outline{border:2px solid var(--accent);color:var(--secondary);background:transparent}
     .eco-button svg{width:18px;height:18px;flex-shrink:0}
 
-    .site-nav{width:min(1120px,calc(100% - 64px));margin:auto;min-height:48px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:13px;font-weight:800;text-transform:uppercase}
+    /* ==== NAV with Nordth font ==== */
+    .site-nav{
+      width:min(1120px,calc(100% - 64px));
+      margin:auto;
+      min-height:48px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      font-family: "Nordth", Sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      text-transform: none;
+      line-height: 30px;
+    }
     .site-nav a{display:flex;align-items:center;gap:8px;padding-block:12px;white-space:nowrap}
     .site-nav svg{width:13px;height:13px}
     .site-nav .active,.site-nav a:hover{color:var(--accent)}
@@ -128,9 +160,18 @@
     .deal-copy strong{font-size:14px;color:var(--secondary)}
     .deal-copy em{font-size:11px;margin-top:5px;color:var(--muted-foreground);font-style:normal}
 
-    /* Finance */
+    /* ==== FINANCE ==== */
     .finance{background:var(--gradient-blue);color:var(--primary-foreground);padding:40px 24px;display:flex;align-items:center;justify-content:center;gap:45px;flex-wrap:wrap}
-    .finance h2{font-size:34px;font-style:italic;font-weight:900;margin-bottom:0}
+    .finance h2{
+      font-family: "Montserrat", sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      font-style: normal;
+      letter-spacing: -0.02em;
+      color: var(--financing-navy);
+      margin-bottom: 0;
+      line-height: 1.1;
+    }
 
     /* Split */
     .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
@@ -216,9 +257,10 @@
       .site-logo{height:110px}
       .header-actions{gap:12px}
       .header-actions .eco-button{padding-inline:20px;font-size:13px}
-      .site-nav{font-size:11px}
+      .site-nav{font-size:17px;line-height:26px}
       .hero-offer .o2{font-size:21px}
       .service-card p{min-height:142px}
+      .finance h2{font-size:34px}
     }
     @media(max-width:900px){
       .header-main{min-height:120px;width:calc(100% - 40px)}
@@ -226,7 +268,7 @@
       .site-logo{height:90px}
       .header-actions{display:none}
       .nav-toggle{display:inline-flex}
-      .site-nav{display:none;position:absolute;top:100%;left:0;width:100%;background:var(--background);box-shadow:var(--shadow-soft);padding:16px 24px;font-size:14px;flex-direction:column;align-items:stretch;gap:4px;z-index:40}
+      .site-nav{display:none;position:absolute;top:100%;left:0;width:100%;background:var(--background);box-shadow:var(--shadow-soft);padding:16px 24px;font-size:18px;line-height:28px;flex-direction:column;align-items:stretch;gap:4px;z-index:40}
       .site-nav.open{display:flex}
       .site-nav a{justify-content:space-between}
       .eco-hero-inner{width:calc(100% - 48px)}
@@ -248,6 +290,7 @@
       .mobile-bar{display:grid;grid-template-columns:1fr 1fr;position:fixed;bottom:0;left:0;right:0;z-index:30}
       .mobile-bar .eco-button{border-radius:0;min-height:56px}
       footer{padding-bottom:56px}
+      .finance h2{font-size:30px}
     }
     @media(max-width:600px){
       .header-main{min-height:112px;width:calc(100% - 28px);gap:14px}
@@ -284,7 +327,7 @@
       .deal-grid{grid-template-columns:repeat(2,1fr)}
       .deal-grid .deal:last-child{grid-column:1/-1}
       .finance{flex-direction:column;gap:24px;text-align:center}
-      .finance h2{font-size:28px}
+      .finance h2{font-size:26px}
       .split,.membership-inner,.areas-layout,.review-grid,.footer-grid{grid-template-columns:1fr;gap:32px}
       .reverse>:first-child{order:0}
       .split h2,.membership h2,.areas-layout h2{font-size:28px}
@@ -349,8 +392,7 @@
 
     <!-- ================= HERO ================= -->
     <section aria-label="Holden Home Services hero" class="eco-hero" id="top">
-      <!-- ==== NEW HERO IMAGE ==== -->
-      <img alt="Holden Heating and Cooling technician and service vans" class="eco-hero-bg" src="https://i.postimg.cc/7YQJcSS8/1d49f721-4b08-41cb-a89d-2b68b9e6bd8f.jpg" />
+      <img alt="Holden Heating and Cooling technician and service vans" class="eco-hero-bg" src="https://i.postimg.cc/SRd1qgks/8533374d-0b26-4d63-a90a-cf3bf804b38a.jpg" />
       <div class="eco-hero-inner">
         <h1 class="hero-headline">
           <span class="w1"><b class="big g">We</b> <i class="sm g">Come</i></span>
@@ -447,7 +489,7 @@
           <a class="eco-button eco-button-green" href="#membership">Know More About <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.7" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
         </div>
         <div class="photo-panel founder">
-          <img src="https://i.postimg.cc/7YQJcSS8/1d49f721-4b08-41cb-a89d-2b68b9e6bd8f.jpg" alt="Holden technicians serving local homes" loading="lazy" />
+          <img src="https://i.postimg.cc/SRd1qgks/8533374d-0b26-4d63-a90a-cf3bf804b38a.jpg" alt="Holden technicians serving local homes" loading="lazy" />
           <span>Local. Skilled. Dependable.</span>
         </div>
       </div>
@@ -457,7 +499,6 @@
     <section class="membership band" id="membership">
       <div class="membership-inner">
         <div>
-          <!-- ==== NEW LOGO ==== -->
           <img alt="Holden" src="https://i.postimg.cc/vTZD2mm2/IMG-4401-removebg-preview.png" />
           <span class="eyebrow">Membership</span>
           <h2>Unmatched Service &amp; Exclusive Savings for Your Home</h2>
