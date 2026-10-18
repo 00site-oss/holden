@@ -3,13 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Holden Home Services | Plumbing, Electric &amp; HVAC</title>
-  <meta name="description" content="Holden Home Services provides plumbing, drain, electrical, heating and cooling service across the Portland area." />
-
+  <title>Holden Heating & Cooling | HVAC, Plumbing & Electrical in Portland, OR</title>
+  <meta name="description" content="Dependable HVAC, plumbing, and electrical services in Portland, OR and surrounding metro areas. Same-day service available. Call 503-351-0404 today!" />
+  <link rel="canonical" href="https://callholden.com/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HVACBusiness",
+    "name": "Holden Heating and Cooling",
+    "url": "https://callholden.com",
+    "logo": "https://i.postimg.cc/vTZD2mm2/IMG-4401-removebg-preview.png",
+    "telephone": "+1-503-351-0404",
+    "email": "s5033510404@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1455 Ryan Dr",
+      "addressLocality": "Silverton",
+      "addressRegion": "OR",
+      "postalCode": "97381",
+      "addressCountry": "US"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Portland", "sameAs": "https://en.wikipedia.org/wiki/Portland,_Oregon" },
+      { "@type": "City", "name": "Beaverton" },
+      { "@type": "City", "name": "Hillsboro" },
+      { "@type": "City", "name": "Gresham" },
+      { "@type": "City", "name": "Tigard" },
+      { "@type": "City", "name": "Lake Oswego" },
+      { "@type": "City", "name": "Oregon City" }
+    ],
+    "priceRange": "$$"
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Unbounded:wght@700;900&family=Lexend:wght@400;600;700&display=swap" rel="stylesheet" />
-
   <style>
     /* ==== Nordth font (CDN fallback) ==== */
     @font-face {
@@ -26,7 +54,6 @@
       font-style: normal;
       font-display: swap;
     }
-
     *{box-sizing:border-box;border-color:var(--border)}
     :root {
       --background: oklch(1 0 0);
@@ -67,7 +94,6 @@
     img{max-width:100%;display:block}
     .home-page{overflow-x:clip}
     .home-page h1,.home-page h2,.home-page h3,.home-page p{margin-top:0}
-
     /* Header */
     .site-header{position:relative;z-index:20;background:var(--background)}
     .header-main{width:min(1120px,calc(100% - 64px));margin:auto;min-height:160px;display:flex;justify-content:space-between;align-items:center;gap:36px}
@@ -80,7 +106,6 @@
     .eco-button-green{background:var(--gradient-green);color:var(--accent-foreground)}
     .eco-button-outline{border:2px solid var(--accent);color:var(--secondary);background:transparent}
     .eco-button svg{width:18px;height:18px;flex-shrink:0}
-
     /* ==== NAV with Nordth font ==== */
     .site-nav{
       width:min(1120px,calc(100% - 64px));
@@ -99,12 +124,10 @@
     .site-nav a{display:flex;align-items:center;gap:8px;padding-block:12px;white-space:nowrap}
     .site-nav svg{width:13px;height:13px}
     .site-nav .active,.site-nav a:hover{color:var(--accent)}
-
     /* Hamburger toggle button */
     .nav-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--accent);width:44px;height:44px;padding:0;align-items:center;justify-content:center}
     .nav-toggle svg{width:30px;height:30px;display:block}
     .nav-toggle .icon-x{display:none}
-
     /* Hero */
     .eco-hero{position:relative;min-height:650px;background:var(--hero-background);color:var(--hero-foreground);margin-bottom:70px}
     .eco-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
@@ -119,26 +142,22 @@
     .hero-cta{display:flex;align-items:center;gap:24px}
     .hero-cta .eco-button{min-width:180px}
     .or{font-size:14px;font-weight:500}
-
     .review-seal{position:absolute;right:5%;top:58%;width:96px;height:96px;border:3px dotted var(--hero-foreground);border-radius:50%;background:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center}
     .review-seal>span{font-size:9px}
     .review-seal strong{font-family:var(--font-control);font-size:24px;line-height:1.15}
     .review-seal small{font-size:11px}
-
     .hero-offer{position:absolute;z-index:2;bottom:-35px;left:50%;transform:translateX(-50%);width:min(1120px,calc(100% - 64px));min-height:118px;display:flex;align-items:center;justify-content:center;gap:20px;padding:24px 30px;background:var(--gradient-accent);border-bottom:5px solid var(--primary);color:var(--hero-foreground);box-shadow:var(--shadow-soft)}
     .hero-offer .o1{font-size:26px;line-height:1.05;font-weight:900}
     .hero-offer .o1 small{display:block;font-size:18px}
     .hero-offer>strong{font-family:var(--font-heading);font-size:66px;font-weight:900;line-height:1}
     .hero-offer .o2{font-size:25px;font-weight:900;line-height:1.25}
     .hero-offer .o2 small{display:block;font-size:14px;font-weight:600;margin-top:6px}
-
     /* Sections */
     .band{padding:70px max(32px,calc((100% - 1120px)/2))}
     .section-title{color:var(--secondary);text-align:center;font-size:36px;line-height:1.2;font-weight:900;text-transform:uppercase;margin-bottom:16px}
     .section-rule{width:70px;height:4px;background:var(--accent);margin:0 auto 36px}
     .left-rule{width:60px;height:4px;background:var(--accent);margin:20px 0}
     .eyebrow{display:block;color:var(--accent);text-transform:uppercase;font-size:12px;font-weight:800;margin-bottom:14px}
-
     /* Services */
     .service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
     .service-card{overflow:hidden;border:1px solid var(--border);background:var(--background);border-radius:6px;display:flex;flex-direction:column}
@@ -147,7 +166,6 @@
     .service-card h3{font-size:19px;font-weight:800;line-height:1.3;color:var(--secondary);margin-bottom:12px}
     .service-card p{font-size:13px;line-height:1.8;color:var(--muted-foreground);min-height:118px;flex:1}
     .service-card .eco-button{font-size:12px;min-height:40px;padding:10px 17px;align-self:flex-start}
-
     /* Deals */
     .deals,.feature.alt,.membership,.areas{background:var(--muted)}
     .deal-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px}
@@ -159,7 +177,6 @@
     .deal-copy{display:flex;flex-direction:column;justify-content:center;min-height:90px;padding:16px 10px}
     .deal-copy strong{font-size:14px;color:var(--secondary)}
     .deal-copy em{font-size:11px;margin-top:5px;color:var(--muted-foreground);font-style:normal}
-
     /* ==== FINANCE ==== */
     .finance{background:var(--gradient-blue);color:var(--primary-foreground);padding:40px 24px;display:flex;align-items:center;justify-content:center;gap:45px;flex-wrap:wrap}
     .finance h2{
@@ -172,7 +189,6 @@
       margin-bottom: 0;
       line-height: 1.1;
     }
-
     /* Split */
     .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
     .split h2,.membership h2,.areas-layout h2{color:var(--secondary);font-size:34px;font-weight:900;line-height:1.2}
@@ -180,7 +196,6 @@
     .photo-panel{position:relative;height:450px;overflow:hidden}
     .photo-panel img{width:100%;height:100%;object-fit:cover;object-position:70% center}
     .photo-panel>span{position:absolute;inset:auto 0 0;background:var(--secondary);color:var(--secondary-foreground);text-align:center;padding:22px;font-size:18px;font-weight:800}
-
     /* Membership */
     .membership-inner{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:90px}
     .membership-inner>div>img{width:280px;height:auto;margin-bottom:24px}
@@ -188,12 +203,10 @@
     .booklet svg{width:75px;height:75px}
     .booklet strong{font-size:28px;font-weight:900}
     .booklet span{font-size:13px}
-
     /* Feature */
     .feature-photo{height:390px;overflow:hidden;border-bottom:5px solid var(--accent)}
     .feature-photo img{width:100%;height:100%;object-fit:cover}
     .reverse>:first-child{order:2}
-
     /* Reviews */
     .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
     .review{padding:35px;border:1px solid var(--border);border-radius:6px}
@@ -201,7 +214,6 @@
     .review p{font-size:17px;line-height:1.8;color:var(--secondary)}
     .reviewer{display:flex;align-items:center;gap:12px;font-size:13px}
     .reviewer>span{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--secondary);color:var(--secondary-foreground)}
-
     /* Guarantees */
     .guarantees{padding-top:20px}
     .guarantee-truck{display:block;width:60px;height:60px;margin:0 auto 35px;color:var(--accent)}
@@ -210,13 +222,11 @@
     .g-icon.navy{background:var(--secondary)}
     .g-icon svg{width:30px;height:30px}
     .guarantee-grid strong{font-size:11px;line-height:1.5;text-transform:uppercase;color:var(--secondary)}
-
     /* Same-day */
     .same-day{display:flex;justify-content:space-between;align-items:center;gap:35px;background:var(--gradient-accent);color:var(--accent-foreground);padding:40px;margin-bottom:60px}
     .same-day h2{font-size:32px;line-height:1.25;font-weight:900}
     .tech-badge{flex:0 0 160px;display:flex;flex-direction:column;align-items:center;gap:12px;font-size:15px;font-weight:800}
     .tech-badge svg{width:70px;height:70px}
-
     /* Areas */
     .areas-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:60px}
     .areas-layout ul{list-style:none;padding:0;columns:3;margin:24px 0}
@@ -224,12 +234,10 @@
     .areas-layout li::before{content:'•';color:var(--accent);margin-right:7px}
     .map-panel{min-height:300px;background:var(--background);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;color:var(--secondary);text-align:center;font-weight:700}
     .map-panel svg{width:75px;height:75px;color:var(--accent)}
-
     /* Schedule */
     .schedule{padding:60px 24px;background:var(--gradient-blue);color:var(--primary-foreground);text-align:center}
     .schedule h2{font-size:36px;line-height:1.2;font-weight:900}
     .cta-row{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
-
     /* Footer */
     footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;background:var(--muted);color:var(--secondary)}
     .footer-truck{position:absolute;top:-24px;left:calc(50% - 24px);width:48px;height:48px;padding:10px;border-radius:50%;background:var(--background);color:var(--accent)}
@@ -249,7 +257,6 @@
     .footer-areas{columns:3;list-style:none;padding:0;font-size:10px;line-height:1.9}
     .copyright{border-top:1px solid var(--border);padding:22px 0;font-size:11px;text-align:center;color:var(--muted-foreground)}
     .mobile-bar{display:none}
-
     /* Responsive */
     @media(max-width:1100px){
       .header-main{gap:24px;min-height:145px}
@@ -356,7 +363,6 @@
 </head>
 <body>
   <main class="home-page">
-
     <!-- ================= HEADER ================= -->
     <header class="site-header">
       <div class="header-main">
@@ -378,7 +384,6 @@
           <svg class="icon-x" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
-
       <nav aria-label="Main navigation" class="site-nav" id="siteNav">
         <a href="#services">Our Services <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></a>
         <a class="active" href="#offers">Offers</a>
@@ -389,7 +394,6 @@
         <a href="#about">About Us <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></a>
       </nav>
     </header>
-
     <!-- ================= HERO ================= -->
     <section aria-label="Holden Home Services hero" class="eco-hero" id="top">
       <img alt="Holden Heating and Cooling technician and service vans" class="eco-hero-bg" src="https://i.postimg.cc/SRd1qgks/8533374d-0b26-4d63-a90a-cf3bf804b38a.jpg" />
@@ -417,7 +421,6 @@
         <span class="o2">in Heating &amp; Cooling Repairs<small>with the installation of a new high-efficiency system</small></span>
       </a>
     </section>
-
     <!-- ================= SERVICES ================= -->
     <section class="services band" id="services">
       <h2 class="section-title">Our Services</h2>
@@ -457,7 +460,6 @@
         </article>
       </div>
     </section>
-
     <!-- ================= DEALS ================= -->
     <section class="deals band" id="offers">
       <h2 class="section-title">Our Deals</h2>
@@ -470,13 +472,11 @@
         <a class="deal" href="#schedule"><span class="deal-price tone-1"><small>Only</small><b>$XX</b></span><span class="deal-copy"><strong>Water Heater</strong><em>Clean &amp; check</em></span></a>
       </div>
     </section>
-
     <!-- ================= FINANCE ================= -->
     <section class="finance">
       <h2>Financing Available</h2>
       <a class="eco-button eco-button-green" href="#schedule">Apply Now <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.7" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
     </section>
-
     <!-- ================= ABOUT ================= -->
     <section class="about band" id="about">
       <div class="split">
@@ -494,7 +494,6 @@
         </div>
       </div>
     </section>
-
     <!-- ================= MEMBERSHIP ================= -->
     <section class="membership band" id="membership">
       <div class="membership-inner">
@@ -512,7 +511,6 @@
         </div>
       </div>
     </section>
-
     <!-- ================= FEATURE: PLUMBING ================= -->
     <section class="feature band" id="plumbing">
       <div class="split feature-split">
@@ -526,7 +524,6 @@
         </div>
       </div>
     </section>
-
     <!-- ================= FEATURE: DRAIN ================= -->
     <section class="feature band alt" id="drain-and-sewer">
       <div class="split feature-split reverse">
@@ -540,7 +537,6 @@
         </div>
       </div>
     </section>
-
     <!-- ================= FEATURE: ELECTRICAL ================= -->
     <section class="feature band" id="electrical">
       <div class="split feature-split">
@@ -554,7 +550,6 @@
         </div>
       </div>
     </section>
-
     <!-- ================= FEATURE: HEATING & COOLING ================= -->
     <section class="feature band alt" id="heating-and-cooling">
       <div class="split feature-split reverse">
@@ -568,7 +563,6 @@
         </div>
       </div>
     </section>
-
     <!-- ================= REVIEWS ================= -->
     <section class="reviews band">
       <h2 class="section-title">Customer Reviews</h2>
@@ -586,7 +580,6 @@
         </article>
       </div>
     </section>
-
     <!-- ================= GUARANTEES ================= -->
     <section class="guarantees band">
       <span class="guarantee-truck">
@@ -602,7 +595,6 @@
         <div><span class="g-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span><strong>One-Year Make It Happen Guarantee</strong></div>
       </div>
     </section>
-
     <!-- ================= AREAS ================= -->
     <section class="areas band" id="areas">
       <div class="same-day">
@@ -635,17 +627,15 @@
         </div>
       </div>
     </section>
-
     <!-- ================= SCHEDULE ================= -->
     <section class="schedule" id="schedule">
       <h2>Schedule an Appointment Today!</h2>
       <div class="cta-row centered">
         <a class="eco-button eco-button-blue" href="mailto:s5033510404@gmail.com?subject=Holden%20Service%20Appointment">Book Online <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.7" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
         <span class="or">Or</span>
-        <a class="eco-button eco-button-green" href="tel:5033510404">Call Now <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.7" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        <a class="eco-button eco-button-green" href="tel:comingsoon">Call Now <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.7" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
       </div>
     </section>
-
     <!-- ================= FOOTER ================= -->
     <footer>
       <span class="footer-truck">
@@ -658,9 +648,9 @@
           <p><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><rect height="16" rx="2" width="20" x="2" y="4"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>s5033510404@gmail.com</p>
         </div>
         <div class="footer-center">
-          <a class="footer-call" href="tel:5033510404">
+          <a class="footer-call" href="tel:comingsoon">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <span><small>Call us for same-day service</small><strong>503-351-0404</strong></span>
+            <span><small>Call us for same-day service</small><strong>Coming Soon</strong></span>
           </a>
           <div class="socials"><a href="#">in</a><a href="#">ig</a><a href="#">f</a><a href="#">X</a></div>
         </div>
@@ -677,7 +667,6 @@
       <div class="copyright">Copyright © 2026 Holden. All Rights Reserved</div>
     </footer>
   </main>
-
   <!-- ================= MOBILE BAR ================= -->
   <div class="mobile-bar">
     <a class="eco-button eco-button-blue" href="#schedule">Book Online
@@ -687,7 +676,6 @@
       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     </a>
   </div>
-
   <script>
     (function () {
       // ===== Mobile nav toggle =====
@@ -695,14 +683,12 @@
       var nav = document.getElementById('siteNav');
       var iconMenu = toggle.querySelector('.icon-menu');
       var iconX = toggle.querySelector('.icon-x');
-
       toggle.addEventListener('click', function () {
         var open = nav.classList.toggle('open');
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         iconMenu.style.display = open ? 'none' : 'block';
         iconX.style.display = open ? 'block' : 'none';
       });
-
       nav.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function () {
           nav.classList.remove('open');
@@ -711,7 +697,6 @@
           iconX.style.display = 'none';
         });
       });
-
       window.addEventListener('resize', function () {
         if (window.innerWidth > 900) {
           nav.classList.remove('open');
@@ -720,7 +705,6 @@
           iconX.style.display = 'none';
         }
       });
-
       // ===== Areas "Load More" toggle =====
       var areasToggle = document.getElementById('areasToggle');
       var areasList = document.getElementById('areasList');
