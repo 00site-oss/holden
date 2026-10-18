@@ -1,8 +1,6 @@
 /**
  * Holden – apply saved admin config to the live public page.
- * Include this AFTER the main markup, and after config.js:
- *   <script src="config.js"></script>
- *   <script src="apply-config.js"></script>
+ * Also supports Edit Mode messages from admin.html iframe parent.
  */
 (function () {
   const STORAGE_KEY = "holden_site_config_v1";
@@ -42,7 +40,6 @@
     }
     if (c.heroHighlight) root.style.setProperty("--hero-highlight", c.heroHighlight);
     if (c.financingNavy) root.style.setProperty("--financing-navy", c.financingNavy);
-    // rebuild accent gradient
     if (c.accent && c.accentLight) {
       root.style.setProperty("--gradient-green", "linear-gradient(105deg, " + c.accentLight + ", " + c.accent + ")");
       root.style.setProperty("--gradient-accent", "linear-gradient(105deg, " + c.accentLight + ", " + c.accent + ")");
@@ -51,42 +48,26 @@
 
   function applyContact(contact) {
     if (!contact) return;
-    // All tel: links
-    document.querySelectorAll('a[href^="tel:"]').forEach((a) => {
+    document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
       a.setAttribute("href", contact.phoneTel || "tel:comingsoon");
-      // Update button text when it contains "Call Now"
-      if (a.textContent.trim().toLowerCase().includes("call now") || a.classList.contains("eco-button-green")) {
-        // keep icon, replace text nodes carefully
-        const text = a.closest(".footer-call") ? null : a;
-      }
     });
-
-    // Footer big phone display
-    const footerStrong = document.querySelector(".footer-call strong");
+    var footerStrong = document.querySelector(".footer-call strong");
     if (footerStrong) footerStrong.textContent = contact.phoneDisplay || "Coming Soon";
-
-    // Header "Call Now n/a" style button – leave label, just fix href (already done)
-
-    // Email links
-    document.querySelectorAll('a[href^="mailto:"]').forEach((a) => {
-      const subject = a.href.includes("subject=") ? a.href.split("subject=")[1] : "";
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+      var subject = a.href.indexOf("subject=") > -1 ? a.href.split("subject=")[1] : "";
       a.href = "mailto:" + (contact.email || "") + (subject ? "?subject=" + subject : "");
     });
-
-    // Footer email text
-    const emailPs = document.querySelectorAll(".footer-grid p");
-    emailPs.forEach((p) => {
-      if (p.textContent.includes("@")) {
-        // keep the svg, replace text
-        const svg = p.querySelector("svg");
+    document.querySelectorAll(".footer-grid p").forEach(function (p) {
+      if (p.textContent.indexOf("@") > -1) {
+        var svg = p.querySelector("svg");
         p.innerHTML = "";
         if (svg) p.appendChild(svg);
         p.appendChild(document.createTextNode(contact.email || ""));
       }
-      if (p.textContent.includes("Ryan") || p.textContent.includes("Silverton")) {
-        const svg = p.querySelector("svg");
+      if (p.textContent.indexOf("Ryan") > -1 || p.textContent.indexOf("Silverton") > -1) {
+        var svg2 = p.querySelector("svg");
         p.innerHTML = "";
-        if (svg) p.appendChild(svg);
+        if (svg2) p.appendChild(svg2);
         p.appendChild(document.createTextNode(contact.address || ""));
       }
     });
@@ -94,13 +75,12 @@
 
   function applyHero(hero) {
     if (!hero) return;
-    const strong = document.querySelector(".hero-offer > strong");
+    var strong = document.querySelector(".hero-offer > strong");
     if (strong) strong.textContent = hero.offerAmount || strong.textContent;
-    const o2 = document.querySelector(".hero-offer .o2");
+    var o2 = document.querySelector(".hero-offer .o2");
     if (o2) {
-      // first text node + small
-      const small = o2.querySelector("small");
-      o2.childNodes.forEach((n) => {
+      var small = o2.querySelector("small");
+      o2.childNodes.forEach(function (n) {
         if (n.nodeType === 3) n.textContent = (hero.offerText || "") + " ";
       });
       if (small) small.textContent = hero.offerSub || small.textContent;
@@ -109,11 +89,11 @@
 
   function applyDeals(deals) {
     if (!Array.isArray(deals) || !deals.length) return;
-    const grid = document.querySelector(".deal-grid");
+    var grid = document.querySelector(".deal-grid");
     if (!grid) return;
     grid.innerHTML = "";
-    deals.forEach((d) => {
-      const a = document.createElement("a");
+    deals.forEach(function (d) {
+      var a = document.createElement("a");
       a.className = "deal";
       a.href = "#schedule";
       a.innerHTML =
@@ -128,43 +108,43 @@
 
   function applyServices(services) {
     if (!services) return;
-    const cards = document.querySelectorAll(".service-card");
-    const map = ["plumbing", "drain", "electrical", "hvac"];
-    cards.forEach((card, i) => {
-      const key = map[i];
+    var cards = document.querySelectorAll(".service-card");
+    var map = ["plumbing", "drain", "electrical", "hvac"];
+    cards.forEach(function (card, i) {
+      var key = map[i];
       if (!key || !services[key]) return;
-      const p = card.querySelector("p");
+      var p = card.querySelector("p");
       if (p) p.textContent = services[key];
     });
   }
 
   function applyAbout(about) {
     if (!about) return;
-    const section = document.getElementById("about");
+    var section = document.getElementById("about");
     if (!section) return;
-    const h2 = section.querySelector("h2");
+    var h2 = section.querySelector("h2");
     if (h2 && about.title) h2.textContent = about.title;
-    const ps = section.querySelectorAll(".split > div:first-child > p");
+    var ps = section.querySelectorAll(".split > div:first-child > p");
     if (ps[0] && about.p1) ps[0].textContent = about.p1;
     if (ps[1] && about.p2) ps[1].textContent = about.p2;
   }
 
   function applyMembership(mem) {
     if (!mem) return;
-    const section = document.getElementById("membership");
+    var section = document.getElementById("membership");
     if (!section) return;
-    const h2 = section.querySelector("h2");
+    var h2 = section.querySelector("h2");
     if (h2 && mem.title) h2.textContent = mem.title;
-    const p = section.querySelector(".membership-inner > div > p");
+    var p = section.querySelector(".membership-inner > div > p");
     if (p && mem.body) p.textContent = mem.body;
   }
 
   function applySeo(seo) {
     if (!seo) return;
     if (seo.title) document.title = seo.title;
-    const desc = document.querySelector('meta[name="description"]');
+    var desc = document.querySelector('meta[name="description"]');
     if (desc && seo.description) desc.setAttribute("content", seo.description);
-    const can = document.querySelector('link[rel="canonical"]');
+    var can = document.querySelector('link[rel="canonical"]');
     if (can && seo.canonical) can.setAttribute("href", seo.canonical);
   }
 
@@ -176,8 +156,8 @@
       .replace(/"/g, "&quot;");
   }
 
-  function applyAll() {
-    const cfg = getConfig();
+  function applyAll(cfg) {
+    cfg = cfg || getConfig();
     applyColors(cfg.colors);
     applyContact(cfg.contact);
     applyHero(cfg.hero);
@@ -188,14 +168,56 @@
     applySeo(cfg.seo);
   }
 
-  // Run when DOM is ready
+  window.__holdenApply = applyAll;
+
+  // Edit Mode: make text contenteditable when parent admin enables it
+  var editStyle = null;
+  function setEditMode(enabled) {
+    var selectors = "h1, h2, h3, p, .deal-copy strong, .deal-copy em, .deal-price b, .deal-price small, .hero-offer strong, .hero-offer .o2, .section-title, .footer-call strong";
+    var nodes = document.querySelectorAll(selectors);
+    nodes.forEach(function (el) {
+      el.contentEditable = enabled ? "true" : "false";
+      if (enabled) {
+        el.style.outline = "1px dashed rgba(224,106,38,0.5)";
+        el.style.cursor = "text";
+      } else {
+        el.style.outline = "";
+        el.style.cursor = "";
+      }
+    });
+    if (enabled && !editStyle) {
+      editStyle = document.createElement("style");
+      editStyle.id = "holden-edit-style";
+      editStyle.textContent = "[contenteditable=true]:focus { outline: 2px solid #E06A26 !important; background: rgba(224,106,38,0.06); }";
+      document.head.appendChild(editStyle);
+    }
+    if (!enabled && editStyle) {
+      editStyle.remove();
+      editStyle = null;
+    }
+  }
+
+  window.addEventListener("message", function (e) {
+    if (!e.data || !e.data.type) return;
+    if (e.data.type === "HOLDEN_APPLY_CONFIG") {
+      if (e.data.config) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(e.data.config));
+        } catch (err) {}
+      }
+      applyAll(e.data.config || getConfig());
+    }
+    if (e.data.type === "HOLDEN_EDIT_MODE") {
+      setEditMode(!!e.data.enabled);
+    }
+  });
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyAll);
+    document.addEventListener("DOMContentLoaded", function () { applyAll(); });
   } else {
     applyAll();
   }
 
-  // Optional: react if admin saves in another tab
   window.addEventListener("storage", function (e) {
     if (e.key === STORAGE_KEY) applyAll();
   });
