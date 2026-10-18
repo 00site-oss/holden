@@ -5,716 +5,367 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
   <meta name="googlebot" content="noindex, nofollow" />
-  <title>Holden Admin Panel – Internal Only</title>
-  <link rel="canonical" href="https://callholden.com/admin.html" />
+  <title>Holden Admin – Live Visual Editor (Internal)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0f1419;
-      --surface: #1a2332;
-      --surface2: #243044;
-      --border: #2d3a4f;
-      --text: #e8eef7;
-      --muted: #8b9bb4;
-      --accent: #E06A26;
-      --accent-hover: #F08442;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --radius: 10px;
-      --shadow: 0 8px 32px rgba(0,0,0,.35);
+      --admin-bg: #0c1118;
+      --admin-surface: #151c27;
+      --admin-border: #243044;
+      --admin-text: #e8eef7;
+      --admin-muted: #8b9bb4;
+      --admin-accent: #E06A26;
+      --admin-accent-h: #F08442;
+      --admin-success: #22c55e;
+      --admin-danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
     body {
       font-family: "Inter", system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.5;
+      background: var(--admin-bg);
+      color: var(--admin-text);
+      overflow: hidden;
     }
-    a { color: inherit; text-decoration: none; }
-
-    /* ===== LOGIN ===== */
     #login-screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: radial-gradient(ellipse at 30% 20%, #1e2a3a 0%, var(--bg) 60%);
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 30% 20%, #1a2433 0%, var(--admin-bg) 55%);
     }
     .login-card {
-      width: 100%;
-      max-width: 400px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 40px 32px;
-      box-shadow: var(--shadow);
+      width: 100%; max-width: 400px;
+      background: var(--admin-surface);
+      border: 1px solid var(--admin-border);
+      border-radius: 16px; padding: 40px 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
     }
-    .login-card h1 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .login-card p {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
-    .login-card label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 6px;
-      color: var(--muted);
-    }
+    .login-card h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .login-card p { color: var(--admin-muted); font-size: 14px; margin-bottom: 24px; }
+    .login-card label { display: block; font-size: 13px; color: var(--admin-muted); margin-bottom: 6px; }
     .login-card input {
-      width: 100%;
-      height: 44px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0 14px;
-      color: var(--text);
-      font-size: 15px;
-      margin-bottom: 18px;
-      outline: none;
-      transition: border-color .15s;
+      width: 100%; height: 44px; background: var(--admin-bg);
+      border: 1px solid var(--admin-border); border-radius: 8px;
+      padding: 0 14px; color: var(--admin-text); font-size: 15px; margin-bottom: 16px; outline: none;
     }
-    .login-card input:focus { border-color: var(--accent); }
+    .login-card input:focus { border-color: var(--admin-accent); }
     .login-card button {
-      width: 100%;
-      height: 46px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .15s;
+      width: 100%; height: 46px; background: var(--admin-accent); color: #fff;
+      border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer;
     }
-    .login-card button:hover { background: var(--accent-hover); }
-    .login-error {
-      color: var(--danger);
-      font-size: 13px;
-      margin-bottom: 12px;
-      display: none;
+    .login-card button:hover { background: var(--admin-accent-h); }
+    .login-error { color: var(--admin-danger); font-size: 13px; margin-bottom: 10px; display: none; }
+    #app { display: none; height: 100vh; flex-direction: column; }
+    #app.show { display: flex; }
+    .admin-bar {
+      height: 52px; flex-shrink: 0;
+      background: var(--admin-surface);
+      border-bottom: 1px solid var(--admin-border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; gap: 12px; z-index: 100;
     }
-
-    /* ===== LAYOUT ===== */
-    #app { display: none; min-height: 100vh; }
-    .sidebar {
-      position: fixed;
-      top: 0; left: 0; bottom: 0;
-      width: 240px;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      z-index: 50;
+    .admin-bar-left { display: flex; align-items: center; gap: 14px; }
+    .admin-bar-left strong { font-size: 14px; font-weight: 700; }
+    .badge {
+      font-size: 11px; font-weight: 600; padding: 3px 8px;
+      border-radius: 999px; background: rgba(34,197,94,.15); color: var(--admin-success);
     }
-    .sidebar-brand {
-      padding: 24px 20px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-brand strong {
-      display: block;
-      font-size: 16px;
-      font-weight: 700;
-    }
-    .sidebar-brand span {
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .sidebar-nav {
-      flex: 1;
-      padding: 16px 12px;
-      overflow-y: auto;
-    }
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted);
-      cursor: pointer;
-      transition: background .15s, color .15s;
-      margin-bottom: 2px;
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
-    }
-    .nav-item:hover, .nav-item.active {
-      background: var(--surface2);
-      color: var(--text);
-    }
-    .nav-item.active { color: var(--accent); }
-    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .sidebar-footer button {
-      width: 100%;
-      height: 40px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--muted);
-      font-size: 13px;
-      cursor: pointer;
+    .admin-bar-center { display: flex; gap: 6px; }
+    .admin-bar-right { display: flex; align-items: center; gap: 8px; }
+    .ab-btn {
+      height: 34px; padding: 0 14px; border-radius: 7px; font-size: 13px; font-weight: 600;
+      border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
       transition: all .15s;
     }
-    .sidebar-footer button:hover {
-      border-color: var(--danger);
-      color: var(--danger);
+    .ab-btn-primary { background: var(--admin-accent); color: #fff; }
+    .ab-btn-primary:hover { background: var(--admin-accent-h); }
+    .ab-btn-ghost {
+      background: transparent; color: var(--admin-muted);
+      border: 1px solid var(--admin-border);
     }
-
-    .main {
-      margin-left: 240px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    .ab-btn-ghost:hover { color: var(--admin-text); border-color: var(--admin-muted); }
+    .ab-btn-danger { background: transparent; color: var(--admin-danger); border: 1px solid var(--admin-danger); }
+    .ab-btn.active {
+      background: rgba(224,106,38,.2); color: var(--admin-accent);
+      border-color: var(--admin-accent);
     }
-    .topbar {
-      height: 64px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
-      position: sticky;
-      top: 0;
-      z-index: 40;
+    .admin-body { flex: 1; display: flex; overflow: hidden; }
+    .tools {
+      width: 320px; flex-shrink: 0;
+      background: var(--admin-surface);
+      border-right: 1px solid var(--admin-border);
+      display: flex; flex-direction: column;
+      overflow: hidden;
     }
-    .topbar h2 { font-size: 18px; font-weight: 600; }
-    .topbar-actions { display: flex; gap: 12px; align-items: center; }
-    .btn {
-      height: 38px;
-      padding: 0 18px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all .15s;
+    .tools-tabs {
+      display: flex; border-bottom: 1px solid var(--admin-border); flex-shrink: 0;
     }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .btn-secondary {
-      background: var(--surface2);
-      color: var(--text);
-      border: 1px solid var(--border);
+    .tools-tab {
+      flex: 1; height: 42px; background: none; border: none; color: var(--admin-muted);
+      font-size: 12px; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent;
     }
-    .btn-secondary:hover { border-color: var(--muted); }
-    .btn-success { background: var(--success); color: #fff; }
-    .btn-danger { background: var(--danger); color: #fff; }
-    .btn-sm { height: 32px; padding: 0 12px; font-size: 12px; }
-
-    .content {
-      flex: 1;
-      padding: 28px;
-      max-width: 1100px;
+    .tools-tab.active { color: var(--admin-accent); border-bottom-color: var(--admin-accent); }
+    .tools-panels { flex: 1; overflow-y: auto; padding: 16px; }
+    .tools-panel { display: none; }
+    .tools-panel.active { display: block; }
+    .tool-section { margin-bottom: 22px; }
+    .tool-section h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--admin-muted); margin-bottom: 10px;
     }
-
-    /* Cards & forms */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 20px;
+    .tool-group { margin-bottom: 12px; }
+    .tool-group label {
+      display: block; font-size: 12px; color: var(--admin-muted); margin-bottom: 5px;
     }
-    .card h3 {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .tool-group input[type="text"],
+    .tool-group input[type="email"],
+    .tool-group input[type="url"],
+    .tool-group textarea,
+    .tool-group select {
+      width: 100%; background: var(--admin-bg); border: 1px solid var(--admin-border);
+      border-radius: 7px; padding: 9px 11px; color: var(--admin-text);
+      font-size: 13px; font-family: inherit; outline: none;
     }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .tool-group input:focus, .tool-group textarea:focus { border-color: var(--admin-accent); }
+    .tool-group textarea { min-height: 70px; resize: vertical; }
+    .color-line { display: flex; gap: 8px; align-items: center; }
+    .color-line input[type="color"] {
+      width: 40px; height: 34px; padding: 2px; border: 1px solid var(--admin-border);
+      border-radius: 6px; background: var(--admin-bg); cursor: pointer;
     }
-    .form-grid.full { grid-template-columns: 1fr; }
-    .form-group { margin-bottom: 4px; }
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
-      margin-bottom: 6px;
+    .color-line input[type="text"] { flex: 1; }
+    .deal-item {
+      background: var(--admin-bg); border: 1px solid var(--admin-border);
+      border-radius: 8px; padding: 12px; margin-bottom: 10px;
     }
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      color: var(--text);
-      font-size: 14px;
-      font-family: inherit;
-      outline: none;
-      transition: border-color .15s;
+    .deal-item-head {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
     }
-    .form-group input:focus,
-    .form-group textarea:focus { border-color: var(--accent); }
-    .form-group textarea { min-height: 80px; resize: vertical; }
-    .color-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .deal-item-head strong { font-size: 13px; }
+    .deal-item .mini-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+    .btn-xs {
+      height: 28px; padding: 0 10px; font-size: 11px; font-weight: 600;
+      border-radius: 6px; border: none; cursor: pointer;
     }
-    .color-row input[type="color"] {
-      width: 44px;
-      height: 36px;
-      padding: 2px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--bg);
-      cursor: pointer;
+    .btn-xs-danger { background: rgba(239,68,68,.15); color: var(--admin-danger); }
+    .preview-wrap {
+      flex: 1; position: relative; background: #1a1a1a; overflow: hidden;
+      display: flex; flex-direction: column;
     }
-    .color-row input[type="text"] { flex: 1; }
-
-    /* Deals table */
-    .deals-table { width: 100%; border-collapse: collapse; }
-    .deals-table th {
-      text-align: left;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--border);
+    .preview-toolbar {
+      height: 36px; background: #111; border-bottom: 1px solid #222;
+      display: flex; align-items: center; padding: 0 12px; gap: 10px; flex-shrink: 0;
     }
-    .deals-table td {
-      padding: 10px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: middle;
+    .preview-toolbar span { font-size: 12px; color: #888; }
+    .device-btns { display: flex; gap: 4px; margin-left: auto; }
+    .device-btn {
+      width: 32px; height: 26px; border: 1px solid #333; background: #1a1a1a;
+      border-radius: 5px; color: #888; cursor: pointer; font-size: 11px;
     }
-    .deals-table input {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 10px;
-      color: var(--text);
-      font-size: 13px;
+    .device-btn.active { border-color: var(--admin-accent); color: var(--admin-accent); }
+    .iframe-frame {
+      flex: 1; display: flex; justify-content: center; align-items: stretch;
+      padding: 0; overflow: hidden; background: #0a0a0a;
     }
-    .deals-table .actions { white-space: nowrap; }
-
-    /* Toast */
+    #siteFrame {
+      width: 100%; height: 100%; border: none; background: #fff;
+      transition: width .25s ease;
+    }
+    #siteFrame.tablet { width: 768px; max-width: 100%; margin: 0 auto; box-shadow: 0 0 0 1px #333; }
+    #siteFrame.mobile { width: 390px; max-width: 100%; margin: 0 auto; box-shadow: 0 0 0 1px #333; }
+    .edit-hint {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(15,20,30,.92); border: 1px solid var(--admin-border);
+      color: var(--admin-text); font-size: 12px; padding: 8px 16px;
+      border-radius: 999px; pointer-events: none; opacity: 0; transition: opacity .2s;
+      z-index: 20; white-space: nowrap;
+    }
+    .edit-hint.show { opacity: 1; }
     .toast {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      box-shadow: var(--shadow);
-      transform: translateY(80px);
-      opacity: 0;
-      transition: all .25s ease;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      background: var(--admin-surface); border: 1px solid var(--admin-border);
+      border-radius: 10px; padding: 12px 18px; font-size: 13px; font-weight: 500;
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+      transform: translateY(60px); opacity: 0; transition: all .25s;
     }
     .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.success { border-color: var(--success); }
-    .toast.error { border-color: var(--danger); }
-
-    /* Status badge */
-    .status-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-      display: inline-block;
-      margin-right: 6px;
-    }
-
-    /* Preview strip */
-    .preview-strip {
-      background: var(--surface2);
-      border: 1px dashed var(--border);
-      border-radius: 8px;
-      padding: 14px 18px;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .preview-strip a {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* Dashboard stats */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-    }
-    .stat-card .label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-    .stat-card .value { font-size: 24px; font-weight: 700; }
-
-    /* Mobile */
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      padding: 8px;
-    }
-    @media (max-width: 900px) {
-      .sidebar { transform: translateX(-100%); transition: transform .25s; }
-      .sidebar.open { transform: translateX(0); }
-      .main { margin-left: 0; }
-      .menu-toggle { display: block; }
-      .form-grid { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: 1fr 1fr; }
-      .content { padding: 18px; }
-    }
-    @media (max-width: 560px) {
-      .stats { grid-template-columns: 1fr; }
-    }
-
-    /* Hidden SEO notice */
-    .seo-notice {
-      background: rgba(239, 68, 68, 0.08);
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      color: #fca5a5;
-      font-size: 12px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      margin-bottom: 20px;
+    .toast.ok { border-color: var(--admin-success); }
+    @media (max-width: 700px) {
+      .admin-body { flex-direction: column; }
+      .tools { width: 100%; height: 40%; border-right: none; border-bottom: 1px solid var(--admin-border); }
+      .preview-wrap { height: 60%; }
     }
   </style>
 </head>
 <body>
-  <!-- ================= LOGIN ================= -->
   <div id="login-screen">
     <div class="login-card">
-      <h1>Holden Admin</h1>
-      <p>Sign in to manage the live website. This page is blocked from search engines.</p>
-      <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+      <h1>Holden Live Editor</h1>
+      <p>Sign in to edit the live website visually. This page is hidden from search engines.</p>
+      <div class="login-error" id="loginError">Wrong password.</div>
       <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter admin password" autocomplete="current-password" />
-      <button type="button" id="loginBtn">Sign In</button>
-      <p style="margin-top:18px;font-size:12px;color:var(--muted);text-align:center;">
-        Default password: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;">holden2026</code>
+      <input type="password" id="password" placeholder="Admin password" autocomplete="current-password" />
+      <button type="button" id="loginBtn">Enter Admin</button>
+      <p style="margin-top:16px;font-size:12px;color:var(--admin-muted);text-align:center;">
+        Default: <code style="background:#0c1118;padding:2px 6px;border-radius:4px;">holden2026</code>
       </p>
     </div>
   </div>
 
-  <!-- ================= APP ================= -->
   <div id="app">
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand">
+    <header class="admin-bar">
+      <div class="admin-bar-left">
         <strong>Holden Admin</strong>
-        <span>Live site control</span>
+        <span class="badge">● Live</span>
       </div>
-      <nav class="sidebar-nav">
-        <button class="nav-item active" data-panel="dashboard">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          Dashboard
-        </button>
-        <button class="nav-item" data-panel="colors">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10c0 2.5-1 4.5-2.5 6L12 22z"/></svg>
-          Colors & Theme
-        </button>
-        <button class="nav-item" data-panel="contact">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Contact Info
-        </button>
-        <button class="nav-item" data-panel="hero">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Hero & Offer
-        </button>
-        <button class="nav-item" data-panel="deals">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Deals (CRUD)
-        </button>
-        <button class="nav-item" data-panel="content">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
-          Page Content
-        </button>
-        <button class="nav-item" data-panel="seo">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          SEO Settings
-        </button>
-      </nav>
-      <div class="sidebar-footer">
-        <button type="button" id="logoutBtn">Sign Out</button>
+      <div class="admin-bar-center">
+        <button class="ab-btn ab-btn-ghost" id="editModeBtn" type="button">✎ Edit Mode</button>
+        <button class="ab-btn ab-btn-ghost" id="refreshPreviewBtn" type="button">↻ Refresh</button>
       </div>
-    </aside>
+      <div class="admin-bar-right">
+        <button class="ab-btn ab-btn-ghost" id="openPublicBtn" type="button">Open Public Site</button>
+        <button class="ab-btn ab-btn-primary" id="saveBtn" type="button">Save & Publish</button>
+        <button class="ab-btn ab-btn-danger" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </header>
 
-    <div class="main">
-      <header class="topbar">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-          </button>
-          <h2 id="panelTitle">Dashboard</h2>
+    <div class="admin-body">
+      <aside class="tools">
+        <div class="tools-tabs">
+          <button class="tools-tab active" data-tab="theme">Theme</button>
+          <button class="tools-tab" data-tab="content">Content</button>
+          <button class="tools-tab" data-tab="deals">Deals</button>
+          <button class="tools-tab" data-tab="seo">SEO</button>
         </div>
-        <div class="topbar-actions">
-          <span style="font-size:13px;color:var(--muted);"><span class="status-dot"></span> Live</span>
-          <button class="btn btn-secondary" type="button" id="previewBtn">View Live Site</button>
-          <button class="btn btn-primary" type="button" id="saveBtn">Save & Publish</button>
-        </div>
-      </header>
-
-      <div class="content">
-        <div class="seo-notice">
-          🔒 This admin panel has <strong>noindex, nofollow</strong> meta tags. Search engines are instructed not to index this page.
-        </div>
-
-        <!-- DASHBOARD -->
-        <section class="panel" id="panel-dashboard">
-          <div class="preview-strip">
-            <span>Changes you save here are applied immediately to the public site (via browser storage). Open the live site in another tab to verify.</span>
-            <a href="index.html" target="_blank" rel="noopener">Open index.html →</a>
-          </div>
-          <div class="stats">
-            <div class="stat-card"><div class="label">Deals</div><div class="value" id="statDeals">5</div></div>
-            <div class="stat-card"><div class="label">Accent Color</div><div class="value" style="font-size:16px;" id="statAccent">#E06A26</div></div>
-            <div class="stat-card"><div class="label">Phone Status</div><div class="value" style="font-size:16px;" id="statPhone">Coming Soon</div></div>
-            <div class="stat-card"><div class="label">Last Saved</div><div class="value" style="font-size:14px;" id="statSaved">—</div></div>
-          </div>
-          <div class="card">
-            <h3>Quick actions</h3>
-            <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Use the left menu to edit colors, contact info, deals, hero offer, page copy, and SEO. Click <strong>Save & Publish</strong> after any change. The public site reads the saved configuration on every page load.</p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <button class="btn btn-secondary btn-sm" type="button" onclick="showPanel('colors')">Edit Colors</button>
-              <button class="btn btn-secondary btn-sm" type="button" onclick="showPanel('deals')">Manage Deals</button>
-              <button class="btn btn-secondary btn-sm" type="button" onclick="showPanel('contact')">Contact Info</button>
-              <button class="btn btn-secondary btn-sm" type="button" onclick="showPanel('hero')">Hero Offer</button>
-            </div>
-          </div>
-        </section>
-
-        <!-- COLORS -->
-        <section class="panel" id="panel-colors" style="display:none;">
-          <div class="card">
-            <h3>Brand Colors</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Accent (primary orange)</label>
-                <div class="color-row">
+        <div class="tools-panels">
+          <div class="tools-panel active" id="tab-theme">
+            <div class="tool-section">
+              <h4>Brand Colors</h4>
+              <div class="tool-group">
+                <label>Accent (orange)</label>
+                <div class="color-line">
                   <input type="color" id="c-accent" value="#E06A26" />
-                  <input type="text" id="c-accent-text" value="#E06A26" />
+                  <input type="text" id="c-accent-t" value="#E06A26" />
                 </div>
               </div>
-              <div class="form-group">
+              <div class="tool-group">
                 <label>Accent Dark</label>
-                <div class="color-row">
+                <div class="color-line">
                   <input type="color" id="c-accentDark" value="#C4591C" />
-                  <input type="text" id="c-accentDark-text" value="#C4591C" />
+                  <input type="text" id="c-accentDark-t" value="#C4591C" />
                 </div>
               </div>
-              <div class="form-group">
+              <div class="tool-group">
                 <label>Accent Light</label>
-                <div class="color-row">
+                <div class="color-line">
                   <input type="color" id="c-accentLight" value="#F08442" />
-                  <input type="text" id="c-accentLight-text" value="#F08442" />
+                  <input type="text" id="c-accentLight-t" value="#F08442" />
                 </div>
               </div>
-              <div class="form-group">
+              <div class="tool-group">
                 <label>Hero Highlight</label>
-                <div class="color-row">
+                <div class="color-line">
                   <input type="color" id="c-heroHighlight" value="#FFB066" />
-                  <input type="text" id="c-heroHighlight-text" value="#FFB066" />
+                  <input type="text" id="c-heroHighlight-t" value="#FFB066" />
                 </div>
               </div>
-              <div class="form-group">
+              <div class="tool-group">
                 <label>Financing Navy</label>
-                <div class="color-row">
+                <div class="color-line">
                   <input type="color" id="c-financingNavy" value="#0F2A47" />
-                  <input type="text" id="c-financingNavy-text" value="#0F2A47" />
+                  <input type="text" id="c-financingNavy-t" value="#0F2A47" />
                 </div>
               </div>
+              <button class="ab-btn ab-btn-primary" style="width:100%;margin-top:8px;" type="button" id="applyColorsBtn">Apply Colors to Preview</button>
             </div>
-            <p style="margin-top:16px;font-size:13px;color:var(--muted;">Tip: Change a color, click Save & Publish, then refresh the public site to see the new theme.</p>
-          </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section class="panel" id="panel-contact" style="display:none;">
-          <div class="card">
-            <h3>Contact Information</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Phone display text</label>
-                <input type="text" id="contact-phoneDisplay" placeholder="e.g. 503-351-0404 or Coming Soon" />
+            <div class="tool-section">
+              <h4>Contact</h4>
+              <div class="tool-group">
+                <label>Phone display</label>
+                <input type="text" id="contact-phoneDisplay" placeholder="Coming Soon" />
               </div>
-              <div class="form-group">
+              <div class="tool-group">
                 <label>Phone tel: link</label>
-                <input type="text" id="contact-phoneTel" placeholder="tel:5033510404 or tel:comingsoon" />
+                <input type="text" id="contact-phoneTel" placeholder="tel:comingsoon" />
               </div>
-              <div class="form-group">
+              <div class="tool-group">
                 <label>Email</label>
                 <input type="email" id="contact-email" />
               </div>
-              <div class="form-group">
+              <div class="tool-group">
                 <label>Address</label>
                 <input type="text" id="contact-address" />
               </div>
+              <button class="ab-btn ab-btn-primary" style="width:100%;margin-top:8px;" type="button" id="applyContactBtn">Apply Contact to Preview</button>
             </div>
           </div>
-        </section>
 
-        <!-- HERO -->
-        <section class="panel" id="panel-hero" style="display:none;">
-          <div class="card">
-            <h3>Hero Offer Bar</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Offer amount (big number)</label>
-                <input type="text" id="hero-offerAmount" placeholder="$500" />
-              </div>
-              <div class="form-group">
-                <label>Offer main text</label>
-                <input type="text" id="hero-offerText" />
-              </div>
-              <div class="form-group" style="grid-column:1/-1;">
-                <label>Offer sub text</label>
-                <input type="text" id="hero-offerSub" />
-              </div>
+          <div class="tools-panel" id="tab-content">
+            <div class="tool-section">
+              <h4>Hero Offer</h4>
+              <div class="tool-group"><label>Amount (e.g. $500)</label><input type="text" id="hero-amount" /></div>
+              <div class="tool-group"><label>Main text</label><input type="text" id="hero-text" /></div>
+              <div class="tool-group"><label>Sub text</label><input type="text" id="hero-sub" /></div>
+              <button class="ab-btn ab-btn-primary" style="width:100%;" type="button" id="applyHeroBtn">Apply Hero</button>
+            </div>
+            <div class="tool-section">
+              <h4>Services text</h4>
+              <div class="tool-group"><label>Plumbing</label><textarea id="svc-plumbing"></textarea></div>
+              <div class="tool-group"><label>Drain & Sewer</label><textarea id="svc-drain"></textarea></div>
+              <div class="tool-group"><label>Electrical</label><textarea id="svc-electrical"></textarea></div>
+              <div class="tool-group"><label>Heating & Cooling</label><textarea id="svc-hvac"></textarea></div>
+              <button class="ab-btn ab-btn-primary" style="width:100%;" type="button" id="applyServicesBtn">Apply Services</button>
+            </div>
+            <div class="tool-section">
+              <h4>About</h4>
+              <div class="tool-group"><label>Title</label><input type="text" id="about-title" /></div>
+              <div class="tool-group"><label>Paragraph 1</label><textarea id="about-p1"></textarea></div>
+              <div class="tool-group"><label>Paragraph 2</label><textarea id="about-p2"></textarea></div>
+              <button class="ab-btn ab-btn-primary" style="width:100%;" type="button" id="applyAboutBtn">Apply About</button>
+            </div>
+            <div class="tool-section">
+              <h4>Membership</h4>
+              <div class="tool-group"><label>Title</label><input type="text" id="mem-title" /></div>
+              <div class="tool-group"><label>Body</label><textarea id="mem-body"></textarea></div>
+              <button class="ab-btn ab-btn-primary" style="width:100%;" type="button" id="applyMemBtn">Apply Membership</button>
             </div>
           </div>
-        </section>
 
-        <!-- DEALS -->
-        <section class="panel" id="panel-deals" style="display:none;">
-          <div class="card">
-            <h3>
-              Deals
-              <button class="btn btn-primary btn-sm" type="button" id="addDealBtn">+ Add Deal</button>
-            </h3>
-            <table class="deals-table">
-              <thead>
-                <tr>
-                  <th style="width:12%">Label</th>
-                  <th style="width:14%">Price</th>
-                  <th style="width:22%">Title</th>
-                  <th style="width:28%">Subtitle</th>
-                  <th style="width:12%">Tone</th>
-                  <th style="width:12%"></th>
-                </tr>
-              </thead>
-              <tbody id="dealsBody"></tbody>
-            </table>
+          <div class="tools-panel" id="tab-deals">
+            <div class="tool-section">
+              <h4>Deals CRUD</h4>
+              <div id="dealsList"></div>
+              <button class="ab-btn ab-btn-primary" style="width:100%;margin-top:8px;" type="button" id="addDealBtn">+ Add New Deal</button>
+              <button class="ab-btn ab-btn-ghost" style="width:100%;margin-top:8px;" type="button" id="applyDealsBtn">Apply Deals to Preview</button>
+            </div>
           </div>
-        </section>
 
-        <!-- CONTENT -->
-        <section class="panel" id="panel-content" style="display:none;">
-          <div class="card">
-            <h3>Services descriptions</h3>
-            <div class="form-grid full">
-              <div class="form-group">
-                <label>Plumbing</label>
-                <textarea id="svc-plumbing"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Drain and Sewer</label>
-                <textarea id="svc-drain"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Electrical</label>
-                <textarea id="svc-electrical"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Heating and Cooling</label>
-                <textarea id="svc-hvac"></textarea>
-              </div>
+          <div class="tools-panel" id="tab-seo">
+            <div class="tool-section">
+              <h4>SEO (public site)</h4>
+              <div class="tool-group"><label>Title</label><input type="text" id="seo-title" /></div>
+              <div class="tool-group"><label>Meta description</label><textarea id="seo-desc"></textarea></div>
+              <div class="tool-group"><label>Canonical URL</label><input type="url" id="seo-canonical" /></div>
+              <p style="font-size:12px;color:var(--admin-muted);margin-top:10px;">Saved SEO values apply when the public site loads the config.</p>
             </div>
           </div>
-          <div class="card">
-            <h3>About section</h3>
-            <div class="form-grid full">
-              <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="about-title" />
-              </div>
-              <div class="form-group">
-                <label>Paragraph 1</label>
-                <textarea id="about-p1"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Paragraph 2</label>
-                <textarea id="about-p2"></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Membership section</h3>
-            <div class="form-grid full">
-              <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="mem-title" />
-              </div>
-              <div class="form-group">
-                <label>Body</label>
-                <textarea id="mem-body"></textarea>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
+      </aside>
 
-        <!-- SEO -->
-        <section class="panel" id="panel-seo" style="display:none;">
-          <div class="card">
-            <h3>SEO Settings (public site)</h3>
-            <div class="form-grid full">
-              <div class="form-group">
-                <label>Page Title</label>
-                <input type="text" id="seo-title" />
-              </div>
-              <div class="form-group">
-                <label>Meta Description</label>
-                <textarea id="seo-description"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Canonical URL</label>
-                <input type="url" id="seo-canonical" />
-              </div>
-            </div>
-            <p style="margin-top:12px;font-size:13px;color:var(--muted);">These values are written into the public page head when the site loads the saved config.</p>
+      <div class="preview-wrap">
+        <div class="preview-toolbar">
+          <span>Live website preview — this is your real site</span>
+          <div class="device-btns">
+            <button class="device-btn active" data-device="desktop" type="button" title="Desktop">🖥</button>
+            <button class="device-btn" data-device="tablet" type="button" title="Tablet">▣</button>
+            <button class="device-btn" data-device="mobile" type="button" title="Mobile">▮</button>
           </div>
-        </section>
+        </div>
+        <div class="iframe-frame">
+          <iframe id="siteFrame" src="index.html" title="Live site preview"></iframe>
+        </div>
+        <div class="edit-hint" id="editHint">Edit Mode ON — click text on the site to edit it inline</div>
       </div>
     </div>
   </div>
@@ -723,302 +374,260 @@
 
   <script src="config.js"></script>
   <script>
-    // ===== Auth (simple client-side – change password in production) =====
     const ADMIN_PASSWORD = "holden2026";
     const STORAGE_KEY = "holden_site_config_v1";
     const AUTH_KEY = "holden_admin_auth";
-
     let config = null;
-
-    function loadConfig() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          config = JSON.parse(raw);
-          // merge with defaults for any missing keys
-          config = deepMerge(JSON.parse(JSON.stringify(window.HOLDEN_CONFIG)), config);
-        } else {
-          config = JSON.parse(JSON.stringify(window.HOLDEN_CONFIG));
-        }
-      } catch (e) {
-        config = JSON.parse(JSON.stringify(window.HOLDEN_CONFIG));
-      }
-      return config;
-    }
-
-    function deepMerge(target, source) {
-      for (const key in source) {
-        if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
-          if (!target[key]) target[key] = {};
-          deepMerge(target[key], source[key]);
-        } else {
-          target[key] = source[key];
-        }
-      }
-      return target;
-    }
-
-    function saveConfig() {
-      collectFromForms();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
-      localStorage.setItem(STORAGE_KEY + "_ts", new Date().toISOString());
-      // also dispatch event so an open public tab can react if listening
-      try {
-        window.dispatchEvent(new StorageEvent("storage", { key: STORAGE_KEY }));
-      } catch (_) {}
-      updateStats();
-      showToast("Saved & published. Public site will use these values on next load.", "success");
-    }
-
-    // ===== Login =====
-    const loginScreen = document.getElementById("login-screen");
-    const app = document.getElementById("app");
-    const loginBtn = document.getElementById("loginBtn");
-    const passwordInput = document.getElementById("password");
-    const loginError = document.getElementById("loginError");
+    let editMode = false;
+    let frame = null;
 
     function checkAuth() {
       if (sessionStorage.getItem(AUTH_KEY) === "1") {
-        loginScreen.style.display = "none";
-        app.style.display = "block";
-        initApp();
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("app").classList.add("show");
+        boot();
       }
     }
-
-    loginBtn.addEventListener("click", tryLogin);
-    passwordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") tryLogin(); });
-
+    document.getElementById("loginBtn").addEventListener("click", tryLogin);
+    document.getElementById("password").addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); });
     function tryLogin() {
-      if (passwordInput.value === ADMIN_PASSWORD) {
+      if (document.getElementById("password").value === ADMIN_PASSWORD) {
         sessionStorage.setItem(AUTH_KEY, "1");
-        loginError.style.display = "none";
-        loginScreen.style.display = "none";
-        app.style.display = "block";
-        initApp();
+        document.getElementById("loginError").style.display = "none";
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("app").classList.add("show");
+        boot();
       } else {
-        loginError.style.display = "block";
-        passwordInput.value = "";
-        passwordInput.focus();
+        document.getElementById("loginError").style.display = "block";
       }
     }
-
     document.getElementById("logoutBtn").addEventListener("click", () => {
       sessionStorage.removeItem(AUTH_KEY);
       location.reload();
     });
 
-    // ===== Navigation =====
-    const titles = {
-      dashboard: "Dashboard",
-      colors: "Colors & Theme",
-      contact: "Contact Info",
-      hero: "Hero & Offer",
-      deals: "Deals (CRUD)",
-      content: "Page Content",
-      seo: "SEO Settings"
-    };
-
-    function showPanel(id) {
-      document.querySelectorAll(".panel").forEach((p) => (p.style.display = "none"));
-      document.getElementById("panel-" + id).style.display = "block";
-      document.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
-      const btn = document.querySelector('.nav-item[data-panel="' + id + '"]');
-      if (btn) btn.classList.add("active");
-      document.getElementById("panelTitle").textContent = titles[id] || id;
-      document.getElementById("sidebar").classList.remove("open");
+    function deepMerge(t, s) {
+      for (const k in s) {
+        if (s[k] && typeof s[k] === "object" && !Array.isArray(s[k])) {
+          if (!t[k]) t[k] = {};
+          deepMerge(t[k], s[k]);
+        } else t[k] = s[k];
+      }
+      return t;
+    }
+    function loadConfig() {
+      let base = window.HOLDEN_CONFIG ? JSON.parse(JSON.stringify(window.HOLDEN_CONFIG)) : {};
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) base = deepMerge(base, JSON.parse(raw));
+      } catch (e) {}
+      config = base;
+      return config;
+    }
+    function saveConfig() {
+      collectForms();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+      localStorage.setItem(STORAGE_KEY + "_ts", new Date().toISOString());
+      pushToFrame();
+      toast("Saved & published. Public site uses these values on next load.", true);
     }
 
-    document.querySelectorAll(".nav-item").forEach((btn) => {
-      btn.addEventListener("click", () => showPanel(btn.dataset.panel));
-    });
-    document.getElementById("menuToggle").addEventListener("click", () => {
-      document.getElementById("sidebar").classList.toggle("open");
-    });
-
-    // ===== Fill forms from config =====
     function fillForms() {
-      // colors
-      const c = config.colors;
+      const c = config.colors || {};
       setColor("accent", c.accent);
       setColor("accentDark", c.accentDark);
       setColor("accentLight", c.accentLight);
       setColor("heroHighlight", c.heroHighlight);
       setColor("financingNavy", c.financingNavy);
-
-      // contact
-      document.getElementById("contact-phoneDisplay").value = config.contact.phoneDisplay || "";
-      document.getElementById("contact-phoneTel").value = config.contact.phoneTel || "";
-      document.getElementById("contact-email").value = config.contact.email || "";
-      document.getElementById("contact-address").value = config.contact.address || "";
-
-      // hero
-      document.getElementById("hero-offerAmount").value = config.hero.offerAmount || "";
-      document.getElementById("hero-offerText").value = config.hero.offerText || "";
-      document.getElementById("hero-offerSub").value = config.hero.offerSub || "";
-
-      // services
-      document.getElementById("svc-plumbing").value = config.services.plumbing || "";
-      document.getElementById("svc-drain").value = config.services.drain || "";
-      document.getElementById("svc-electrical").value = config.services.electrical || "";
-      document.getElementById("svc-hvac").value = config.services.hvac || "";
-
-      // about
-      document.getElementById("about-title").value = config.about.title || "";
-      document.getElementById("about-p1").value = config.about.p1 || "";
-      document.getElementById("about-p2").value = config.about.p2 || "";
-
-      // membership
-      document.getElementById("mem-title").value = config.membership.title || "";
-      document.getElementById("mem-body").value = config.membership.body || "";
-
-      // seo
-      document.getElementById("seo-title").value = config.seo.title || "";
-      document.getElementById("seo-description").value = config.seo.description || "";
-      document.getElementById("seo-canonical").value = config.seo.canonical || "";
-
-      renderDeals();
-      updateStats();
+      document.getElementById("contact-phoneDisplay").value = config.contact?.phoneDisplay || "";
+      document.getElementById("contact-phoneTel").value = config.contact?.phoneTel || "";
+      document.getElementById("contact-email").value = config.contact?.email || "";
+      document.getElementById("contact-address").value = config.contact?.address || "";
+      document.getElementById("hero-amount").value = config.hero?.offerAmount || "";
+      document.getElementById("hero-text").value = config.hero?.offerText || "";
+      document.getElementById("hero-sub").value = config.hero?.offerSub || "";
+      document.getElementById("svc-plumbing").value = config.services?.plumbing || "";
+      document.getElementById("svc-drain").value = config.services?.drain || "";
+      document.getElementById("svc-electrical").value = config.services?.electrical || "";
+      document.getElementById("svc-hvac").value = config.services?.hvac || "";
+      document.getElementById("about-title").value = config.about?.title || "";
+      document.getElementById("about-p1").value = config.about?.p1 || "";
+      document.getElementById("about-p2").value = config.about?.p2 || "";
+      document.getElementById("mem-title").value = config.membership?.title || "";
+      document.getElementById("mem-body").value = config.membership?.body || "";
+      document.getElementById("seo-title").value = config.seo?.title || "";
+      document.getElementById("seo-desc").value = config.seo?.description || "";
+      document.getElementById("seo-canonical").value = config.seo?.canonical || "";
+      renderDealsList();
     }
-
     function setColor(key, val) {
-      const colorEl = document.getElementById("c-" + key);
-      const textEl = document.getElementById("c-" + key + "-text");
-      if (colorEl && textEl) {
-        // only set color input if it's a valid hex
-        if (/^#[0-9A-Fa-f]{6}$/.test(val)) colorEl.value = val;
-        textEl.value = val;
+      const col = document.getElementById("c-" + key);
+      const txt = document.getElementById("c-" + key + "-t");
+      if (col && txt) {
+        if (/^#[0-9A-Fa-f]{6}$/.test(val || "")) col.value = val;
+        txt.value = val || "";
       }
     }
-
-    function collectFromForms() {
-      config.colors.accent = document.getElementById("c-accent-text").value.trim();
-      config.colors.accentDark = document.getElementById("c-accentDark-text").value.trim();
-      config.colors.accentLight = document.getElementById("c-accentLight-text").value.trim();
-      config.colors.heroHighlight = document.getElementById("c-heroHighlight-text").value.trim();
-      config.colors.financingNavy = document.getElementById("c-financingNavy-text").value.trim();
-
+    function collectForms() {
+      config.colors = config.colors || {};
+      config.colors.accent = document.getElementById("c-accent-t").value.trim();
+      config.colors.accentDark = document.getElementById("c-accentDark-t").value.trim();
+      config.colors.accentLight = document.getElementById("c-accentLight-t").value.trim();
+      config.colors.heroHighlight = document.getElementById("c-heroHighlight-t").value.trim();
+      config.colors.financingNavy = document.getElementById("c-financingNavy-t").value.trim();
+      config.contact = config.contact || {};
       config.contact.phoneDisplay = document.getElementById("contact-phoneDisplay").value.trim();
       config.contact.phoneTel = document.getElementById("contact-phoneTel").value.trim();
       config.contact.email = document.getElementById("contact-email").value.trim();
       config.contact.address = document.getElementById("contact-address").value.trim();
-
-      config.hero.offerAmount = document.getElementById("hero-offerAmount").value.trim();
-      config.hero.offerText = document.getElementById("hero-offerText").value.trim();
-      config.hero.offerSub = document.getElementById("hero-offerSub").value.trim();
-
+      config.hero = config.hero || {};
+      config.hero.offerAmount = document.getElementById("hero-amount").value.trim();
+      config.hero.offerText = document.getElementById("hero-text").value.trim();
+      config.hero.offerSub = document.getElementById("hero-sub").value.trim();
+      config.services = config.services || {};
       config.services.plumbing = document.getElementById("svc-plumbing").value.trim();
       config.services.drain = document.getElementById("svc-drain").value.trim();
       config.services.electrical = document.getElementById("svc-electrical").value.trim();
       config.services.hvac = document.getElementById("svc-hvac").value.trim();
-
+      config.about = config.about || {};
       config.about.title = document.getElementById("about-title").value.trim();
       config.about.p1 = document.getElementById("about-p1").value.trim();
       config.about.p2 = document.getElementById("about-p2").value.trim();
-
+      config.membership = config.membership || {};
       config.membership.title = document.getElementById("mem-title").value.trim();
       config.membership.body = document.getElementById("mem-body").value.trim();
-
+      config.seo = config.seo || {};
       config.seo.title = document.getElementById("seo-title").value.trim();
-      config.seo.description = document.getElementById("seo-description").value.trim();
+      config.seo.description = document.getElementById("seo-desc").value.trim();
       config.seo.canonical = document.getElementById("seo-canonical").value.trim();
-
-      // deals already live in config.deals via render/edit
     }
 
-    // Color picker ↔ text sync
-    ["accent", "accentDark", "accentLight", "heroHighlight", "financingNavy"].forEach((key) => {
-      const colorEl = document.getElementById("c-" + key);
-      const textEl = document.getElementById("c-" + key + "-text");
-      if (colorEl && textEl) {
-        colorEl.addEventListener("input", () => { textEl.value = colorEl.value; });
-        textEl.addEventListener("input", () => {
-          if (/^#[0-9A-Fa-f]{6}$/.test(textEl.value)) colorEl.value = textEl.value;
+    ["accent","accentDark","accentLight","heroHighlight","financingNavy"].forEach(key => {
+      const col = document.getElementById("c-" + key);
+      const txt = document.getElementById("c-" + key + "-t");
+      if (col && txt) {
+        col.addEventListener("input", () => { txt.value = col.value; });
+        txt.addEventListener("input", () => {
+          if (/^#[0-9A-Fa-f]{6}$/.test(txt.value)) col.value = txt.value;
         });
       }
     });
 
-    // ===== Deals CRUD =====
-    function renderDeals() {
-      const tbody = document.getElementById("dealsBody");
-      tbody.innerHTML = "";
-      (config.deals || []).forEach((deal, i) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><input data-i="${i}" data-f="priceLabel" value="${esc(deal.priceLabel)}" /></td>
-          <td><input data-i="${i}" data-f="price" value="${esc(deal.price)}" /></td>
-          <td><input data-i="${i}" data-f="title" value="${esc(deal.title)}" /></td>
-          <td><input data-i="${i}" data-f="subtitle" value="${esc(deal.subtitle)}" /></td>
-          <td>
-            <select data-i="${i}" data-f="tone">
-              <option value="tone-0" ${deal.tone === "tone-0" ? "selected" : ""}>Blue</option>
-              <option value="tone-1" ${deal.tone === "tone-1" ? "selected" : ""}>Orange</option>
-              <option value="tone-2" ${deal.tone === "tone-2" ? "selected" : ""}>Orange 2</option>
-            </select>
-          </td>
-          <td class="actions">
-            <button class="btn btn-danger btn-sm" type="button" data-del="${i}">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
+    function renderDealsList() {
+      const list = document.getElementById("dealsList");
+      list.innerHTML = "";
+      (config.deals || []).forEach((d, i) => {
+        const div = document.createElement("div");
+        div.className = "deal-item";
+        div.innerHTML =
+          '<div class="deal-item-head"><strong>Deal ' + (i+1) + '</strong>' +
+          '<button class="btn-xs btn-xs-danger" type="button" data-del="' + i + '">Delete</button></div>' +
+          '<div class="mini-row">' +
+          '<input data-i="' + i + '" data-f="priceLabel" placeholder="Label" value="' + esc(d.priceLabel) + '" style="width:100%;background:var(--admin-bg);border:1px solid var(--admin-border);border-radius:6px;padding:7px 9px;color:var(--admin-text);font-size:12px;" />' +
+          '<input data-i="' + i + '" data-f="price" placeholder="Price" value="' + esc(d.price) + '" style="width:100%;background:var(--admin-bg);border:1px solid var(--admin-border);border-radius:6px;padding:7px 9px;color:var(--admin-text);font-size:12px;" /></div>' +
+          '<input data-i="' + i + '" data-f="title" placeholder="Title" value="' + esc(d.title) + '" style="width:100%;margin-bottom:6px;background:var(--admin-bg);border:1px solid var(--admin-border);border-radius:6px;padding:7px 9px;color:var(--admin-text);font-size:12px;" />' +
+          '<input data-i="' + i + '" data-f="subtitle" placeholder="Subtitle" value="' + esc(d.subtitle) + '" style="width:100%;margin-bottom:6px;background:var(--admin-bg);border:1px solid var(--admin-border);border-radius:6px;padding:7px 9px;color:var(--admin-text);font-size:12px;" />' +
+          '<select data-i="' + i + '" data-f="tone" style="width:100%;background:var(--admin-bg);border:1px solid var(--admin-border);border-radius:6px;padding:7px 9px;color:var(--admin-text);font-size:12px;">' +
+          '<option value="tone-0"' + (d.tone==="tone-0"?" selected":"") + '>Blue</option>' +
+          '<option value="tone-1"' + (d.tone==="tone-1"?" selected":"") + '>Orange</option>' +
+          '<option value="tone-2"' + (d.tone==="tone-2"?" selected":"") + '>Orange 2</option></select>';
+        list.appendChild(div);
       });
-
-      tbody.querySelectorAll("input, select").forEach((el) => {
+      list.querySelectorAll("input, select").forEach(el => {
         el.addEventListener("change", () => {
-          const i = +el.dataset.i;
-          const f = el.dataset.f;
-          config.deals[i][f] = el.value;
+          config.deals[+el.dataset.i][el.dataset.f] = el.value;
         });
       });
-      tbody.querySelectorAll("[data-del]").forEach((btn) => {
+      list.querySelectorAll("[data-del]").forEach(btn => {
         btn.addEventListener("click", () => {
           config.deals.splice(+btn.dataset.del, 1);
-          renderDeals();
+          renderDealsList();
         });
       });
     }
-
-    function esc(s) {
-      return String(s || "").replace(/"/g, "&quot;");
-    }
-
+    function esc(s) { return String(s || "").replace(/"/g, "&quot;"); }
     document.getElementById("addDealBtn").addEventListener("click", () => {
-      config.deals.push({
-        priceLabel: "Only",
-        price: "$XX",
-        title: "New Deal",
-        subtitle: "Description",
-        tone: "tone-0"
-      });
-      renderDeals();
+      if (!config.deals) config.deals = [];
+      config.deals.push({ priceLabel: "Only", price: "$XX", title: "New Deal", subtitle: "Description", tone: "tone-0" });
+      renderDealsList();
     });
 
-    function updateStats() {
-      document.getElementById("statDeals").textContent = (config.deals || []).length;
-      document.getElementById("statAccent").textContent = config.colors.accent;
-      document.getElementById("statPhone").textContent = config.contact.phoneDisplay || "—";
-      const ts = localStorage.getItem(STORAGE_KEY + "_ts");
-      document.getElementById("statSaved").textContent = ts ? new Date(ts).toLocaleString() : "Never";
-    }
+    document.querySelectorAll(".tools-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tools-tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tools-panel").forEach(p => p.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById("tab-" + tab.dataset.tab).classList.add("active");
+      });
+    });
 
-    // ===== Toast =====
-    function showToast(msg, type) {
+    document.querySelectorAll(".device-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".device-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const f = document.getElementById("siteFrame");
+        f.classList.remove("tablet", "mobile");
+        if (btn.dataset.device === "tablet") f.classList.add("tablet");
+        if (btn.dataset.device === "mobile") f.classList.add("mobile");
+      });
+    });
+
+    function pushToFrame() {
+      try {
+        const win = frame.contentWindow;
+        if (!win) return;
+        win.localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+        win.postMessage({ type: "HOLDEN_APPLY_CONFIG", config: config }, "*");
+        win.location.reload();
+      } catch (e) {
+        frame.src = "index.html?" + Date.now();
+      }
+    }
+    function applySection(name) {
+      collectForms();
+      pushToFrame();
+      toast(name + " applied to live preview", true);
+    }
+    document.getElementById("applyColorsBtn").addEventListener("click", () => applySection("Colors"));
+    document.getElementById("applyContactBtn").addEventListener("click", () => applySection("Contact"));
+    document.getElementById("applyHeroBtn").addEventListener("click", () => applySection("Hero"));
+    document.getElementById("applyServicesBtn").addEventListener("click", () => applySection("Services"));
+    document.getElementById("applyAboutBtn").addEventListener("click", () => applySection("About"));
+    document.getElementById("applyMemBtn").addEventListener("click", () => applySection("Membership"));
+    document.getElementById("applyDealsBtn").addEventListener("click", () => applySection("Deals"));
+    document.getElementById("saveBtn").addEventListener("click", saveConfig);
+    document.getElementById("refreshPreviewBtn").addEventListener("click", () => {
+      frame.src = "index.html?" + Date.now();
+    });
+    document.getElementById("openPublicBtn").addEventListener("click", () => window.open("index.html", "_blank"));
+
+    document.getElementById("editModeBtn").addEventListener("click", () => {
+      editMode = !editMode;
+      document.getElementById("editModeBtn").classList.toggle("active", editMode);
+      document.getElementById("editHint").classList.toggle("show", editMode);
+      try {
+        frame.contentWindow.postMessage({ type: "HOLDEN_EDIT_MODE", enabled: editMode }, "*");
+      } catch (e) {}
+    });
+
+    function toast(msg, ok) {
       const t = document.getElementById("toast");
       t.textContent = msg;
-      t.className = "toast show " + (type || "");
-      setTimeout(() => t.classList.remove("show"), 3200);
+      t.className = "toast show" + (ok ? " ok" : "");
+      setTimeout(() => t.classList.remove("show"), 2800);
     }
 
-    // ===== Buttons =====
-    document.getElementById("saveBtn").addEventListener("click", saveConfig);
-    document.getElementById("previewBtn").addEventListener("click", () => {
-      window.open("index.html", "_blank");
-    });
-
-    function initApp() {
+    function boot() {
       loadConfig();
       fillForms();
+      frame = document.getElementById("siteFrame");
+      frame.addEventListener("load", () => {
+        try {
+          frame.contentWindow.localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+          frame.contentWindow.postMessage({ type: "HOLDEN_APPLY_CONFIG", config: config }, "*");
+        } catch (e) {}
+      });
     }
-
     checkAuth();
   </script>
 </body>
