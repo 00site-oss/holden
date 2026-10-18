@@ -601,13 +601,52 @@
     });
     document.getElementById("openPublicBtn").addEventListener("click", () => window.open("index.html", "_blank"));
 
+    function applyEditModeToFrame(enabled) {
+      try {
+        var doc = frame.contentDocument || frame.contentWindow.document;
+        if (!doc) return;
+        var selectors = "h1, h2, h3, h4, p, span.o1, span.o2, .deal-copy strong, .deal-copy em, .deal-price b, .deal-price small, .hero-offer strong, .section-title, .footer-call strong, .service-card p, .review p, .eyebrow";
+        var nodes = doc.querySelectorAll(selectors);
+        nodes.forEach(function (el) {
+          // skip pure icon/svg containers
+          if (el.closest("svg") || el.querySelector("svg")) return;
+          el.contentEditable = enabled ? "true" : "false";
+          if (enabled) {
+            el.setAttribute("data-holden-editable", "1");
+            el.style.outline = "1px dashed rgba(224,106,38,0.55)";
+            el.style.outlineOffset = "2px";
+            el.style.cursor = "text";
+          } else {
+            el.removeAttribute("data-holden-editable");
+            el.style.outline = "";
+            el.style.outlineOffset = "";
+            el.style.cursor = "";
+          }
+        });
+        // inject focus style once
+        var styleId = "holden-edit-style";
+        var existing = doc.getElementById(styleId);
+        if (enabled && !existing) {
+          var st = doc.createElement("style");
+          st.id = styleId;
+          st.textContent = "[contenteditable=true]:hover { outline: 2px solid #E06A26 !important; background: rgba(224,106,38,0.08) !important; } [contenteditable=true]:focus { outline: 2px solid #E06A26 !important; background: rgba(224,106,38,0.12) !important; }";
+          doc.head.appendChild(st);
+        }
+        if (!enabled && existing) existing.remove();
+        // also postMessage for apply-config listeners
+        frame.contentWindow.postMessage({ type: "HOLDEN_EDIT_MODE", enabled: enabled }, "*");
+      } catch (err) {
+        console.warn("Edit mode failed (cross-origin or not loaded):", err);
+        toast("Cannot edit: page not ready or blocked. Click Refresh, then try Edit Mode again.", false);
+      }
+    }
+
     document.getElementById("editModeBtn").addEventListener("click", () => {
       editMode = !editMode;
       document.getElementById("editModeBtn").classList.toggle("active", editMode);
       document.getElementById("editHint").classList.toggle("show", editMode);
-      try {
-        frame.contentWindow.postMessage({ type: "HOLDEN_EDIT_MODE", enabled: editMode }, "*");
-      } catch (e) {}
+      applyEditModeToFrame(editMode);
+      if (editMode) toast("Edit Mode ON — click any orange-outlined text and type", true);
     });
 
     function toast(msg, ok) {
@@ -626,6 +665,10 @@
           frame.contentWindow.localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
           frame.contentWindow.postMessage({ type: "HOLDEN_APPLY_CONFIG", config: config }, "*");
         } catch (e) {}
+        // restore edit mode after refresh/reload of preview
+        if (editMode) {
+          setTimeout(function () { applyEditModeToFrame(true); }, 400);
+        }
       });
     }
     checkAuth();
