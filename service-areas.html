@@ -174,9 +174,25 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="js/content.js" defer></script>
   <script src="js/booking.js" defer></script>
   <script src="js/main.js" defer></script>
+
+
+  <script>
+  // Hide Netlify badge if present
+  (function(){
+    function hideBadge(){
+      document.querySelectorAll('[data-netlify-badge], .netlify-badge, iframe[src*="netlify"]').forEach(function(el){ el.style.display='none'; });
+      var badges = document.querySelectorAll('div');
+      badges.forEach(function(d){
+        if ((d.textContent||'').indexOf('Powered by Netlify') !== -1) d.style.display='none';
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hideBadge);
+    else hideBadge();
+    setTimeout(hideBadge, 1500);
+  })();
+  </script>
 
 </body>
 </html>

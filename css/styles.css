@@ -847,3 +847,9 @@ footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;backgr
 .book-service {
   background: #fff;
 }
+
+/* Hide Netlify badge */
+[data-netlify-badge], .netlify-badge, iframe[src*="netlify"], div[id*="netlify"] {
+  display: none !important;
+  visibility: hidden !important;
+}
