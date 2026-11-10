@@ -91,6 +91,8 @@
         $$('.book-service', list).forEach(function (x) { x.classList.remove('selected'); });
         el.classList.add('selected');
         state.service = services[state.category][parseInt(el.getAttribute('data-index'), 10)];
+        // Instantly move to the details form
+        setTimeout(function () { goToStep(3); }, 180);
       });
     });
   }

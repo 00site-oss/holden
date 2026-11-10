@@ -506,9 +506,22 @@ footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;backgr
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
 }
-.book-service:hover, .book-service.selected {
+.book-service:hover {
   border-color: var(--accent);
   background: #fff8f4;
+}
+.book-service.selected {
+  border-color: var(--secondary);
+  background: var(--secondary);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(15, 42, 71, 0.25);
+}
+.book-service.selected .svc-title,
+.book-service.selected .svc-price {
+  color: #fff;
+}
+.book-service.selected .svc-desc {
+  color: rgba(255,255,255,0.8);
 }
 .book-service .svc-title {
   font-weight: 700;
