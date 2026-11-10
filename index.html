@@ -304,9 +304,6 @@
           <h4>Select a service</h4>
           <p class="sub">Choose the service you need</p>
           <div id="bookServiceList"></div>
-          <div class="book-actions">
-            <button type="button" class="book-btn book-btn-primary" id="bookToDetails">Continue</button>
-          </div>
         </div>
         <div class="book-step" id="bookStep3">
           <button type="button" class="book-btn book-btn-secondary" data-book-back="2" style="margin-bottom:14px;width:auto;padding:8px 14px;font-size:13px;">← Back</button>
@@ -330,15 +327,19 @@
           </div>
         </div>
         <div class="book-step" id="bookStep4">
-          <div class="book-success">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+          <div class="book-success" id="bookSuccessPanel">
+            <div class="check-circle">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
             <h4>Request sent!</h4>
-            <p class="sub">Thank you. We'll contact you shortly to confirm your appointment.</p>
-            <button type="button" class="book-btn book-btn-primary" id="bookDoneBtn" style="margin-top:18px;">Done</button>
+            <p class="sub">Thank you. You will receive an email confirmation shortly.<br>We'll contact you to confirm your appointment.</p>
+            <p class="book-success-swipe-hint">Swipe right to close</p>
+            <button type="button" class="book-btn book-btn-primary" id="bookDoneBtn" style="margin-top:18px;background:#16a34a;">Done</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
 

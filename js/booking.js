@@ -130,6 +130,7 @@
     return null;
   }
 
+
   function sendBooking() {
     var err = validateForm();
     if (err) {
@@ -139,8 +140,9 @@
 
     var submitBtn = $('#bookSubmitBtn');
     if (submitBtn) {
+      submitBtn.classList.remove('is-success');
+      submitBtn.classList.add('is-loading');
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
     }
 
     var payload = {
@@ -158,30 +160,40 @@
       message: buildEmailBody()
     };
 
+    function finishSuccess() {
+      // Turn button green with checkmark briefly
+      if (submitBtn) {
+        submitBtn.classList.remove('is-loading');
+        submitBtn.classList.add('is-success');
+        submitBtn.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:20px;height:20px;vertical-align:middle;margin-right:6px;"><path d="M20 6 9 17l-5-5"/></svg> Sent';
+      }
+      // Then show confirmation step
+      setTimeout(function () {
+        goToStep(4);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-success');
+          submitBtn.textContent = 'Book Service';
+          submitBtn.innerHTML = 'Book Service';
+        }
+      }, 900);
+    }
+
     // Try EmailJS first
     if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, payload)
-        .then(function () {
-          goToStep(4);
-        })
+        .then(function () { finishSuccess(); })
         .catch(function (e) {
           console.error(e);
           fallbackMailto(payload);
-        })
-        .finally(function () {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Book Service';
-          }
+          finishSuccess();
         });
     } else {
-      // Fallback: open mail client
-      fallbackMailto(payload);
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Book Service';
-      }
-      goToStep(4);
+      // Simulate short loading then success (mailto fallback)
+      setTimeout(function () {
+        fallbackMailto(payload);
+        finishSuccess();
+      }, 700);
     }
   }
 
@@ -260,17 +272,6 @@
       });
     });
 
-    // Continue from step 2
-    var toDetails = $('#bookToDetails');
-    if (toDetails) {
-      toDetails.addEventListener('click', function () {
-        if (!state.service) {
-          alert('Please select a service.');
-          return;
-        }
-        goToStep(3);
-      });
-    }
 
     // Submit
     var submitBtn = $('#bookSubmitBtn');
@@ -288,4 +289,35 @@
 
   // Expose for external triggers
   window.HoldenBooking = { open: openModal, close: closeModal };
+
+  // Mobile: swipe right on success panel to close
+  document.addEventListener('DOMContentLoaded', function () {
+    var startX = 0;
+    var panel = null;
+
+    document.body.addEventListener('touchstart', function (e) {
+      panel = document.getElementById('bookSuccessPanel');
+      if (!panel || !panel.closest('.book-step.active')) return;
+      if (e.touches.length === 1) startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    document.body.addEventListener('touchend', function (e) {
+      if (!panel || !panel.closest('.book-step.active')) return;
+      var endX = e.changedTouches[0].clientX;
+      var dx = endX - startX;
+      // Swipe right threshold
+      if (dx > 80) {
+        panel.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+        panel.style.transform = 'translateX(120%)';
+        panel.style.opacity = '0';
+        setTimeout(function () {
+          closeModal();
+          panel.style.transform = '';
+          panel.style.opacity = '';
+          panel.style.transition = '';
+        }, 280);
+      }
+    }, { passive: true });
+  });
+
 })();
