@@ -49,4 +49,32 @@
       }
     });
   }
+
+  // ===== Scroll up to top → return to homepage =====
+  // Only on pages that are NOT the homepage
+  var isHomePage = window.location.pathname.endsWith('index.html') ||
+                   window.location.pathname === '/' ||
+                   window.location.pathname === '';
+
+  if (!isHomePage) {
+    var hasScrolledDown = false;
+    var lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', function () {
+      var currentScrollY = window.scrollY;
+
+      // Mark that the user has scrolled down the page
+      if (currentScrollY > 300) {
+        hasScrolledDown = true;
+      }
+
+      // If user previously scrolled down and now reached the very top while scrolling up
+      if (hasScrolledDown && currentScrollY <= 10 && currentScrollY < lastScrollY) {
+        // Return to main page
+        window.location.href = 'index.html';
+      }
+
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+  }
 })();
