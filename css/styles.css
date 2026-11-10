@@ -322,45 +322,32 @@ footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;backgr
 
 
 
-/* ===== Subtle Home Button (always visible, transparent) ===== */
-.home-btn {
-  position: fixed;
-  bottom: 90px;
-  right: 18px;
-  z-index: 40;
-  padding: 10px 16px;
-  border-radius: 30px;
-  background: rgba(15, 42, 71, 0.55);
-  color: #ffffff;
+
+
+/* ===== Clean Home button (left of title) ===== */
+.page-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 18px;
+  padding: 8px 16px 8px 12px;
+  border-radius: 8px;
+  background: #f4f6f9;
+  color: var(--secondary);
   font-family: var(--font-control);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.3px;
   text-decoration: none;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.18);
-  opacity: 0.75;
-  transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  border: 1px solid var(--border);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-.home-btn:hover {
-  opacity: 1;
-  background: rgba(15, 42, 71, 0.85);
-  transform: translateY(-2px);
+.page-home-link:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
-.home-btn svg {
+.page-home-link svg {
   width: 15px;
   height: 15px;
   flex-shrink: 0;
-}
-@media (max-width: 900px) {
-  .home-btn {
-    bottom: 78px;
-    right: 14px;
-    padding: 9px 14px;
-    font-size: 12px;
-  }
 }
