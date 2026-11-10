@@ -327,20 +327,16 @@ footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;backgr
 
 
 
-/* ===== Clean Home button + title side-by-side layout ===== */
-.page-title-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 28px;
-  max-width: 900px;
-  margin: 0 auto 10px;
-}
+
+/* ===== Home button – fixed same position on every page ===== */
 .page-home-link {
+  position: fixed;
+  top: 180px;
+  left: 24px;
+  z-index: 30;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
-  margin-top: 8px;
   padding: 14px 22px 14px 18px;
   border-radius: 10px;
   background: var(--secondary);
@@ -363,17 +359,31 @@ footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;backgr
   height: 20px;
   flex-shrink: 0;
 }
-.page-title-content {
-  flex: 1;
-  min-width: 0;
+
+/* Reset any previous title-row layout */
+.page-title-row {
+  display: block;
+  max-width: none;
+  margin: 0;
 }
-@media (max-width: 700px) {
-  .page-title-row {
-    flex-direction: column;
-    gap: 16px;
-  }
+.page-title-content {
+  display: contents;
+}
+
+@media (max-width: 900px) {
   .page-home-link {
-    margin-top: 0;
+    top: 140px;
+    left: 16px;
+    padding: 12px 18px 12px 14px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 600px) {
+  .page-home-link {
+    top: 120px;
+    left: 12px;
+    padding: 10px 16px 10px 12px;
+    font-size: 13px;
   }
 }
 
