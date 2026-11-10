@@ -1,11 +1,18 @@
 (function () {
   'use strict';
 
-  // ========== CONFIG – replace with your EmailJS keys ==========
+  // ========== EMAIL SETUP (free) ==========
+  // Recommended free service: EmailJS (200 emails/month free)
+  // 1. Create account at https://www.emailjs.com
+  // 2. Connect your Gmail (or any email) as Email Service
+  // 3. Create a template that includes {{to_email}}, {{message}}, etc.
+  // 4. Paste your keys below
   var EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
   var EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
   var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-  // =============================================================
+  // Owner email (always receives the booking)
+  var OWNER_EMAIL = 'support@callholden.com';
+  // =========================================
 
   var state = {
     step: 1,
@@ -16,22 +23,22 @@
   };
 
   var catalog = {
-    'AC Repair': [
+    'Air Conditioner': [
       { name: 'Air Conditioning System Diagnostic', price: 89, desc: 'Professional system evaluation to identify the root cause of your cooling issue.' },
       { name: 'Air Conditioner Tune-Up & Safety Inspection', price: 89, desc: 'Comprehensive maintenance and safety inspection for your AC system.' },
       { name: 'Air Conditioner & Furnace Tune-Up', price: 89, desc: 'Combined AC & furnace tune-up for complete seasonal maintenance.' }
     ],
-    'Furnace Repair': [
+    'Heater - Furnace': [
       { name: 'Furnace Diagnostic', price: 89, desc: 'Full diagnostic to find the cause of heating problems.' },
       { name: 'Furnace Tune-Up & Safety Inspection', price: 89, desc: 'Complete furnace maintenance and safety check.' },
       { name: 'Furnace & AC Tune-Up Combo', price: 89, desc: 'Both systems tuned up in one visit.' }
     ],
-    'Heat Pump Repair': [
+    'Heat Pump': [
       { name: 'Heat Pump Diagnostic', price: 89, desc: 'Expert evaluation of your heat pump system.' },
       { name: 'Heat Pump Tune-Up', price: 89, desc: 'Seasonal maintenance for optimal heat pump performance.' },
       { name: 'A/C & Heat Pump Tune-Up Special', price: 89, desc: 'Limited time dual-system tune-up offer.' }
     ],
-    'Commercial Service': [
+    'Commercial HVAC': [
       { name: 'Commercial System Diagnostic', price: 149, desc: 'Diagnostic service for light commercial HVAC equipment.' },
       { name: 'Commercial Maintenance Visit', price: 179, desc: 'Scheduled maintenance for commercial systems.' }
     ]
@@ -223,8 +230,9 @@ function $(sel, ctx) { return (ctx || document).querySelector(sel); }
     }
 
     var total = state.services.reduce(function (sum, s) { return sum + s.price; }, 0);
+    // Send to owner
     var payload = {
-      to_email: 'support@callholden.com',
+      to_email: OWNER_EMAIL,
       from_name: state.form.firstName + ' ' + state.form.lastName,
       from_email: state.form.email,
       service_list: state.services.map(function (s) { return s.name + ' ($' + s.price.toFixed(2) + ')'; }).join(', '),
@@ -256,6 +264,14 @@ function $(sel, ctx) { return (ctx || document).querySelector(sel); }
 
     if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, payload)
+        .then(function () {
+          // Also send confirmation to the customer
+          var customerPayload = Object.assign({}, payload, {
+            to_email: state.form.email,
+            message: 'Thank you for booking with Holden Heating & Cooling.\n\n' + payload.message + '\n\nWe will contact you shortly to confirm your appointment.'
+          });
+          return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, customerPayload);
+        })
         .then(function () { finishSuccess(); })
         .catch(function (e) {
           console.error(e);
