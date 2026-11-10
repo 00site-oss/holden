@@ -119,6 +119,7 @@
         </div>
         <div class="book-step" id="bookStep3">
           <button type="button" class="book-btn book-btn-secondary" data-book-back="2" style="margin-bottom:14px;width:auto;padding:8px 14px;font-size:13px;">← Back</button>
+          <div class="book-cart" id="bookCart"></div>
           <div class="book-summary" id="bookSummary"></div>
           <h4>Your details</h4>
           <p class="sub">We'll use this to confirm your appointment.</p>
@@ -134,7 +135,17 @@
           </div>
           <div class="book-form-group"><label for="bkZip">ZIP code</label><input type="text" id="bkZip" required autocomplete="postal-code"></div>
           <div class="book-form-group"><label for="bkNotes">Additional info (optional)</label><textarea id="bkNotes" rows="3" placeholder="Any details that will help us prepare..."></textarea></div>
-          <div class="book-actions">
+          <div class="book-form-group">
+            <label>Photos (optional)</label>
+            <div class="book-upload" id="bookUploadArea">
+              <input type="file" id="bkPhotos" accept="image/*" multiple>
+              <div class="book-upload-label">Upload photos</div>
+              <div class="book-upload-hint">Helps us prepare for the visit</div>
+            </div>
+            <div class="book-thumbs" id="bookThumbs"></div>
+          </div>
+          <div class="book-actions" style="flex-direction:column;gap:10px;">
+            <button type="button" class="book-btn book-btn-secondary" id="bookAddMore">Add more services</button>
             <button type="button" class="book-btn book-btn-primary" id="bookSubmitBtn">Book Service</button>
           </div>
         </div>
@@ -150,7 +161,7 @@
           </div>
         </div>
       </div>
-      <div class="book-powered">Powered by <strong>Holden</strong></div>
+      <div class="book-powered">Powered by <img src="https://i.postimg.cc/vTZD2mm2/IMG-4401-removebg-preview.png" alt="Holden" height="18"></div>
     </div>
   </div>
 

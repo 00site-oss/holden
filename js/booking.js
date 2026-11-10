@@ -2,10 +2,6 @@
   'use strict';
 
   // ========== CONFIG – replace with your EmailJS keys ==========
-  // 1. Go to https://www.emailjs.com and create a free account
-  // 2. Add your Gmail / Google account as an Email Service
-  // 3. Create an email template
-  // 4. Paste your Public Key, Service ID and Template ID below
   var EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
   var EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
   var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
@@ -14,11 +10,12 @@
   var state = {
     step: 1,
     category: '',
-    service: null,
-    form: {}
+    services: [],   // array of selected services
+    form: {},
+    photos: []
   };
 
-  var services = {
+  var catalog = {
     'Air Conditioner': [
       { name: 'Air Conditioning System Diagnostic', price: 89, desc: 'Professional system evaluation to identify the root cause of your cooling issue.' },
       { name: 'Air Conditioner Tune-Up & Safety Inspection', price: 179, desc: 'Comprehensive maintenance and safety inspection for your AC system.' },
@@ -48,7 +45,11 @@
     if (!overlay) return;
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    goToStep(1);
+    // keep existing cart if user is adding more; only reset when fully closed
+    if (!state.services.length) {
+      state = { step: 1, category: '', services: [], form: {}, photos: [] };
+    }
+    goToStep(state.services.length ? 1 : 1);
   }
 
   function closeModal() {
@@ -56,7 +57,11 @@
     if (!overlay) return;
     overlay.classList.remove('open');
     document.body.style.overflow = '';
-    state = { step: 1, category: '', service: null, form: {} };
+    state = { step: 1, category: '', services: [], form: {}, photos: [] };
+    var thumbs = $('#bookThumbs');
+    if (thumbs) thumbs.innerHTML = '';
+    var cart = $('#bookCart');
+    if (cart) cart.innerHTML = '';
   }
 
   function goToStep(n) {
@@ -68,16 +73,17 @@
     var bar = $('#bookProgressBar');
     if (bar) bar.style.width = (n * 25) + '%';
 
-    // Populate step 2 services
     if (n === 2) renderServices();
-    // Populate summary on step 3
-    if (n === 3) renderSummary();
+    if (n === 3) {
+      renderCart();
+      renderSummary();
+    }
   }
 
   function renderServices() {
     var list = $('#bookServiceList');
     if (!list) return;
-    var items = services[state.category] || [];
+    var items = catalog[state.category] || [];
     list.innerHTML = items.map(function (s, i) {
       return '<div class="book-service" data-index="' + i + '">' +
         '<div class="svc-title">' + s.name + '</div>' +
@@ -90,18 +96,50 @@
       el.addEventListener('click', function () {
         $$('.book-service', list).forEach(function (x) { x.classList.remove('selected'); });
         el.classList.add('selected');
-        state.service = services[state.category][parseInt(el.getAttribute('data-index'), 10)];
-        // Instantly move to the details form
+        var svc = catalog[state.category][parseInt(el.getAttribute('data-index'), 10)];
+        // Add to cart (allow duplicates only if different category name combo)
+        state.services.push({
+          category: state.category,
+          name: svc.name,
+          price: svc.price,
+          desc: svc.desc
+        });
         setTimeout(function () { goToStep(3); }, 180);
+      });
+    });
+  }
+
+  function renderCart() {
+    var cart = $('#bookCart');
+    if (!cart) return;
+    if (!state.services.length) {
+      cart.innerHTML = '';
+      return;
+    }
+    cart.innerHTML = state.services.map(function (s, i) {
+      return '<span class="book-chip">' + s.name + ' · $' + s.price.toFixed(2) +
+        ' <button type="button" data-remove="' + i + '" aria-label="Remove">&times;</button></span>';
+    }).join('');
+
+    $$('[data-remove]', cart).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = parseInt(btn.getAttribute('data-remove'), 10);
+        state.services.splice(idx, 1);
+        renderCart();
+        renderSummary();
       });
     });
   }
 
   function renderSummary() {
     var box = $('#bookSummary');
-    if (!box || !state.service) return;
-    box.innerHTML = '<strong>' + state.service.name + '</strong><br>' +
-      state.category + ' &nbsp;·&nbsp; <strong>$' + state.service.price.toFixed(2) + '</strong>';
+    if (!box) return;
+    if (!state.services.length) {
+      box.innerHTML = '<span style="color:#888">No services selected yet.</span>';
+      return;
+    }
+    var total = state.services.reduce(function (sum, s) { return sum + s.price; }, 0);
+    box.innerHTML = '<strong>' + state.services.length + ' service(s)</strong> &nbsp;·&nbsp; Total <strong>$' + total.toFixed(2) + '</strong>';
   }
 
   function collectForm() {
@@ -120,6 +158,7 @@
   function validateForm() {
     collectForm();
     var f = state.form;
+    if (!state.services.length) return 'Please select at least one service.';
     if (!f.firstName.trim()) return 'Please enter your first name.';
     if (!f.lastName.trim()) return 'Please enter your last name.';
     if (!f.email.trim() || f.email.indexOf('@') === -1) return 'Please enter a valid email.';
@@ -130,6 +169,38 @@
     return null;
   }
 
+  function buildEmailBody() {
+    var f = state.form;
+    var lines = [
+      'NEW BOOKING REQUEST',
+      '====================',
+      ''
+    ];
+    state.services.forEach(function (s, i) {
+      lines.push((i + 1) + '. ' + s.name + ' (' + s.category + ') – $' + s.price.toFixed(2));
+    });
+    var total = state.services.reduce(function (sum, s) { return sum + s.price; }, 0);
+    lines.push('Total: $' + total.toFixed(2));
+    lines.push('');
+    lines.push('Customer: ' + f.firstName + ' ' + f.lastName);
+    lines.push('Email: ' + f.email);
+    lines.push('Address: ' + f.address);
+    lines.push('City: ' + f.city + ', ' + f.state + ' ' + f.zip);
+    lines.push('');
+    lines.push('Additional info:');
+    lines.push(f.notes || '(none)');
+    if (state.photos.length) {
+      lines.push('');
+      lines.push('Photos attached: ' + state.photos.length);
+    }
+    return lines.join('\n');
+  }
+
+  function fallbackMailto() {
+    var subject = encodeURIComponent('Booking Request – Holden HVAC');
+    var body = encodeURIComponent(buildEmailBody());
+    window.location.href = 'mailto:support@callholden.com?subject=' + subject + '&body=' + body;
+  }
 
   function sendBooking() {
     var err = validateForm();
@@ -145,91 +216,60 @@
       submitBtn.disabled = true;
     }
 
+    var total = state.services.reduce(function (sum, s) { return sum + s.price; }, 0);
     var payload = {
       to_email: 'support@callholden.com',
       from_name: state.form.firstName + ' ' + state.form.lastName,
       from_email: state.form.email,
-      service_category: state.category,
-      service_name: state.service ? state.service.name : '',
-      service_price: state.service ? '$' + state.service.price.toFixed(2) : '',
+      service_list: state.services.map(function (s) { return s.name + ' ($' + s.price.toFixed(2) + ')'; }).join(', '),
+      service_total: '$' + total.toFixed(2),
       address: state.form.address,
       city: state.form.city,
       state: state.form.state,
       zip: state.form.zip,
       notes: state.form.notes || '(none)',
+      photo_count: String(state.photos.length),
       message: buildEmailBody()
     };
 
     function finishSuccess() {
-      // Turn button green with checkmark briefly
       if (submitBtn) {
         submitBtn.classList.remove('is-loading');
         submitBtn.classList.add('is-success');
         submitBtn.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:20px;height:20px;vertical-align:middle;margin-right:6px;"><path d="M20 6 9 17l-5-5"/></svg> Sent';
       }
-      // Then show confirmation step
       setTimeout(function () {
         goToStep(4);
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.classList.remove('is-success');
           submitBtn.textContent = 'Book Service';
-          submitBtn.innerHTML = 'Book Service';
         }
       }, 900);
     }
 
-    // Try EmailJS first
     if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, payload)
         .then(function () { finishSuccess(); })
         .catch(function (e) {
           console.error(e);
-          fallbackMailto(payload);
+          fallbackMailto();
           finishSuccess();
         });
     } else {
-      // Simulate short loading then success (mailto fallback)
       setTimeout(function () {
-        fallbackMailto(payload);
+        fallbackMailto();
         finishSuccess();
       }, 700);
     }
   }
 
-  function buildEmailBody() {
-    var f = state.form;
-    var s = state.service || {};
-    return [
-      'NEW BOOKING REQUEST',
-      '====================',
-      'Service: ' + (s.name || '') + ' (' + state.category + ')',
-      'Price: $' + (s.price ? s.price.toFixed(2) : ''),
-      '',
-      'Customer: ' + f.firstName + ' ' + f.lastName,
-      'Email: ' + f.email,
-      'Address: ' + f.address,
-      'City: ' + f.city + ', ' + f.state + ' ' + f.zip,
-      '',
-      'Additional info:',
-      f.notes || '(none)'
-    ].join('\n');
-  }
-
-  function fallbackMailto(payload) {
-    var subject = encodeURIComponent('Booking Request – ' + (state.service ? state.service.name : 'Service'));
-    var body = encodeURIComponent(buildEmailBody());
-    window.location.href = 'mailto:support@callholden.com?subject=' + subject + '&body=' + body;
-  }
-
-  // Event binding
   document.addEventListener('DOMContentLoaded', function () {
-    // Open buttons
+    // Open booking from Book / Schedule buttons
     $$('a[href="#schedule"], a[href="contact.html"], .eco-button-blue, .eco-button-green').forEach(function (btn) {
       var text = (btn.textContent || '').toLowerCase();
       if (text.indexOf('book') !== -1 || text.indexOf('schedule') !== -1 || btn.getAttribute('href') === '#schedule') {
         btn.addEventListener('click', function (e) {
-          // Only intercept if it's a book/schedule action (not tel: or mailto:)
           var href = btn.getAttribute('href') || '';
           if (href.indexOf('tel:') === 0 || href.indexOf('mailto:') === 0) return;
           e.preventDefault();
@@ -237,8 +277,6 @@
         });
       }
     });
-
-    // Also explicit book triggers
     $$('[data-book], .js-open-book').forEach(function (el) {
       el.addEventListener('click', function (e) {
         e.preventDefault();
@@ -249,14 +287,12 @@
     var overlay = $('#bookOverlay');
     if (!overlay) return;
 
-    // Close
     var closeBtn = $('#bookClose');
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', function (e) {
       if (e.target === overlay) closeModal();
     });
 
-    // Step 1 – category
     $$('.book-option').forEach(function (opt) {
       opt.addEventListener('click', function () {
         state.category = opt.getAttribute('data-category');
@@ -264,16 +300,20 @@
       });
     });
 
-    // Back buttons
     $$('[data-book-back]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var to = parseInt(btn.getAttribute('data-book-back'), 10);
-        goToStep(to);
+        goToStep(parseInt(btn.getAttribute('data-book-back'), 10));
       });
     });
 
+    // Add more services – go back to category list, keep cart
+    var addMore = $('#bookAddMore');
+    if (addMore) {
+      addMore.addEventListener('click', function () {
+        goToStep(1);
+      });
+    }
 
-    // Submit
     var submitBtn = $('#bookSubmitBtn');
     if (submitBtn) {
       submitBtn.addEventListener('click', function (e) {
@@ -282,30 +322,45 @@
       });
     }
 
-    // Done
     var doneBtn = $('#bookDoneBtn');
     if (doneBtn) doneBtn.addEventListener('click', closeModal);
-  });
 
-  // Expose for external triggers
-  window.HoldenBooking = { open: openModal, close: closeModal };
+    // Photo upload
+    var uploadArea = $('#bookUploadArea');
+    var fileInput = $('#bkPhotos');
+    var thumbs = $('#bookThumbs');
+    if (uploadArea && fileInput) {
+      uploadArea.addEventListener('click', function () { fileInput.click(); });
+      fileInput.addEventListener('change', function () {
+        var files = Array.prototype.slice.call(fileInput.files || []);
+        files.forEach(function (file) {
+          if (!file.type.match(/^image\//)) return;
+          state.photos.push(file);
+          if (thumbs) {
+            var reader = new FileReader();
+            reader.onload = function (ev) {
+              var img = document.createElement('img');
+              img.src = ev.target.result;
+              img.alt = 'Upload preview';
+              thumbs.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      });
+    }
 
-  // Mobile: swipe right on success panel to close
-  document.addEventListener('DOMContentLoaded', function () {
+    // Mobile swipe right on success to close
     var startX = 0;
-    var panel = null;
-
     document.body.addEventListener('touchstart', function (e) {
-      panel = document.getElementById('bookSuccessPanel');
+      var panel = document.getElementById('bookSuccessPanel');
       if (!panel || !panel.closest('.book-step.active')) return;
       if (e.touches.length === 1) startX = e.touches[0].clientX;
     }, { passive: true });
-
     document.body.addEventListener('touchend', function (e) {
+      var panel = document.getElementById('bookSuccessPanel');
       if (!panel || !panel.closest('.book-step.active')) return;
-      var endX = e.changedTouches[0].clientX;
-      var dx = endX - startX;
-      // Swipe right threshold
+      var dx = e.changedTouches[0].clientX - startX;
       if (dx > 80) {
         panel.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
         panel.style.transform = 'translateX(120%)';
@@ -320,4 +375,5 @@
     }, { passive: true });
   });
 
+  window.HoldenBooking = { open: openModal, close: closeModal };
 })();

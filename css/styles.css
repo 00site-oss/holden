@@ -742,3 +742,108 @@ footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;backgr
   color: var(--secondary);
   font-weight: 700;
 }
+
+
+/* Powered-by logo footer */
+.book-powered {
+  text-align: center;
+  padding: 12px 20px 16px;
+  border-top: 1px solid #eef1f4;
+  background: #fafbfc;
+  border-radius: 0 0 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #8a93a0;
+}
+.book-powered img {
+  height: 18px;
+  width: auto;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+/* Selected services chips (multi-add) */
+.book-cart {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.book-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f4f8;
+  border: 1px solid #d8e0ea;
+  border-radius: 20px;
+  padding: 6px 10px 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondary);
+}
+.book-chip button {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 2px;
+}
+.book-chip button:hover { color: #c00; }
+
+/* Image upload */
+.book-upload {
+  border: 1.5px dashed #cfd6e0;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  background: #fafbfc;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.book-upload:hover {
+  border-color: var(--accent);
+  background: #fff8f4;
+}
+.book-upload input { display: none; }
+.book-upload-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--secondary);
+}
+.book-upload-hint {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-top: 4px;
+}
+.book-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.book-thumbs img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e2e6ec;
+}
+
+/* Modal background match */
+.book-modal {
+  background: #f7f8fa;
+}
+.book-logo-wrap,
+.book-header,
+.book-body {
+  background: #f7f8fa;
+}
+.book-option,
+.book-service {
+  background: #fff;
+}
