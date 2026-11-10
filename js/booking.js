@@ -37,7 +37,13 @@
     ]
   };
 
-  function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+  
+  // Override catalog with admin-saved data if available
+  if (window.__holdenBookingCatalog) {
+    catalog = window.__holdenBookingCatalog;
+  }
+
+function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
 
   function openModal() {

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holden Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --sidebar: #0f2a47;
+      --accent: #E06A26;
+      --text: #1a2332;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    .login-wrap { min-height: 100vh; display: grid; place-items: center; background: linear-gradient(135deg, #0f2a47, #1a4a7a); }
+    .login-card { background: #fff; padding: 40px; border-radius: 16px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .login-card h1 { margin: 0 0 8px; font-size: 24px; color: var(--sidebar); }
+    .login-card p { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
+    .login-card input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; font-size: 15px; }
+    .login-card button { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; }
+    .login-card button:hover { filter: brightness(1.08); }
+    .error { color: #dc2626; font-size: 13px; margin-bottom: 10px; display: none; }
+
+    .app { display: none; min-height: 100vh; }
+    .app.show { display: flex; }
+    .sidebar { width: 260px; background: var(--sidebar); color: #fff; flex-shrink: 0; display: flex; flex-direction: column; }
+    .sidebar-logo { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 800; font-size: 18px; }
+    .sidebar-logo small { display: block; font-weight: 400; font-size: 12px; opacity: .7; margin-top: 2px; }
+    .nav-item { padding: 14px 20px; cursor: pointer; font-size: 14px; font-weight: 500; border-left: 3px solid transparent; transition: background .15s; }
+    .nav-item:hover { background: rgba(255,255,255,.06); }
+    .nav-item.active { background: rgba(255,255,255,.1); border-left-color: var(--accent); }
+    .sidebar-footer { margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.1); }
+    .sidebar-footer button { width: 100%; padding: 10px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; cursor: pointer; }
+
+    .main { flex: 1; padding: 32px; overflow-y: auto; }
+    .main h2 { margin: 0 0 6px; font-size: 26px; }
+    .main .sub { color: var(--muted); margin: 0 0 28px; font-size: 14px; }
+    .card { background: var(--card); border-radius: 14px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .card h3 { margin: 0 0 16px; font-size: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-row.full { grid-template-columns: 1fr; }
+    label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 6px; color: var(--sidebar); }
+    input, textarea, select { width: 100%; padding: 11px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; }
+    textarea { min-height: 80px; resize: vertical; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 14px; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-secondary { background: #eef1f5; color: var(--sidebar); }
+    .btn-danger { background: #fee2e2; color: #dc2626; }
+    .svc-list { margin-bottom: 16px; }
+    .svc-item { display: grid; grid-template-columns: 1.4fr 1.6fr 90px 40px; gap: 10px; align-items: end; margin-bottom: 10px; padding: 12px; background: #f9fafb; border-radius: 10px; }
+    .svc-item input { margin: 0; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #16a34a; color: #fff; padding: 14px 20px; border-radius: 10px; font-weight: 600; opacity: 0; transform: translateY(10px); transition: all .25s; z-index: 100; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .section { display: none; }
+    .section.active { display: block; }
+    @media (max-width: 800px) {
+      .sidebar { width: 70px; }
+      .sidebar-logo small, .nav-item span, .sidebar-footer button span { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .svc-item { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="login-wrap" id="loginWrap">
+    <div class="login-card">
+      <h1>Holden Admin</h1>
+      <p>Sign in to manage your website content.</p>
+      <div class="error" id="loginError">Incorrect password.</div>
+      <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password" />
+      <button type="button" onclick="doLogin()">Sign In</button>
+      <p style="margin-top:16px;font-size:12px;color:#9ca3af;">Default password: <strong>holden2026</strong></p>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div class="app" id="app">
+    <aside class="sidebar">
+      <div class="sidebar-logo">Holden<small>Admin Panel</small></div>
+      <div class="nav-item active" data-sec="site" onclick="showSec('site')"><span>Site Settings</span></div>
+      <div class="nav-item" data-sec="hero" onclick="showSec('hero')"><span>Homepage Hero</span></div>
+      <div class="nav-item" data-sec="booking" onclick="showSec('booking')"><span>Booking Services</span></div>
+      <div class="nav-item" data-sec="footer" onclick="showSec('footer')"><span>Footer</span></div>
+      <div class="nav-item" data-sec="pages" onclick="showSec('pages')"><span>Page Content</span></div>
+      <div class="sidebar-footer">
+        <button onclick="logout()"><span>Sign Out</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <!-- SITE SETTINGS -->
+      <section class="section active" id="sec-site">
+        <h2>Site Settings</h2>
+        <p class="sub">Phone, email, and address used across the site and booking form.</p>
+        <div class="card">
+          <div class="form-row">
+            <div><label>Phone Number</label><input id="setPhone" value="971-677-0201" /></div>
+            <div><label>Email</label><input id="setEmail" value="support@callholden.com" /></div>
+          </div>
+          <div class="form-row full">
+            <div><label>Address</label><input id="setAddress" value="1455 Ryan Dr, Silverton, OR 97381" /></div>
+          </div>
+          <button class="btn btn-primary" onclick="saveSite()">Save Site Settings</button>
+        </div>
+      </section>
+
+      <!-- HERO -->
+      <section class="section" id="sec-hero">
+        <h2>Homepage Hero</h2>
+        <p class="sub">Edit the main headline and subtext on the homepage.</p>
+        <div class="card">
+          <div class="form-row full">
+            <div><label>Headline Line 1 (large white)</label><input id="hero1" value="Same-Day" /></div>
+          </div>
+          <div class="form-row full">
+            <div><label>Headline Line 1 accent (orange italic)</label><input id="hero1b" value="Service." /></div>
+          </div>
+          <div class="form-row">
+            <div><label>Line 2 (large white)</label><input id="hero2" value="Honest," /></div>
+            <div><label>Line 3 (orange)</label><input id="hero3" value="Up-Front" /></div>
+          </div>
+          <div class="form-row full">
+            <div><label>Line 4 (large white)</label><input id="hero4" value="Pricing." /></div>
+          </div>
+          <div class="form-row full">
+            <div><label>Subtext</label><input id="heroSub" value="Portland’s Trusted HVAC, Plumbing & Electrical Team" /></div>
+          </div>
+          <button class="btn btn-primary" onclick="saveHero()">Save Hero</button>
+        </div>
+      </section>
+
+      <!-- BOOKING SERVICES -->
+      <section class="section" id="sec-booking">
+        <h2>Booking Services & Prices</h2>
+        <p class="sub">Manage the services and prices that appear in the booking popup.</p>
+        <div class="card">
+          <h3>Air Conditioner</h3>
+          <div class="svc-list" id="svc-ac"></div>
+          <button class="btn btn-secondary" onclick="addSvc('ac')">+ Add Service</button>
+        </div>
+        <div class="card">
+          <h3>Heater / Furnace</h3>
+          <div class="svc-list" id="svc-furnace"></div>
+          <button class="btn btn-secondary" onclick="addSvc('furnace')">+ Add Service</button>
+        </div>
+        <div class="card">
+          <h3>Heat Pump</h3>
+          <div class="svc-list" id="svc-hp"></div>
+          <button class="btn btn-secondary" onclick="addSvc('hp')">+ Add Service</button>
+        </div>
+        <div class="card">
+          <h3>Commercial HVAC</h3>
+          <div class="svc-list" id="svc-comm"></div>
+          <button class="btn btn-secondary" onclick="addSvc('comm')">+ Add Service</button>
+        </div>
+        <button class="btn btn-primary" onclick="saveBooking()">Save All Services</button>
+      </section>
+
+      <!-- FOOTER -->
+      <section class="section" id="sec-footer">
+        <h2>Footer</h2>
+        <p class="sub">Edit footer text and copyright line.</p>
+        <div class="card">
+          <div class="form-row full">
+            <div><label>Copyright Line</label><textarea id="footerCopy">Copyright © 2026 Holden Heating and Cooling. All Rights Reserved.</textarea></div>
+          </div>
+          <button class="btn btn-primary" onclick="saveFooter()">Save Footer</button>
+        </div>
+      </section>
+
+      <!-- PAGES -->
+      <section class="section" id="sec-pages">
+        <h2>Page Content</h2>
+        <p class="sub">Quick links to edit individual pages (opens in new tab). Content changes from Site Settings, Hero, Booking, and Footer apply site-wide.</p>
+        <div class="card">
+          <p style="margin:0 0 12px;">All public pages automatically reflect the settings you save here.</p>
+          <a class="btn btn-secondary" href="index.html" target="_blank">View Homepage</a>
+          <a class="btn btn-secondary" href="services.html" target="_blank" style="margin-left:8px;">View Services</a>
+          <a class="btn btn-secondary" href="heating-cooling.html" target="_blank" style="margin-left:8px;">View Heating & Cooling</a>
+          <a class="btn btn-secondary" href="offers.html" target="_blank" style="margin-left:8px;">View Offers</a>
+          <a class="btn btn-secondary" href="contact.html" target="_blank" style="margin-left:8px;">View Contact</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">Saved successfully</div>
+
+  <script>
+    var ADMIN_PASS = 'holden2026';
+    var KEY = 'holden_content_v1';
+
+    function getData() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; }
+    }
+    function setData(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+
+    function doLogin() {
+      var p = document.getElementById('loginPass').value;
+      if (p === ADMIN_PASS) {
+        document.getElementById('loginWrap').style.display = 'none';
+        document.getElementById('app').classList.add('show');
+        loadAll();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+    function logout() {
+      document.getElementById('app').classList.remove('show');
+      document.getElementById('loginWrap').style.display = 'grid';
+      document.getElementById('loginPass').value = '';
+    }
+
+    function showSec(id) {
+      document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+      document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+      document.getElementById('sec-' + id).classList.add('active');
+      document.querySelector('.nav-item[data-sec="' + id + '"]').classList.add('active');
+    }
+
+    function toast() {
+      var t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(function(){ t.classList.remove('show'); }, 1800);
+    }
+
+    // --- Site ---
+    function loadAll() {
+      var d = getData();
+      if (d.phone) document.getElementById('setPhone').value = d.phone;
+      if (d.email) document.getElementById('setEmail').value = d.email;
+      if (d.address) document.getElementById('setAddress').value = d.address;
+      if (d.hero) {
+        if (d.hero.l1) document.getElementById('hero1').value = d.hero.l1;
+        if (d.hero.l1b) document.getElementById('hero1b').value = d.hero.l1b;
+        if (d.hero.l2) document.getElementById('hero2').value = d.hero.l2;
+        if (d.hero.l3) document.getElementById('hero3').value = d.hero.l3;
+        if (d.hero.l4) document.getElementById('hero4').value = d.hero.l4;
+        if (d.hero.sub) document.getElementById('heroSub').value = d.hero.sub;
+      }
+      if (d.footer && d.footer.copyright) document.getElementById('footerCopy').value = d.footer.copyright;
+      renderBooking(d.bookingServices);
+    }
+
+    function saveSite() {
+      var d = getData();
+      d.phone = document.getElementById('setPhone').value.trim();
+      d.email = document.getElementById('setEmail').value.trim();
+      d.address = document.getElementById('setAddress').value.trim();
+      setData(d);
+      toast();
+    }
+
+    function saveHero() {
+      var d = getData();
+      var l1 = document.getElementById('hero1').value.trim();
+      var l1b = document.getElementById('hero1b').value.trim();
+      var l2 = document.getElementById('hero2').value.trim();
+      var l3 = document.getElementById('hero3').value.trim();
+      var l4 = document.getElementById('hero4').value.trim();
+      var sub = document.getElementById('heroSub').value.trim();
+      d.hero = {
+        l1: l1, l1b: l1b, l2: l2, l3: l3, l4: l4, sub: sub,
+        html: '<span class="w1"><b class="big">' + l1 + '</b> <i class="sm g">' + l1b + '</i></span>' +
+              '<span class="big">' + l2 + '</span>' +
+              '<span class="sm g">' + l3 + '</span>' +
+              '<span class="big">' + l4 + '</span>'
+      };
+      setData(d);
+      toast();
+    }
+
+    function saveFooter() {
+      var d = getData();
+      d.footer = { copyright: document.getElementById('footerCopy').value.trim() };
+      setData(d);
+      toast();
+    }
+
+    // --- Booking services ---
+    var defaultCatalog = {
+      'Air Conditioner': [
+        { name: 'Air Conditioning System Diagnostic', price: 89, desc: 'Professional system evaluation to identify the root cause of your cooling issue.' },
+        { name: 'Air Conditioner Tune-Up & Safety Inspection', price: 179, desc: 'Comprehensive maintenance and safety inspection for your AC system.' },
+        { name: 'Air Conditioner & Furnace Tune-Up', price: 225, desc: 'Combined AC & furnace tune-up for complete seasonal maintenance.' }
+      ],
+      'Heater / Furnace': [
+        { name: 'Furnace Diagnostic', price: 89, desc: 'Full diagnostic to find the cause of heating problems.' },
+        { name: 'Furnace Tune-Up & Safety Inspection', price: 179, desc: 'Complete furnace maintenance and safety check.' },
+        { name: 'Furnace & AC Tune-Up Combo', price: 225, desc: 'Both systems tuned up in one visit.' }
+      ],
+      'Heat Pump': [
+        { name: 'Heat Pump Diagnostic', price: 89, desc: 'Expert evaluation of your heat pump system.' },
+        { name: 'Heat Pump Tune-Up', price: 189, desc: 'Seasonal maintenance for optimal heat pump performance.' },
+        { name: 'A/C & Heat Pump Tune-Up Special', price: 225, desc: 'Limited time dual-system tune-up offer.' }
+      ],
+      'Commercial HVAC': [
+        { name: 'Commercial System Diagnostic', price: 149, desc: 'Diagnostic service for light commercial HVAC equipment.' },
+        { name: 'Commercial Maintenance Visit', price: 299, desc: 'Scheduled maintenance for commercial systems.' }
+      ]
+    };
+
+    var catMap = { ac: 'Air Conditioner', furnace: 'Heater / Furnace', hp: 'Heat Pump', comm: 'Commercial HVAC' };
+
+    function renderBooking(saved) {
+      var catalog = saved || defaultCatalog;
+      Object.keys(catMap).forEach(function(key) {
+        var cat = catMap[key];
+        var list = document.getElementById('svc-' + key);
+        var items = catalog[cat] || [];
+        list.innerHTML = items.map(function(s, i) {
+          return '<div class="svc-item" data-cat="' + key + '" data-i="' + i + '">' +
+            '<input type="text" class="svc-name" value="' + (s.name||'').replace(/"/g,'"') + '" placeholder="Service name" />' +
+            '<input type="text" class="svc-desc" value="' + (s.desc||'').replace(/"/g,'"') + '" placeholder="Description" />' +
+            '<input type="number" class="svc-price" value="' + (s.price||0) + '" placeholder="Price" />' +
+            '<button class="btn btn-danger" onclick="this.parentNode.remove()">×</button>' +
+            '</div>';
+        }).join('');
+      });
+    }
+
+    function addSvc(key) {
+      var list = document.getElementById('svc-' + key);
+      var div = document.createElement('div');
+      div.className = 'svc-item';
+      div.setAttribute('data-cat', key);
+      div.innerHTML = '<input type="text" class="svc-name" placeholder="Service name" />' +
+        '<input type="text" class="svc-desc" placeholder="Description" />' +
+        '<input type="number" class="svc-price" value="0" placeholder="Price" />' +
+        '<button class="btn btn-danger" onclick="this.parentNode.remove()">×</button>';
+      list.appendChild(div);
+    }
+
+    function saveBooking() {
+      var catalog = {};
+      Object.keys(catMap).forEach(function(key) {
+        var cat = catMap[key];
+        catalog[cat] = [];
+        document.querySelectorAll('#svc-' + key + ' .svc-item').forEach(function(row) {
+          var name = row.querySelector('.svc-name').value.trim();
+          var desc = row.querySelector('.svc-desc').value.trim();
+          var price = parseFloat(row.querySelector('.svc-price').value) || 0;
+          if (name) catalog[cat].push({ name: name, desc: desc, price: price });
+        });
+      });
+      var d = getData();
+      d.bookingServices = catalog;
+      setData(d);
+      toast();
+    }
+
+    // Enter key on login
+    document.getElementById('loginPass').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doLogin();
+    });
+  </script>
+</body>
+</html>
