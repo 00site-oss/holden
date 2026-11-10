@@ -1,0 +1,321 @@
+/* ==== Nordth font (CDN fallback) ==== */
+@font-face {
+  font-family: 'Nordth';
+  src: url('https://fonts.cdnfonts.com/s/93467/Nordth.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nordth';
+  src: url('https://fonts.cdnfonts.com/s/93467/Nordth-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*{box-sizing:border-box;border-color:var(--border)}
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(.19 .022 255);
+  --primary: oklch(.57 .14 245);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(.29 .065 252);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(.97 .009 230);
+  --muted-foreground: oklch(.48 .025 250);
+  /* ==== VIBRANT ORANGE / AMBER ACCENT (#E06A26) ==== */
+  --accent: #E06A26;
+  --accent-foreground: #ffffff;
+  --accent-dark: #C4591C;
+  --accent-light: #F08442;
+  --border: oklch(.90 .012 235);
+  --blue-start: oklch(.67 .145 230);
+  --blue-end: oklch(.47 .14 247);
+  --green-start: #F08442;
+  --green-end: #E06A26;
+  --hero-highlight: #FFB066;
+  --hero-background: oklch(.17 .013 254);
+  --hero-foreground: oklch(1 0 0);
+  --gradient-blue: linear-gradient(105deg, var(--blue-start), var(--blue-end));
+  --gradient-green: linear-gradient(105deg, var(--green-start), var(--green-end));
+  --gradient-accent: linear-gradient(105deg, #F08442, #E06A26);
+  --shadow-soft: 0 8px 24px color-mix(in oklch, var(--secondary) 9%, transparent);
+  --font-body: "Montserrat", sans-serif;
+  --font-heading: "Unbounded", "Montserrat", sans-serif;
+  --font-control: "Lexend", "Montserrat", sans-serif;
+  --font-nav: "Nordth", "Montserrat", sans-serif;
+  /* ==== FINANCING HEADING FONT ==== */
+  --financing-navy: #0F2A47;
+}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;font-family:var(--font-body);background:var(--background);color:var(--foreground);letter-spacing:0}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.home-page{overflow-x:clip}
+.home-page h1,.home-page h2,.home-page h3,.home-page p{margin-top:0}
+/* Header */
+.site-header{position:relative;z-index:20;background:var(--background)}
+.header-main{width:min(1120px,calc(100% - 64px));margin:auto;min-height:160px;display:flex;justify-content:space-between;align-items:center;gap:36px}
+.header-main>a{flex:0 1 480px;min-width:0}
+.site-logo{display:block;width:auto;max-width:100%;height:130px;object-fit:contain}
+.header-actions{display:flex;gap:20px;align-items:center;flex-shrink:0}
+.eco-button{min-height:48px;height:auto;padding:13px 27px;border-radius:999px;gap:9px;font-family:var(--font-control);font-size:15px;line-height:1.4;font-weight:600;transition:transform 180ms ease,filter 180ms ease;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.eco-button:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.eco-button-blue{background:var(--gradient-blue);color:var(--primary-foreground)}
+.eco-button-green{background:var(--gradient-green);color:var(--accent-foreground)}
+.eco-button-outline{border:2px solid var(--accent);color:var(--secondary);background:transparent}
+.eco-button svg{width:18px;height:18px;flex-shrink:0}
+/* ==== NAV with Nordth font ==== */
+.site-nav{
+  width:min(1120px,calc(100% - 64px));
+  margin:auto;
+  min-height:48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  font-family: "Nordth", Sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  text-transform: none;
+  line-height: 30px;
+}
+.site-nav a{display:flex;align-items:center;gap:8px;padding-block:12px;white-space:nowrap}
+.site-nav svg{width:13px;height:13px}
+.site-nav .active,.site-nav a:hover{color:var(--accent)}
+/* Hamburger toggle button */
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--accent);width:44px;height:44px;padding:0;align-items:center;justify-content:center}
+.nav-toggle svg{width:30px;height:30px;display:block}
+.nav-toggle .icon-x{display:none}
+/* Hero */
+.eco-hero{position:relative;min-height:650px;background:var(--hero-background);color:var(--hero-foreground);margin-bottom:70px}
+.eco-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.eco-hero-inner{position:relative;z-index:1;width:min(1120px,calc(100% - 64px));margin:auto;padding:48px 0 145px}
+.hero-headline{width:410px;max-width:100%;margin-bottom:30px;font-family:var(--font-heading);font-weight:900;line-height:1.02}
+.hero-headline>span{display:block}
+.hero-headline .big{font-size:70px;font-weight:900;line-height:1}
+.hero-headline .sm{font-family:var(--font-body);font-size:36px;font-weight:900;font-style:italic;line-height:1.12}
+.hero-headline .g{color:var(--hero-highlight)}
+.hero-headline .w1{display:flex;gap:12px;align-items:baseline}
+.hero-headline .w1 .big{font-size:60px;font-family:var(--font-body);font-style:italic}
+.hero-cta{display:flex;align-items:center;gap:24px}
+.hero-cta .eco-button{min-width:180px}
+.or{font-size:14px;font-weight:500}
+.review-seal{position:absolute;right:5%;top:58%;width:96px;height:96px;border:3px dotted var(--hero-foreground);border-radius:50%;background:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.review-seal>span{font-size:9px}
+.review-seal strong{font-family:var(--font-control);font-size:24px;line-height:1.15}
+.review-seal small{font-size:11px}
+.hero-offer{position:absolute;z-index:2;bottom:-35px;left:50%;transform:translateX(-50%);width:min(1120px,calc(100% - 64px));min-height:118px;display:flex;align-items:center;justify-content:center;gap:20px;padding:24px 30px;background:var(--gradient-accent);border-bottom:5px solid var(--primary);color:var(--hero-foreground);box-shadow:var(--shadow-soft)}
+.hero-offer .o1{font-size:26px;line-height:1.05;font-weight:900}
+.hero-offer .o1 small{display:block;font-size:18px}
+.hero-offer>strong{font-family:var(--font-heading);font-size:66px;font-weight:900;line-height:1}
+.hero-offer .o2{font-size:25px;font-weight:900;line-height:1.25}
+.hero-offer .o2 small{display:block;font-size:14px;font-weight:600;margin-top:6px}
+/* Sections */
+.band{padding:70px max(32px,calc((100% - 1120px)/2))}
+.section-title{color:var(--secondary);text-align:center;font-size:36px;line-height:1.2;font-weight:900;text-transform:uppercase;margin-bottom:16px}
+.section-rule{width:70px;height:4px;background:var(--accent);margin:0 auto 36px}
+.left-rule{width:60px;height:4px;background:var(--accent);margin:20px 0}
+.eyebrow{display:block;color:var(--accent);text-transform:uppercase;font-size:12px;font-weight:800;margin-bottom:14px}
+/* Services */
+.service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.service-card{overflow:hidden;border:1px solid var(--border);background:var(--background);border-radius:6px;display:flex;flex-direction:column}
+.service-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#f8f8f8;padding:20px}
+.service-card>div{padding:25px 20px;display:flex;flex-direction:column;flex:1}
+.service-card h3{font-size:19px;font-weight:800;line-height:1.3;color:var(--secondary);margin-bottom:12px}
+.service-card p{font-size:13px;line-height:1.8;color:var(--muted-foreground);min-height:118px;flex:1}
+.service-card .eco-button{font-size:12px;min-height:40px;padding:10px 17px;align-self:flex-start}
+/* Deals */
+.deals,.feature.alt,.membership,.areas{background:var(--muted)}
+.deal-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px}
+.deal{overflow:hidden;background:var(--background);border:1px solid var(--border);border-radius:6px;text-align:center;display:flex;flex-direction:column}
+.deal-price{display:flex;flex-direction:column;justify-content:center;min-height:100px;background:var(--gradient-blue);color:var(--primary-foreground)}
+.deal-price.tone-1,.deal-price.tone-2{background:var(--gradient-accent)}
+.deal-price small{font-size:12px;font-weight:600;text-transform:uppercase}
+.deal-price b{font-size:40px;font-weight:900}
+.deal-copy{display:flex;flex-direction:column;justify-content:center;min-height:90px;padding:16px 10px}
+.deal-copy strong{font-size:14px;color:var(--secondary)}
+.deal-copy em{font-size:11px;margin-top:5px;color:var(--muted-foreground);font-style:normal}
+/* ==== FINANCE ==== */
+.finance{background:var(--gradient-blue);color:var(--primary-foreground);padding:40px 24px;display:flex;align-items:center;justify-content:center;gap:45px;flex-wrap:wrap}
+.finance h2{
+  font-family: "Montserrat", sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+  font-style: normal;
+  letter-spacing: -0.02em;
+  color: var(--financing-navy);
+  margin-bottom: 0;
+  line-height: 1.1;
+}
+/* Split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.split h2,.membership h2,.areas-layout h2{color:var(--secondary);font-size:34px;font-weight:900;line-height:1.2}
+.split p,.membership p{color:var(--muted-foreground);line-height:1.8;font-size:14px;margin-bottom:18px}
+.photo-panel{position:relative;height:450px;overflow:hidden;background:#f8f8f8;display:flex;align-items:center;justify-content:center}
+.photo-panel img{width:80%;height:auto;object-fit:contain;object-position:center}
+.photo-panel>span{position:absolute;inset:auto 0 0;background:var(--secondary);color:var(--secondary-foreground);text-align:center;padding:22px;font-size:18px;font-weight:800}
+/* Membership */
+.membership-inner{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:90px}
+.membership-inner>div>img{width:280px;height:auto;margin-bottom:24px}
+.booklet{min-height:350px;padding:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;background:var(--gradient-blue);color:var(--primary-foreground);border:7px solid var(--background);box-shadow:var(--shadow-soft);transform:rotate(3deg);text-align:center}
+.booklet svg{width:75px;height:75px}
+.booklet strong{font-size:28px;font-weight:900}
+.booklet span{font-size:13px}
+/* Feature */
+.feature-photo{height:390px;overflow:hidden;border-bottom:5px solid var(--accent);background:#f8f8f8;display:flex;align-items:center;justify-content:center}
+.feature-photo img{width:70%;height:auto;object-fit:contain}
+.reverse>:first-child{order:2}
+/* Reviews */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.review{padding:35px;border:1px solid var(--border);border-radius:6px}
+.stars{color:var(--accent);font-size:22px;margin-bottom:15px}
+.review p{font-size:17px;line-height:1.8;color:var(--secondary)}
+.reviewer{display:flex;align-items:center;gap:12px;font-size:13px}
+.reviewer>span{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--secondary);color:var(--secondary-foreground)}
+/* Guarantees */
+.guarantees{padding-top:20px}
+.guarantee-truck{display:block;width:60px;height:60px;margin:0 auto 35px;color:var(--accent)}
+.guarantee-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;text-align:center}
+.g-icon{width:65px;height:65px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-foreground)}
+.g-icon.navy{background:var(--secondary)}
+.g-icon svg{width:30px;height:30px}
+.guarantee-grid strong{font-size:11px;line-height:1.5;text-transform:uppercase;color:var(--secondary)}
+/* Same-day */
+.same-day{display:flex;justify-content:space-between;align-items:center;gap:35px;background:var(--gradient-accent);color:var(--accent-foreground);padding:40px;margin-bottom:60px}
+.same-day h2{font-size:32px;line-height:1.25;font-weight:900}
+.tech-badge{flex:0 0 160px;display:flex;flex-direction:column;align-items:center;gap:12px;font-size:15px;font-weight:800}
+.tech-badge svg{width:70px;height:70px}
+/* Areas */
+.areas-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:60px}
+.areas-layout ul{list-style:none;padding:0;columns:3;margin:24px 0}
+.areas-layout li{font-size:12px;font-weight:600;margin-bottom:13px;color:var(--secondary)}
+.areas-layout li::before{content:'•';color:var(--accent);margin-right:7px}
+.map-panel{min-height:300px;background:var(--background);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;color:var(--secondary);text-align:center;font-weight:700}
+.map-panel svg{width:75px;height:75px;color:var(--accent)}
+/* Schedule */
+.schedule{padding:60px 24px;background:var(--gradient-blue);color:var(--primary-foreground);text-align:center}
+.schedule h2{font-size:36px;line-height:1.2;font-weight:900}
+.cta-row{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+/* Footer */
+footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;background:var(--muted);color:var(--secondary)}
+.footer-truck{position:absolute;top:-24px;left:calc(50% - 24px);width:48px;height:48px;padding:10px;border-radius:50%;background:var(--background);color:var(--accent)}
+.footer-truck svg{width:100%;height:100%}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:40px;padding-bottom:40px}
+.footer-grid h3{font-size:15px;font-weight:800;color:var(--accent);margin-bottom:18px}
+.footer-grid p{display:flex;gap:10px;align-items:center;font-size:12px;line-height:1.7}
+.footer-grid p svg{width:17px;flex-shrink:0;color:var(--accent)}
+.footer-center{text-align:center}
+.footer-call{display:inline-flex;align-items:center;gap:12px}
+.footer-call>svg{width:34px;height:34px;color:var(--accent)}
+.footer-call span{display:flex;flex-direction:column;text-align:left;gap:4px}
+.footer-call small{font-size:10px}
+.footer-call strong{font-size:21px}
+.socials{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.socials a{font-size:12px;font-weight:800}
+.footer-areas{columns:3;list-style:none;padding:0;font-size:10px;line-height:1.9}
+.copyright{border-top:1px solid var(--border);padding:22px 0;font-size:11px;text-align:center;color:var(--muted-foreground)}
+.license{display:block;margin-top:8px;font-size:10px;color:var(--muted-foreground)}
+.mobile-bar{display:none}
+/* Responsive */
+@media(max-width:1100px){
+  .header-main{gap:24px;min-height:145px}
+  .header-main>a{flex-basis:400px}
+  .site-logo{height:110px}
+  .header-actions{gap:12px}
+  .header-actions .eco-button{padding-inline:20px;font-size:13px}
+  .site-nav{font-size:17px;line-height:26px}
+  .hero-offer .o2{font-size:21px}
+  .service-card p{min-height:142px}
+  .finance h2{font-size:34px}
+}
+@media(max-width:900px){
+  .header-main{min-height:120px;width:calc(100% - 40px)}
+  .header-main>a{flex-basis:360px}
+  .site-logo{height:90px}
+  .header-actions{display:none}
+  .nav-toggle{display:inline-flex}
+  .site-nav{display:none;position:absolute;top:100%;left:0;width:100%;background:var(--background);box-shadow:var(--shadow-soft);padding:16px 24px;font-size:18px;line-height:28px;flex-direction:column;align-items:stretch;gap:4px;z-index:40}
+  .site-nav.open{display:flex}
+  .site-nav a{justify-content:space-between}
+  .eco-hero-inner{width:calc(100% - 48px)}
+  .hero-offer{width:calc(100% - 48px);padding:20px;gap:14px}
+  .hero-offer>strong{font-size:50px}
+  .hero-offer .o1{font-size:22px}
+  .hero-offer .o2{font-size:18px}
+  .service-grid{grid-template-columns:repeat(2,1fr)}
+  .service-card p{min-height:70px}
+  .deal-grid{grid-template-columns:repeat(3,1fr)}
+  .split{gap:35px}
+  .split h2,.membership h2{font-size:28px}
+  .membership-inner{gap:40px}
+  .guarantee-grid{grid-template-columns:repeat(3,1fr)}
+  .areas-layout{gap:30px}
+  .areas-layout ul{columns:2}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-grid>:last-child{grid-column:1/-1}
+  .mobile-bar{display:grid;grid-template-columns:1fr 1fr;position:fixed;bottom:0;left:0;right:0;z-index:30}
+  .mobile-bar .eco-button{border-radius:0;min-height:56px}
+  footer{padding-bottom:56px}
+  .finance h2{font-size:30px}
+}
+@media(max-width:600px){
+  .header-main{min-height:112px;width:calc(100% - 28px);gap:14px}
+  .header-main>a{flex-basis:310px}
+  .site-logo{height:80px}
+  .eco-hero{min-height:620px;margin-bottom:0}
+  .eco-hero-bg{object-position:62% center}
+  .eco-hero::after{content:'';position:absolute;inset:0;background:color-mix(in oklch,var(--hero-background) 26%,transparent);pointer-events:none}
+  .eco-hero-inner{z-index:1;width:calc(100% - 40px);padding:40px 0 165px}
+  .hero-headline{width:300px;margin-bottom:30px}
+  .hero-headline .big{font-size:60px}
+  .hero-headline .sm{font-size:29px}
+  .hero-headline .w1 .big{font-size:53px}
+  .hero-cta{flex-wrap:wrap;gap:12px}
+  .hero-cta .eco-button{min-width:0;padding:13px 18px;font-size:13px}
+  .hero-cta .or{font-size:12px}
+  .review-seal{z-index:1;right:20px;top:280px;width:74px;height:74px}
+  .review-seal strong{font-size:19px}
+  .review-seal>span{font-size:7px}
+  .review-seal small{font-size:9px}
+  .hero-offer{bottom:0;width:100%;min-height:122px;padding:20px;gap:10px;flex-wrap:wrap}
+  .hero-offer>strong{font-size:46px}
+  .hero-offer .o1{font-size:21px}
+  .hero-offer .o1 small{font-size:14px}
+  .hero-offer .o2{font-size:16px;flex-basis:100%;text-align:center}
+  .hero-offer .o2 small{font-size:10px}
+  .band{padding:48px 20px}
+  .section-title{font-size:28px}
+  .service-grid{gap:14px}
+  .service-card>div{padding:20px 14px}
+  .service-card h3{font-size:16px;min-height:42px}
+  .service-card p{min-height:150px;font-size:12px}
+  .service-card .eco-button{font-size:11px;padding-inline:12px}
+  .deal-grid{grid-template-columns:repeat(2,1fr)}
+  .deal-grid .deal:last-child{grid-column:1/-1}
+  .finance{flex-direction:column;gap:24px;text-align:center}
+  .finance h2{font-size:26px}
+  .split,.membership-inner,.areas-layout,.review-grid,.footer-grid{grid-template-columns:1fr;gap:32px}
+  .reverse>:first-child{order:0}
+  .split h2,.membership h2,.areas-layout h2{font-size:28px}
+  .photo-panel,.feature-photo{height:310px}
+  .booklet{min-height:300px;margin-inline:10px}
+  .review{padding:25px}
+  .guarantee-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+  .same-day{padding:28px 24px;flex-direction:column;align-items:flex-start;margin-bottom:40px}
+  .same-day h2{font-size:27px}
+  .tech-badge{display:none}
+  .areas-layout ul{columns:2}
+  .schedule h2{font-size:29px}
+  .cta-row{gap:12px}
+  .schedule .eco-button{padding-inline:20px}
+  footer{padding-inline:24px}
+  .footer-grid>:last-child{grid-column:auto}
+  .footer-grid{text-align:center}
+  .footer-grid p{justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .eco-button{transition:none}
+  .eco-button:hover{transform:none}
+}
