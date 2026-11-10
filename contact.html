@@ -109,6 +109,71 @@
     </footer>
   </main>
   <div class="mobile-bar"><a class="eco-button eco-button-blue" href="contact.html">Book Online</a><a class="eco-button eco-button-green" href="tel:+19716770201">Call Now</a></div>
-<script src="js/main.js" defer></script>
+
+
+  <!-- ========== BOOKING MODAL ========== -->
+  <div class="book-overlay" id="bookOverlay" aria-hidden="true">
+    <div class="book-modal" role="dialog" aria-labelledby="bookTitle">
+      <div class="book-header">
+        <h3 id="bookTitle">Book a Service</h3>
+        <button type="button" class="book-close" id="bookClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="book-progress"><div class="book-progress-bar" id="bookProgressBar"></div></div>
+      <div class="book-body">
+        <div class="book-step active" id="bookStep1">
+          <h4>What can we do for you?</h4>
+          <p class="sub">Heating &amp; Air Conditioning</p>
+          <div class="book-option" data-category="Air Conditioner">Air Conditioner <span class="arrow">›</span></div>
+          <div class="book-option" data-category="Heater / Furnace">Heater / Furnace <span class="arrow">›</span></div>
+          <div class="book-option" data-category="Heat Pump">Heat Pump <span class="arrow">›</span></div>
+          <div class="book-option" data-category="Commercial HVAC">Commercial HVAC <span class="arrow">›</span></div>
+        </div>
+        <div class="book-step" id="bookStep2">
+          <button type="button" class="book-btn book-btn-secondary" data-book-back="1" style="margin-bottom:14px;width:auto;padding:8px 14px;font-size:13px;">← Back</button>
+          <h4>Select a service</h4>
+          <p class="sub">Choose the service you need</p>
+          <div id="bookServiceList"></div>
+          <div class="book-actions">
+            <button type="button" class="book-btn book-btn-primary" id="bookToDetails">Continue</button>
+          </div>
+        </div>
+        <div class="book-step" id="bookStep3">
+          <button type="button" class="book-btn book-btn-secondary" data-book-back="2" style="margin-bottom:14px;width:auto;padding:8px 14px;font-size:13px;">← Back</button>
+          <div class="book-summary" id="bookSummary"></div>
+          <h4>Your details</h4>
+          <p class="sub">We'll use this to confirm your appointment.</p>
+          <div class="book-form-row">
+            <div class="book-form-group"><label for="bkFirstName">First name</label><input type="text" id="bkFirstName" required autocomplete="given-name"></div>
+            <div class="book-form-group"><label for="bkLastName">Last name</label><input type="text" id="bkLastName" required autocomplete="family-name"></div>
+          </div>
+          <div class="book-form-group"><label for="bkEmail">Email</label><input type="email" id="bkEmail" required autocomplete="email"></div>
+          <div class="book-form-group"><label for="bkAddress">Street address</label><input type="text" id="bkAddress" required autocomplete="street-address"></div>
+          <div class="book-form-row">
+            <div class="book-form-group"><label for="bkCity">City</label><input type="text" id="bkCity" required autocomplete="address-level2"></div>
+            <div class="book-form-group"><label for="bkState">State</label><input type="text" id="bkState" required value="OR" autocomplete="address-level1"></div>
+          </div>
+          <div class="book-form-group"><label for="bkZip">ZIP code</label><input type="text" id="bkZip" required autocomplete="postal-code"></div>
+          <div class="book-form-group"><label for="bkNotes">Additional info (optional)</label><textarea id="bkNotes" rows="3" placeholder="Any details that will help us prepare..."></textarea></div>
+          <div class="book-actions">
+            <button type="button" class="book-btn book-btn-primary" id="bookSubmitBtn">Book Service</button>
+          </div>
+        </div>
+        <div class="book-step" id="bookStep4">
+          <div class="book-success">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+            <h4>Request sent!</h4>
+            <p class="sub">Thank you. We'll contact you shortly to confirm your appointment.</p>
+            <button type="button" class="book-btn book-btn-primary" id="bookDoneBtn" style="margin-top:18px;">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/booking.js" defer></script>
+  <script src="js/main.js" defer></script>
+
 </body>
 </html>
