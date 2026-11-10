@@ -50,31 +50,61 @@
     });
   }
 
-  // ===== Scroll up to top → return to homepage =====
-  // Only on pages that are NOT the homepage
+  // ===== Return to homepage only when user is at the very top and tries to scroll up again =====
+  // This allows free scrolling up/down to read content.
+  // Only triggers when already at the top + additional upward intention.
+
   var isHomePage = window.location.pathname.endsWith('index.html') ||
                    window.location.pathname === '/' ||
-                   window.location.pathname === '';
+                   window.location.pathname === '' ||
+                   window.location.pathname.endsWith('/');
 
   if (!isHomePage) {
-    var hasScrolledDown = false;
-    var lastScrollY = window.scrollY;
+    var atTop = window.scrollY <= 5;
+    var pullDistance = 0;
+    var startY = 0;
+    var isPulling = false;
 
+    // Track whether we are at the top
     window.addEventListener('scroll', function () {
-      var currentScrollY = window.scrollY;
-
-      // Mark that the user has scrolled down the page
-      if (currentScrollY > 300) {
-        hasScrolledDown = true;
+      atTop = window.scrollY <= 5;
+      if (!atTop) {
+        pullDistance = 0;
       }
+    }, { passive: true });
 
-      // If user previously scrolled down and now reached the very top while scrolling up
-      if (hasScrolledDown && currentScrollY <= 10 && currentScrollY < lastScrollY) {
-        // Return to main page
+    // Desktop: mouse wheel upward while already at top
+    window.addEventListener('wheel', function (e) {
+      if (atTop && e.deltaY < 0) {
+        // User is at top and scrolling up → go home
         window.location.href = 'index.html';
       }
+    }, { passive: true });
 
-      lastScrollY = currentScrollY;
+    // Mobile: touch pull-down while at top
+    window.addEventListener('touchstart', function (e) {
+      if (atTop && e.touches.length === 1) {
+        startY = e.touches[0].clientY;
+        isPulling = true;
+        pullDistance = 0;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function (e) {
+      if (!isPulling || !atTop) return;
+      var currentY = e.touches[0].clientY;
+      pullDistance = currentY - startY;
+
+      // If user pulls down more than 80px while at the top → go home
+      if (pullDistance > 80) {
+        isPulling = false;
+        window.location.href = 'index.html';
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', function () {
+      isPulling = false;
+      pullDistance = 0;
     }, { passive: true });
   }
 })();
