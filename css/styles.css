@@ -324,30 +324,34 @@ footer{position:relative;padding:65px max(32px,calc((100% - 1120px)/2)) 0;backgr
 
 
 
-/* ===== Clean Home button (left of title) ===== */
+
+
+/* ===== Clean Home button (left of title) – big & visible ===== */
 .page-home-link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin-bottom: 18px;
-  padding: 8px 16px 8px 12px;
-  border-radius: 8px;
-  background: #f4f6f9;
-  color: var(--secondary);
+  gap: 10px;
+  margin-bottom: 28px;
+  padding: 14px 22px 14px 18px;
+  border-radius: 10px;
+  background: var(--secondary);
+  color: #ffffff;
   font-family: var(--font-control);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   text-decoration: none;
-  border: 1px solid var(--border);
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border: none;
+  box-shadow: 0 4px 14px rgba(15, 42, 71, 0.18);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .page-home-link:hover {
   background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(224, 106, 38, 0.3);
 }
 .page-home-link svg {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
+
