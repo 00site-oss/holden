@@ -95,7 +95,7 @@
     function nextPrompt() {
       switch (booking.step) {
         case 'issue':
-          return "Thank you for chatting with Holden Heating and Cooling. My name is Anna. How can I help you with your heating or cooling system today?";
+          return "Thank you for chatting with Holden Heating and Cooling. My name is Holly. How can I help you with your heating or cooling system today?";
         case 'name':
           return "Thank you for describing the issue. Could you please provide your first and last name?";
         case 'phone':
