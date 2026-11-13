@@ -35,48 +35,74 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "HVACBusiness",
-    "name": "Holden Heating and Cooling",
-    "url": "https://callholden.com",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://i.postimg.cc/vTZD2mm2/IMG-4401-removebg-preview.png",
-      "width": 512,
-      "height": 512
-    },
-    "image": "https://i.postimg.cc/SRd1qgks/8533374d-0b26-4d63-a90a-cf3bf804b38a.jpg",
-    "telephone": "+1-971-677-0201",
-    "email": "support@callholden.com",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "US"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "45.005",
-      "longitude": "-122.778"
-    },
-    "areaServed": [
-      {"@type": "City", "name": "Portland"},
-      {"@type": "City", "name": "Beaverton"},
-      {"@type": "City", "name": "Hillsboro"},
-      {"@type": "City", "name": "Tigard"},
-      {"@type": "City", "name": "Lake Oswego"},
-      {"@type": "City", "name": "Oregon City"},
-      {"@type": "City", "name": "Tualatin"},
-      {"@type": "City", "name": "West Linn"},
-      {"@type": "City", "name": "Milwaukie"},
-      {"@type": "City", "name": "Salem"},
-      {"@type": "City", "name": "Silverton"}
-    ],
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-      "opens": "07:00",
-      "closes": "19:00"
-    },
-    "sameAs": []
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://callholden.com/#website",
+        "url": "https://callholden.com/",
+        "name": "Holden Heating and Cooling",
+        "description": "Trusted HVAC repair, installation and maintenance in Portland, Beaverton, Hillsboro and the surrounding Oregon metro.",
+        "publisher": { "@id": "https://callholden.com/#organization" },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "HVACBusiness",
+        "@id": "https://callholden.com/#organization",
+        "name": "Holden Heating and Cooling",
+        "url": "https://callholden.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://i.postimg.cc/vTZD2mm2/IMG-4401-removebg-preview.png",
+          "width": 512,
+          "height": 512
+        },
+        "image": "https://i.postimg.cc/SRd1qgks/8533374d-0b26-4d63-a90a-cf3bf804b38a.jpg",
+        "telephone": "+1-971-677-0201",
+        "email": "support@callholden.com",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "US",
+          "addressRegion": "OR",
+          "addressLocality": "Portland"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "45.5152",
+          "longitude": "-122.6784"
+        },
+        "areaServed": [
+          {"@type": "City", "name": "Portland"},
+          {"@type": "City", "name": "Beaverton"},
+          {"@type": "City", "name": "Hillsboro"},
+          {"@type": "City", "name": "Tigard"},
+          {"@type": "City", "name": "Lake Oswego"},
+          {"@type": "City", "name": "Oregon City"},
+          {"@type": "City", "name": "Tualatin"},
+          {"@type": "City", "name": "West Linn"},
+          {"@type": "City", "name": "Milwaukie"},
+          {"@type": "City", "name": "Salem"},
+          {"@type": "City", "name": "Silverton"}
+        ],
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "07:00",
+          "closes": "19:00"
+        },
+        "sameAs": [],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "HVAC Services",
+          "itemListElement": [
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Heating & Cooling Repair"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "System Tune-Up & Maintenance"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "New System Installation"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Indoor Air Quality"}}
+          ]
+        }
+      }
+    ]
   }
   </script>
 
@@ -104,7 +130,6 @@
       </div>
       <nav aria-label="Main navigation" class="site-nav" id="siteNav">
         <a href="services.html">Our Services</a>
-        <a href="services-showcase.html">Showcase</a>
         <a href="offers.html">Offers</a>
         <a href="heating-cooling.html">Heating &amp; Cooling</a>
         <a href="service-areas.html">Service Areas</a>
@@ -138,12 +163,13 @@
 
     <!-- Quick links (helps Google generate sitelinks) -->
     <section class="band" style="padding:30px 20px 10px; background:#f8f9fb;">
-      <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;">
-        <a class="eco-button eco-button-outline" href="heating-cooling.html" style="min-width:160px;">Heating &amp; Cooling</a>
-        <a class="eco-button eco-button-outline" href="offers.html" style="min-width:160px;">Current Offers</a>
-        <a class="eco-button eco-button-outline" href="service-areas.html" style="min-width:160px;">Service Areas</a>
-        <a class="eco-button eco-button-outline" href="contact.html" style="min-width:160px;">Schedule Service</a>
-        <a class="eco-button eco-button-outline" href="about.html" style="min-width:160px;">About Us</a>
+      <div style="max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;">
+        <a class="eco-button eco-button-outline" href="services.html" style="min-width:150px;">Our Services</a>
+        <a class="eco-button eco-button-outline" href="heating-cooling.html" style="min-width:150px;">Heating & Cooling</a>
+        <a class="eco-button eco-button-outline" href="offers.html" style="min-width:150px;">Current Offers</a>
+        <a class="eco-button eco-button-outline" href="service-areas.html" style="min-width:150px;">Service Areas</a>
+        <a class="eco-button eco-button-outline" href="about.html" style="min-width:150px;">About Us</a>
+        <a class="eco-button eco-button-outline" href="contact.html" style="min-width:150px;">Schedule Service</a>
       </div>
     </section>
 
@@ -253,6 +279,17 @@
           <a class="footer-call" href="tel:+19716770201">
             <span><small>Call for same-day service</small><strong>971-677-0201</strong></span>
           </a>
+        </div>
+        <div>
+          <h3>Quick Links</h3>
+          <ul class="footer-areas">
+            <li><a href="services.html">Our Services</a></li>
+            <li><a href="heating-cooling.html">Heating & Cooling</a></li>
+            <li><a href="offers.html">Current Offers</a></li>
+            <li><a href="service-areas.html">Service Areas</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Schedule Service</a></li>
+          </ul>
         </div>
         <div>
           <h3>Service Areas</h3>
